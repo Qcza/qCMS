@@ -1,0 +1,81 @@
+/* line 3, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+body {
+  margin: 0;
+  overflow-x: hidden; }
+
+/* line 10, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.brand {
+  bottom: 6px;
+  color: #fff;
+  cursor: default;
+  font-size: 8pt;
+  left: 10px;
+  position: absolute; }
+
+/* line 18, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar {
+  background-color: #6404e8;
+  display: block;
+  height: 100%;
+  position: fixed;
+  width: 66px; }
+
+/* line 25, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar-element {
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 26px;
+  height: 66px;
+  padding: 20px;
+  text-align: center;
+  width: 66px; }
+  /* line 35, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+  .left-bar-element:hover {
+    background-color: #7e24fb; }
+
+/* line 38, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar-element-active {
+  background-color: #7e24fb; }
+
+/* line 41, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar-extend-hide {
+  background-color: #ccc;
+  height: 100%;
+  left: -334px;
+  position: fixed;
+  width: 400px;
+  z-index: -1;
+  animation-name: hide-left-bar;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards; }
+
+@keyframes hide-left-bar {
+  0% {
+    left: 0; }
+  25% {
+    left: 8px; }
+  100% {
+    left: -334px; } }
+
+/* line 61, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar-extend-show {
+  background-color: #ccc;
+  height: 100%;
+  left: -334px;
+  position: fixed;
+  width: 400px;
+  z-index: -1;
+  animation-name: show-left-bar;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards; }
+
+@keyframes show-left-bar {
+  0% {
+    left: -334px; }
+  25% {
+    left: -326px; }
+  75% {
+    left: 8px; }
+  100% {
+    left: 0; } }

@@ -1,0 +1,23 @@
+/* line 1, /home/balus/OWN/qcms/app/styles/sass/mainapp.component.sass */
+.scms-document-contener {
+  padding: 2%; }
+
+/* line 4, /home/balus/OWN/qcms/app/styles/sass/mainapp.component.sass */
+.scms-document {
+  border: solid 1px;
+  box-shadow: 4px 4px 2px #888;
+  display: block;
+  height: 100%;
+  padding: 6%;
+  width: 100%; }
+
+/* line 12, /home/balus/OWN/qcms/app/styles/sass/mainapp.component.sass */
+.scms-document-textarea {
+  background-color: #fff;
+  border: 0;
+  height: 100%;
+  resize: none;
+  width: 100%; }
+  /* line 19, /home/balus/OWN/qcms/app/styles/sass/mainapp.component.sass */
+  .scms-document-textarea:focus {
+    outline: none; }

@@ -1,0 +1,13 @@
+<div class="left-bar">
+  <div class="left-bar-element" (click)="extendBar('all')" [ngClass]="{'left-bar-element-active': scenario === 'all'}">
+    <i class="glyphicon glyphicon-inbox"></i>
+  </div>
+  <div class="left-bar-element" (click)="extendBar('new')" [ngClass]="{'left-bar-element-active': scenario === 'new'}">
+    <i class="glyphicon glyphicon-file"></i>
+  </div>
+  <div class="left-bar-brand">
+    <span class="brand">{{brand}}</span>
+  </div>
+</div>
+
+<div [ngClass]="{'left-bar-extend-show': extend === 'show', 'left-bar-extend-hide': extend == 'hide'}"></div>

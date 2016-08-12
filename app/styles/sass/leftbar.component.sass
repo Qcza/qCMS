@@ -1,0 +1,80 @@
+@import main
+
+//variables
+$bar-font-color: #fff
+$bar-icon-size: 26px
+$bar-width: 66px
+$bar-ext-width: 400px
+$bar-ext-bgc: #ccc
+
+.brand
+  bottom: 6px
+  color: $bar-font-color
+  cursor: default
+  font-size: 8pt
+  left: 10px
+  position: absolute
+
+.left-bar
+  background-color: $primary-color
+  display: block
+  height: 100%
+  position: fixed
+  width: $bar-width
+
+.left-bar-element
+  color: $bar-font-color
+  cursor: pointer
+  display: inline-block
+  font-size: $bar-icon-size
+  height: $bar-width
+  padding: ($bar-width - $bar-icon-size) / 2
+  text-align: center
+  width: $bar-width
+
+  &:hover
+    background-color: lighten($primary-color, 10%)
+
+.left-bar-element-active
+  background-color: lighten($primary-color, 10%)
+
+.left-bar-extend-hide
+  background-color: $bar-ext-bgc
+  height: 100%
+  left: $bar-width - $bar-ext-width
+  position: fixed
+  width: $bar-ext-width
+  z-index: -1
+  animation-name: hide-left-bar
+  animation-duration: 1.5s
+  animation-fill-mode: forwards
+
+@keyframes hide-left-bar
+  0%
+    left: 0
+  25%
+    left: 8px
+  100%
+    left: $bar-width - $bar-ext-width
+
+
+.left-bar-extend-show
+  background-color: $bar-ext-bgc
+  height: 100%
+  left: $bar-width - $bar-ext-width
+  position: fixed
+  width: $bar-ext-width
+  z-index: -1
+  animation-name: show-left-bar
+  animation-duration: 1.5s
+  animation-fill-mode: forwards
+
+@keyframes show-left-bar
+  0%
+    left: $bar-width - $bar-ext-width
+  25%
+    left: $bar-width - $bar-ext-width + 8px
+  75%
+    left: 8px
+  100%
+    left: 0
