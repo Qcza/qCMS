@@ -1,7 +1,7 @@
 import * as request from 'request';
 
-var port = 3000;
-var main_url = `http://localhost:${port}`
+const port = 3000;
+const main_url = `http://localhost:${port}`;
 
 describe('Landing page', function() {
     describe('GET /', function() {
