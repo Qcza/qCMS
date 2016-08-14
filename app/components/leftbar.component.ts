@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'left-bar',
-  templateUrl: 'app/components/leftbar.component.html',
+  templateUrl: 'app/templates/leftbar.component.html',
   styleUrls: ['app/styles/leftbar.component.css']
 })
 

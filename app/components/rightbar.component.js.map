@@ -1,0 +1,1 @@
+{"version":3,"file":"rightbar.component.js","sourceRoot":"","sources":["rightbar.component.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,qBAA0B,eAAe,CAAC,CAAA;AAQ1C;IAAA;QACE,SAAI,GAAW,IAAI,CAAC;IACrB,CAAC;IARF;QAAC,gBAAS,CAAC;YACP,QAAQ,EAAE,WAAW;YACrB,WAAW,EAAE,uCAAuC;YACpD,SAAS,EAAE,CAAC,mCAAmC,CAAC;SACnD,CAAC;;yBAAA;IAID,wBAAC;AAAD,CAAC,AAFF,IAEE;AAFW,yBAAiB,oBAE5B,CAAA"}

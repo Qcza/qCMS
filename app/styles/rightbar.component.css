@@ -1,0 +1,22 @@
+/* line 3, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+body {
+  margin: 0;
+  overflow-x: hidden; }
+
+/* line 6, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+.right-bar-show {
+  background-color: #ccc;
+  display: block;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  width: 300px; }
+
+/* line 14, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+.right-bar-hide {
+  background-color: #ccc;
+  display: block;
+  height: 100%;
+  position: fixed;
+  right: -300px;
+  width: 300px; }

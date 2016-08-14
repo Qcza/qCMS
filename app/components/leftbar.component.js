@@ -31,7 +31,7 @@ var LeftBarComponent = (function () {
     LeftBarComponent = __decorate([
         core_1.Component({
             selector: 'left-bar',
-            templateUrl: 'app/components/leftbar.component.html',
+            templateUrl: 'app/templates/leftbar.component.html',
             styleUrls: ['app/styles/leftbar.component.css']
         }), 
         __metadata('design:paramtypes', [])

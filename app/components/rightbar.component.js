@@ -9,21 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var leftbar_component_1 = require('./leftbar.component');
-var rightbar_component_1 = require('./rightbar.component');
-var MainAppComponent = (function () {
-    function MainAppComponent() {
+var RightBarComponent = (function () {
+    function RightBarComponent() {
+        this.show = true;
     }
-    MainAppComponent = __decorate([
+    RightBarComponent = __decorate([
         core_1.Component({
-            selector: 'main-app',
-            templateUrl: 'app/templates/mainapp.component.html',
-            styleUrls: ['app/styles/mainapp.component.css'],
-            directives: [leftbar_component_1.LeftBarComponent, rightbar_component_1.RightBarComponent]
+            selector: 'right-bar',
+            templateUrl: 'app/templates/rightbar.component.html',
+            styleUrls: ['app/styles/rightbar.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], MainAppComponent);
-    return MainAppComponent;
+    ], RightBarComponent);
+    return RightBarComponent;
 }());
-exports.MainAppComponent = MainAppComponent;
-//# sourceMappingURL=mainapp.component.js.map
+exports.RightBarComponent = RightBarComponent;
+//# sourceMappingURL=rightbar.component.js.map
