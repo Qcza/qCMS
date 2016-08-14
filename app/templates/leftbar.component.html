@@ -5,6 +5,9 @@
   <div class="left-bar-element" (click)="extendBar('new')" [ngClass]="{'left-bar-element-active': scenario === 'new'}">
     <i class="glyphicon glyphicon-file"></i>
   </div>
+  <div class="left-bar-element-bottom" (click)="extendBar('setting')" [ngClass]="{'left-bar-element-active': scenario === 'setting'}">
+    <i class="glyphicon glyphicon-cog"></i>
+  </div>
   <div class="left-bar-brand">
     <span class="brand">{{brand}}</span>
   </div>
