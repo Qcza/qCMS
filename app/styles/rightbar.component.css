@@ -95,5 +95,12 @@ body {
   cursor: pointer;
   color: #fff;
   height: 100%;
-  position: relative;
+  position: absolute;
   width: 15px; }
+
+/* line 74, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+.right-bar-content {
+  color: #6404e8;
+  padding: 20px;
+  padding-left: 35px;
+  z-index: 2; }

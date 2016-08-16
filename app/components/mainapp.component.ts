@@ -9,4 +9,10 @@ import { RightBarComponent } from './rightbar.component';
   directives: [LeftBarComponent, RightBarComponent]
 })
 
-export class MainAppComponent {  }
+export class MainAppComponent { 
+  scenario:string
+
+  onSelect(scenario:string) {
+    this.scenario = scenario;
+  }
+ }

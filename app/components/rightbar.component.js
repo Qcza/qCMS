@@ -13,6 +13,11 @@ var RightBarComponent = (function () {
     function RightBarComponent() {
         this.show = 'default';
     }
+    RightBarComponent.prototype.ngOnChanges = function (changes) {
+        if (this.scenario != null) {
+            this.show = 'show';
+        }
+    };
     RightBarComponent.prototype.showBar = function () {
         if (this.show === 'default' || this.show == 'hide') {
             this.show = 'show';
@@ -21,6 +26,10 @@ var RightBarComponent = (function () {
             this.show = 'hide';
         }
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], RightBarComponent.prototype, "scenario", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

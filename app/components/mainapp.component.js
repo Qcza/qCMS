@@ -14,6 +14,9 @@ var rightbar_component_1 = require('./rightbar.component');
 var MainAppComponent = (function () {
     function MainAppComponent() {
     }
+    MainAppComponent.prototype.onSelect = function (scenario) {
+        this.scenario = scenario;
+    };
     MainAppComponent = __decorate([
         core_1.Component({
             selector: 'main-app',

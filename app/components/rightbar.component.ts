@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'right-bar',
@@ -6,8 +6,17 @@ import { Component } from '@angular/core';
     styleUrls: ['app/styles/rightbar.component.css']
 })
 
-export class RightBarComponent { 
+export class RightBarComponent implements OnChanges { 
   show:string = 'default';
+  @Input() scenario:string;
+  
+  templateElements:Array<any>;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.scenario != null) {
+      this.show = 'show';
+    }
+  }
 
   showBar():void {
     if (this.show === 'default' || this.show == 'hide') {

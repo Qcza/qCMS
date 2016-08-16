@@ -1,12 +1,9 @@
-import { Component } from '@angular/core';
-
-interface adminElement {
-  name: string;
-  icon: string;
-}
+import { Component, Output, EventEmitter } from '@angular/core';
+import { CollapseDirective } from 'ng2-bootstrap/ng2-bootstrap'
 
 @Component({
   selector: 'left-bar',
+  directives: [CollapseDirective],
   templateUrl: 'app/templates/leftbar.component.html',
   styleUrls: ['app/styles/leftbar.component.css']
 })
@@ -17,18 +14,10 @@ export class LeftBarComponent {
   scenario:string = null;
   active:string = null;
 
-  adminElements: Array<adminElement> = [
-    {name: 'New template', icon: 'log-in'},
-    {name: 'Edit template', icon: 'edit'},
-    {name: 'New user', icon: 'user'},
-    {name: 'Preferences', icon: 'cutlery'},
-    {name: 'Account', icon: 'briefcase'}
-]
-  newDocumentElements:Array<string> = [
-    'New document'
-  ];
-
-  inboxElements:Array<any> = [];
+  @Output() onSelect = new EventEmitter<string>();
+  selectSettingScenario(scenario:string):void {
+    this.onSelect.emit(scenario);
+  }
 
   setScenario(scenario:string):void {
     this.scenario = scenario;

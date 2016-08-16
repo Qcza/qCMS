@@ -9,24 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var LeftBarComponent = (function () {
     function LeftBarComponent() {
         this.brand = '@qCMS';
         this.extend = null;
         this.scenario = null;
         this.active = null;
-        this.adminElements = [
-            { name: 'New template', icon: 'log-in' },
-            { name: 'Edit template', icon: 'edit' },
-            { name: 'New user', icon: 'user' },
-            { name: 'Preferences', icon: 'cutlery' },
-            { name: 'Account', icon: 'briefcase' }
-        ];
-        this.newDocumentElements = [
-            'New document'
-        ];
-        this.inboxElements = [];
+        this.onSelect = new core_1.EventEmitter();
     }
+    LeftBarComponent.prototype.selectSettingScenario = function (scenario) {
+        this.onSelect.emit(scenario);
+    };
     LeftBarComponent.prototype.setScenario = function (scenario) {
         this.scenario = scenario;
         this.active = scenario;
@@ -41,9 +35,14 @@ var LeftBarComponent = (function () {
             this.setScenario(scenario);
         }
     };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], LeftBarComponent.prototype, "onSelect", void 0);
     LeftBarComponent = __decorate([
         core_1.Component({
             selector: 'left-bar',
+            directives: [ng2_bootstrap_1.CollapseDirective],
             templateUrl: 'app/templates/leftbar.component.html',
             styleUrls: ['app/styles/leftbar.component.css']
         }), 
