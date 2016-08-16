@@ -1,4 +1,31 @@
-/* line 3, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 3, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 body {
   margin: 0;
   overflow-x: hidden; }
+
+/* line 8, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.qcms-form-input {
+  border-radius: 0;
+  border: 1px solid #9c56fc; }
+  /* line 12, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  .qcms-form-input:focus {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd; }
+
+/* line 17, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.btn-qcms {
+  background-color: #6404e8;
+  border-radius: 0;
+  color: #fff;
+  outline: none; }
+
+/* line 23, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.btn-qcms-icon {
+  font-size: 12pt;
+  padding: 10px; }
+  /* line 27, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  .btn-qcms-icon:hover {
+    background-color: #fff;
+    border: 1px solid #6404e8;
+    color: #6404e8; }

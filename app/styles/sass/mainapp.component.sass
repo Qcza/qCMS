@@ -1,16 +1,25 @@
-.scms-document-contener
+//variables
+$background-color: #f2f2f2
+$document-background: #fff
+$shadow: #888
+
+.main
+  background-color: $background-color
+
+.document-contener
   padding: 2%
 
-.scms-document
+.document
+  background: $document-background
   border: solid 1px
-  box-shadow: 4px 4px 2px #888
+  box-shadow: 4px 4px 2px $shadow
   display: block
   height: 100%
   padding: 6%
   width: 100%
 
-.scms-document-textarea
-  background-color: #fff
+.document-textarea
+  background-color: $document-background
   border: 0
   height: 100%
   resize: none

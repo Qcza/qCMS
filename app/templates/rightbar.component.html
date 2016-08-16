@@ -1,3 +1,5 @@
-<div [ngClass]="{'right-bar-show': show, 'right-bar-hide': !show}">
-
+<div [ngClass]="{'right-bar-show': show === 'show', 'right-bar-hide': show === 'hide', 'right-bar': show === 'default'}">
+  <div class="extend-bar" (click)="showBar()">
+    <i class="glyphicon" [ngClass]="{'glyphicon-chevron-left': show === 'hide' || show === 'default', 'glyphicon-chevron-right': show === 'show'}"></i>
+  </div>
 </div>

@@ -7,5 +7,14 @@ import { Component } from '@angular/core';
 })
 
 export class RightBarComponent { 
-  show:boolean = true;
+  show:string = 'default';
+
+  showBar():void {
+    if (this.show === 'default' || this.show == 'hide') {
+      this.show = 'show';
+    } else if (this.show === 'show') {
+      this.show = 'hide';
+    }
+  }
+
  }

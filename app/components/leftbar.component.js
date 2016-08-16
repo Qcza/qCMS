@@ -14,14 +14,27 @@ var LeftBarComponent = (function () {
         this.brand = '@qCMS';
         this.extend = null;
         this.scenario = null;
+        this.active = null;
+        this.adminElements = [
+            { name: 'New template', icon: 'log-in' },
+            { name: 'Edit template', icon: 'edit' },
+            { name: 'New user', icon: 'user' },
+            { name: 'Preferences', icon: 'cutlery' },
+            { name: 'Account', icon: 'briefcase' }
+        ];
+        this.newDocumentElements = [
+            'New document'
+        ];
+        this.inboxElements = [];
     }
     LeftBarComponent.prototype.setScenario = function (scenario) {
         this.scenario = scenario;
+        this.active = scenario;
     };
     LeftBarComponent.prototype.extendBar = function (scenario) {
         if (this.extend === 'show' && this.scenario === scenario) {
             this.extend = 'hide';
-            this.setScenario(null);
+            this.active = null;
         }
         else {
             this.extend = 'show';

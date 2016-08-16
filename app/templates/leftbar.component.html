@@ -1,11 +1,11 @@
 <div class="left-bar">
-  <div class="left-bar-element" (click)="extendBar('all')" [ngClass]="{'left-bar-element-active': scenario === 'all'}">
+  <div class="left-bar-element" (click)="extendBar('all')" [ngClass]="{'left-bar-element-active': active === 'all'}">
     <i class="glyphicon glyphicon-inbox"></i>
   </div>
-  <div class="left-bar-element" (click)="extendBar('new')" [ngClass]="{'left-bar-element-active': scenario === 'new'}">
+  <div class="left-bar-element" (click)="extendBar('new')" [ngClass]="{'left-bar-element-active': active === 'new'}">
     <i class="glyphicon glyphicon-file"></i>
   </div>
-  <div class="left-bar-element-bottom" (click)="extendBar('setting')" [ngClass]="{'left-bar-element-active': scenario === 'setting'}">
+  <div class="left-bar-element-bottom" (click)="extendBar('admin')" [ngClass]="{'left-bar-element-active': active === 'admin'}">
     <i class="glyphicon glyphicon-cog"></i>
   </div>
   <div class="left-bar-brand">
@@ -13,4 +13,31 @@
   </div>
 </div>
 
-<div [ngClass]="{'left-bar-extend-show': extend === 'show', 'left-bar-extend-hide': extend == 'hide'}"></div>
+<div [ngClass]="{'left-bar-extend-show': extend === 'show', 'left-bar-extend-hide': extend == 'hide'}">
+  <div id="allDocumentsScenario" *ngIf="scenario === 'all'">
+    <div class="left-bar-content">
+    </div>
+  </div>
+  <div id="newDocumentScenario" *ngIf="scenario === 'new'">
+    <div class="left-bar-content left-bar-form">
+      <form name="newDocument">
+        <div class="form-group">
+          <label for="documentName">Document name</label>
+          <input class="form-control qcms-form-input" id="documentName" type="text">
+        </div>
+        <div class="form-group">
+          <label for="documentTemplate">Template</label>
+          <div id="documentTemplate">
+            ToDo::ListOfCurrentTemplates
+          </div>
+        </div>
+        <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="glyphicon glyphicon-plus"></i></button>
+      </form>
+    </div>
+  </div>
+  <div id="adminScenario" *ngIf="scenario === 'admin'">
+    <div class="left-bar-content">
+      <div  class="left-bar-extend-element" *ngFor="let element of adminElements"><i class="left-bar-extend-element-icon glyphicon glyphicon-{{element.icon}}"></i>&nbsp;&nbsp;{{element.name}}</div>
+    </div>
+  </div>
+</div>

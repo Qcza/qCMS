@@ -4,8 +4,8 @@
 $bar-font-color: #fff
 $bar-icon-size: 26px
 $bar-width: 66px
-$bar-ext-width: 350px
-$bar-ext-bgc: #ccc
+$bar-ext-width: $bar-width + 300px
+$bar-ext-bgc: #fff
 
 .brand
   bottom: 6px
@@ -56,42 +56,77 @@ $bar-ext-bgc: #ccc
   background-color: lighten($primary-color, 10%)
 
 .left-bar-extend-hide
+  animation-duration: 0.7s
+  animation-fill-mode: forwards
+  animation-name: hide-left-bar
   background-color: $bar-ext-bgc
+  border-right: 1px solid $primary-color
   height: 100%
   left: $bar-width - $bar-ext-width
   position: fixed
   width: $bar-ext-width
   z-index: 1
-  animation-name: hide-left-bar
-  animation-duration: 1s
-  animation-fill-mode: forwards
 
 @keyframes hide-left-bar
   0%
     left: 0
+
   25%
     left: 8px
+
   100%
     left: $bar-width - $bar-ext-width
 
 
 .left-bar-extend-show
+  animation-duration: 0.7s
+  animation-fill-mode: forwards
+  animation-name: show-left-bar
   background-color: $bar-ext-bgc
+  border-right: 1px solid $primary-color
   height: 100%
   left: $bar-width - $bar-ext-width
   position: fixed
   width: $bar-ext-width
   z-index: 1
-  animation-name: show-left-bar
-  animation-duration: 1s
-  animation-fill-mode: forwards
 
 @keyframes show-left-bar
   0%
     left: $bar-width - $bar-ext-width
+
   25%
     left: $bar-width - $bar-ext-width + 8px
+
   75%
     left: 8px
+
   100%
     left: 0
+
+.left-bar-extend-element
+  background-color: $bar-ext-bgc
+  cursor: pointer
+  color: $primary-color
+  font-size: 11pt
+  font-weight: bold
+  padding: 20px
+  width: 100%
+  z-index: 2
+
+  &:hover
+    background-color: $primary-color
+    color: #fff
+
+  .left-bar-extend-element-icon
+    font-size: 14pt
+
+.left-bar-content
+  background-color: $bar-ext-bgc
+  color: $primary-color
+  position: absolute
+  left: $bar-width
+  width: 299px
+  z-index: 1
+
+.left-bar-form
+  padding: 20px

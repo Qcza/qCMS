@@ -2,19 +2,71 @@
 
 //variables
 $bar-width: 300px
+$background-color: #fff
+
+.right-bar
+  background-color: $background-color
+  display: block
+  height: 100%
+  position: fixed
+  right: 12px - $bar-width
+  width: $bar-width
+  z-index: 2
+
+  &:hover
+    animation-duration: 0.2s
+    animation-fill-mode: forwards
+    animation-name: slightly-slide
+
+@keyframes slightly-slide
+  0%
+    right: 12px - $bar-width
+
+  100%
+    right: 18px - $bar-width
 
 .right-bar-show
-  background-color: #ccc
+  animation-duration: 0.5s
+  animation-fill-mode: forwards
+  animation-name: show
+  background-color: $background-color
   display: block
   height: 100%
   position: fixed
   right: 0
   width: $bar-width
+  z-index: 2
+
+@keyframes show
+  0%
+    right: 18px - $bar-width
+  
+  100%
+    right: 0
 
 .right-bar-hide
-  background-color: #ccc
+  animation-duration: 0.5s
+  animation-fill-mode: forwards
+  animation-name: hide
+  background-color: $background-color
   display: block
   height: 100%
   position: fixed
-  right: 0 - $bar-width
+  right: 12px - $bar-width
   width: $bar-width
+  z-index: 2
+
+@keyframes hide
+  0%
+    right: 0
+  
+  100%
+    right: 12px - $bar-width
+
+.extend-bar
+  background-color: $primary-color
+  cursor: pointer
+  color: #fff
+  height: 100%
+  position: relative
+  width: 15px

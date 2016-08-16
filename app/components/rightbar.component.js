@@ -11,8 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var RightBarComponent = (function () {
     function RightBarComponent() {
-        this.show = true;
+        this.show = 'default';
     }
+    RightBarComponent.prototype.showBar = function () {
+        if (this.show === 'default' || this.show == 'hide') {
+            this.show = 'show';
+        }
+        else if (this.show === 'show') {
+            this.show = 'hide';
+        }
+    };
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',
