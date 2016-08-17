@@ -12,14 +12,14 @@
         <div class="form-group">
           <label for="templateElements">Elements</label>
           <div class="template-element" *ngFor="let element of templateElements">
-            <i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture': element.type === 'picture'}"></i>{{element.type}}
+            <i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture'}"></i>{{element.type}}
             <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="fa fa-minus"></i></button>
           </div>
-          <div class="template-element" dropdown>
-            <span class="dropdown-element" dropdownToggle><i class="template-element-icon fa" [ngClass]="{'fa-font': chosenElement.type === 'text', 'fa-picture': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}<i class="dropdown-icon fa fa-chevron-down"></i></span>
+          <div class="template-element" ngbDropdown>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon fa" [ngClass]="{'fa-font': chosenElement.type === 'text', 'fa-picture-o': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}</span>
             <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)"><i class="fa fa-plus"></i></button>
-            <ul class="dropdown-menu " dropdownMenu>
-              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture': element.type === 'picture'}"></i>{{element.type}}</li>
+            <ul class="dropdown-menu qcms-dropdown-menu">
+              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture'}"></i>{{element.type}}</li>
             </ul>
           </div>
           <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()">Save</button>

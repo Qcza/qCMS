@@ -56,6 +56,11 @@ body {
     border: 1px solid #6404e8;
     color: #6404e8; }
 
+/* line 55, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+.qcms-dropdown-menu {
+  border-radius: 0;
+  color: #6404e8; }
+
 /* line 7, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
 .right-bar {
   background-color: #fff;
@@ -173,8 +178,3 @@ body {
   /* line 115, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
   .dropdown-element:hover {
     color: #7e24fb; }
-
-/* line 118, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
-.dropdown-icon {
-  font-size: 8pt;
-  margin-left: 12px; }

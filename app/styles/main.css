@@ -55,3 +55,8 @@ body {
     background-color: #fff;
     border: 1px solid #6404e8;
     color: #6404e8; }
+
+/* line 55, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+.qcms-dropdown-menu {
+  border-radius: 0;
+  color: #6404e8; }
