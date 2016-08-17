@@ -59,14 +59,14 @@ $background-color: #fff
 @keyframes hide
   0%
     right: 0
-  
+
   100%
     right: 12px - $bar-width
 
 .extend-bar
   background-color: $primary-color
-  cursor: pointer
   color: #fff
+  cursor: pointer
   height: 100%
   position: absolute
   width: 15px
@@ -76,3 +76,45 @@ $background-color: #fff
   padding: 20px
   padding-left: 35px;
   z-index: 2
+
+.template-element
+  border: solid 1px $primary-color
+  display: block
+  font-size: 11pt
+  font-weight: normal
+  margin-top: 10px
+  padding: 10px
+  position: relative
+
+.template-element-icon
+  font-size: 12pt
+  margin-right: 12px
+
+.template-element-btn
+  font-size: 12pt
+  height: 100%
+  position: absolute
+  right: 0
+  top: 0
+
+  &:hover
+    background-color: #fff
+    border-left: 1px solid $primary-color
+    color: $primary-color
+
+.drodown-menu-element
+  cursor: pointer
+  margin: 8px
+
+  &:hover
+    color: lighten($primary-color, 10%)
+
+.dropdown-element
+  cursor: pointer
+
+  &:hover
+    color: lighten($primary-color, 10%)
+
+.dropdown-icon
+  font-size: 8pt
+  margin-left: 12px

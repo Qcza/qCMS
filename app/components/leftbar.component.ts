@@ -1,9 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { CollapseDirective } from 'ng2-bootstrap/ng2-bootstrap'
 
 @Component({
   selector: 'left-bar',
-  directives: [CollapseDirective],
   templateUrl: 'app/templates/leftbar.component.html',
   styleUrls: ['app/styles/leftbar.component.css']
 })

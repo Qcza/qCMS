@@ -134,12 +134,21 @@ interface Zone {
    * Returns a value associated with the `key`.
    *
    * If the current zone does not have a key, the request is delegated to the parent zone. Use
-   * [ZoneSpec.properties] to configure the set of properties asseciated with the current zone.
+   * [ZoneSpec.properties] to configure the set of properties associated with the current zone.
    *
    * @param key The key to retrieve.
-   * @returns {any} Tha value for the key, or `undefined` if not found.
+   * @returns {any} The value for the key, or `undefined` if not found.
    */
   get(key: string): any;
+  /**
+   * Returns a Zone which defines a `key`.
+   *
+   * Recursively search the parent Zone until a Zone which has a property `key` is found.
+   *
+   * @param key The key to use for identification of the returned zone.
+   * @returns {Zone} The Zone which defines the `key`, `null` if not found.
+   */
+  getZoneWith(key: string): Zone;
   /**
    * Used to create a child zone.
    *
@@ -395,6 +404,11 @@ interface TaskData {
    * Delay in milliseconds when the Task will run.
    */
   delay?: number;
+
+  /**
+   * identifier returned by the native setTimeout.
+   */
+  handleId?: number;
 }
 
 /**
@@ -486,7 +500,10 @@ type AmbientZone = Zone;
 /** @internal */
 type AmbientZoneDelegate = ZoneDelegate;
 
-const Zone: ZoneType = (function(global) {
+const Zone: ZoneType = (function(global: any) {
+  if (global.Zone) {
+    throw new Error('Zone already loaded.');
+  }
   class Zone implements AmbientZone {
     static __symbol__: (name: string) => string = __symbol__;
 
@@ -512,13 +529,19 @@ const Zone: ZoneType = (function(global) {
     }
 
     public get(key: string): any {
+      const zone: Zone = this.getZoneWith(key) as Zone;
+      if (zone) return zone._properties[key];
+    }
+
+    public getZoneWith(key: string): AmbientZone {
       let current: Zone = this;
       while (current) {
         if (current._properties.hasOwnProperty(key)) {
-          return current._properties[key];
+          return current;
         }
         current = current._parent;
       }
+      return null;
     }
 
     public fork(zoneSpec: ZoneSpec): AmbientZone {
@@ -819,6 +842,14 @@ const Zone: ZoneType = (function(global) {
         }
       };
     }
+
+  public toString() {
+      if (this.data && typeof this.data.handleId !== 'undefined') {
+        return this.data.handleId;
+      } else {
+        return this.toString();
+      }
+    }
   }
 
   interface UncaughtPromiseError extends Error {
@@ -837,7 +868,7 @@ const Zone: ZoneType = (function(global) {
   let _currentTask: Task = null;
   let _microTaskQueue: Task[] = [];
   let _isDrainingMicrotaskQueue: boolean = false;
-  let _uncaughtPromiseErrors: UncaughtPromiseError[] = [];
+  const _uncaughtPromiseErrors: UncaughtPromiseError[] = [];
   let _drainScheduled: boolean = false;
 
   function scheduleQueueDrain() {
@@ -863,7 +894,8 @@ const Zone: ZoneType = (function(global) {
           'Unhandled Promise rejection:', rejection instanceof Error ? rejection.message : rejection,
           '; Zone:', (<Zone>e.zone).name,
           '; Task:', e.task && (<Task>e.task).source,
-          '; Value:', rejection
+          '; Value:', rejection, 
+          rejection instanceof Error ? rejection.stack : undefined
       );
     }
     console.error(e);
@@ -885,10 +917,8 @@ const Zone: ZoneType = (function(global) {
         }
       }
       while(_uncaughtPromiseErrors.length) {
-        const uncaughtPromiseErrors = _uncaughtPromiseErrors;
-        _uncaughtPromiseErrors = [];
-        for (let i = 0; i < uncaughtPromiseErrors.length; i++) {
-          const uncaughtPromiseError: UncaughtPromiseError = uncaughtPromiseErrors[i];
+        while(_uncaughtPromiseErrors.length) {
+          const uncaughtPromiseError: UncaughtPromiseError = _uncaughtPromiseErrors.shift();
           try {
             uncaughtPromiseError.zone.runGuarded(() => { throw uncaughtPromiseError; });
           } catch (e) {
@@ -1044,6 +1074,9 @@ const Zone: ZoneType = (function(global) {
     constructor(executor: (resolve : (value?: R | Thenable<R>) => void,
                            reject: (error?: any) => void) => void) {
       const promise: ZoneAwarePromise<R> = this;
+      if (!(promise instanceof ZoneAwarePromise)) {
+        throw new Error('Must be an instanceof Promise.');
+      }
       promise[symbolState] = UNRESOLVED;
       promise[symbolValue] = []; // queue;
       try {
@@ -1056,7 +1089,7 @@ const Zone: ZoneType = (function(global) {
     then<R, U>(onFulfilled?: (value: R) => U | Thenable<U>,
                onRejected?: (error: any) => U | Thenable<U>): Promise<R>
     {
-      const chainPromise: Promise<R> = new ZoneAwarePromise(null);
+      const chainPromise: Promise<R> = new (this.constructor as typeof ZoneAwarePromise)(null);
       const zone = Zone.current;
       if (this[symbolState] == UNRESOLVED ) {
         (<any[]>this[symbolValue]).push(zone, chainPromise, onFulfilled, onRejected);
@@ -1085,5 +1118,7 @@ const Zone: ZoneType = (function(global) {
     }
   }
 
+  // This is not part of public API, but it is usefull for tests, so we expose it.
+  Promise[Zone.__symbol__('uncaughtPromiseErrors')] = _uncaughtPromiseErrors;
   return global.Zone = Zone;
 })(typeof window === 'undefined' ? global : window);

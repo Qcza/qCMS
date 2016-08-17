@@ -21,11 +21,37 @@ body {
   outline: none; }
 
 /* line 23, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.btn-qcms-reverse {
+  background-color: #fff;
+  border: 1px solid #6404e8;
+  border-radius: 0;
+  color: #6404e8;
+  outline: none; }
+
+/* line 30, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms-icon {
   font-size: 12pt;
   padding: 10px; }
-  /* line 27, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  /* line 34, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .btn-qcms-icon:hover {
+    background-color: #fff;
+    border: 1px solid #6404e8;
+    color: #6404e8; }
+
+/* line 39, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.btn-qcms-element {
+  font-size: 12pt; }
+  /* line 42, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  .btn-qcms-element:hover {
+    background-color: #fff;
+    border: 1px solid #6404e8;
+    color: #6404e8; }
+
+/* line 47, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.btn-qcms-cta {
+  margin: 8px 0; }
+  /* line 50, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  .btn-qcms-cta:hover {
     background-color: #fff;
     border: 1px solid #6404e8;
     color: #6404e8; }

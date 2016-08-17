@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var LeftBarComponent = (function () {
     function LeftBarComponent() {
         this.brand = '@qCMS';
@@ -42,7 +41,6 @@ var LeftBarComponent = (function () {
     LeftBarComponent = __decorate([
         core_1.Component({
             selector: 'left-bar',
-            directives: [ng2_bootstrap_1.CollapseDirective],
             templateUrl: 'app/templates/leftbar.component.html',
             styleUrls: ['app/styles/leftbar.component.css']
         }), 

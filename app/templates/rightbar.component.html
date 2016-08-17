@@ -7,13 +7,22 @@
       <form name="newTemplate">
         <div class="form-group">
           <label for="templateName">Template name</label>
-          <input id="templateName" class="form-control qcms-form-input" type="text">
+          <input id="templateName" name="templateName" class="form-control qcms-form-input" type="text" [(ngModel)]="templateName">
         </div>
         <div class="form-group">
           <label for="templateElements">Elements</label>
-          <div class="element" *ngFor="let element of templateElements">{{element}}</div>
-          <br />
-          <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="glyphicon glyphicon-plus"></i></button>
+          <div class="template-element" *ngFor="let element of templateElements">
+            <i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': element.type === 'text', 'glyphicon-picture': element.type === 'picture'}"></i>{{element.type}}
+            <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="glyphicon glyphicon-minus"></i></button>
+          </div>
+          <div class="template-element" dropdown>
+            <span class="dropdown-element" dropdownToggle><i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': chosenElement.type === 'text', 'glyphicon-picture': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}<i class="dropdown-icon glyphicon glyphicon-chevron-down"></i></span>
+            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)"><i class="glyphicon glyphicon-plus"></i></button>
+            <ul class="dropdown-menu " dropdownMenu>
+              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': element.type === 'text', 'glyphicon-picture': element.type === 'picture'}"></i>{{element.type}}</li>
+            </ul>
+          </div>
+          <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()">Save</button>
         </div>
       </form>
     </div>
