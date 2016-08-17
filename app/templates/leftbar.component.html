@@ -1,12 +1,12 @@
 <div class="left-bar">
   <div class="left-bar-element" (click)="extendBar('all')" [ngClass]="{'left-bar-element-active': active === 'all'}">
-    <i class="fa fa-inbox"></i>
+    <i class="glyphicon glyphicon-inbox"></i>
   </div>
   <div class="left-bar-element" (click)="extendBar('new')" [ngClass]="{'left-bar-element-active': active === 'new'}">
-    <i class="fa fa-file"></i>
+    <i class="glyphicon glyphicon-file"></i>
   </div>
   <div class="left-bar-element-bottom" (click)="extendBar('admin')" [ngClass]="{'left-bar-element-active': active === 'admin'}">
-    <i class="fa fa-cogs"></i>
+    <i class="glyphicon glyphicon-cog"></i>
   </div>
   <div class="left-bar-brand">
     <span class="brand">{{brand}}</span>
@@ -31,17 +31,17 @@
             ToDo::ListOfCurrentTemplates
           </div>
         </div>
-        <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="glyphicon glyphicon-plus"></i></button>
       </form>
     </div>
   </div>
   <div id="adminScenario" *ngIf="scenario === 'admin'">
     <div class="left-bar-content">
-      <div class="left-bar-extend-element" (click)="selectSettingScenario('newTemplate')"><i class="left-bar-extend-element-icon fa fa-sign-in"></i>&nbsp;&nbsp;New template</div>
-      <div class="left-bar-extend-element" (click)="selectSettingScenario('editTemplate')"><i class="left-bar-extend-element-icon fa fa-edit"></i>&nbsp;&nbsp;Edit template</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-user-plus"></i>&nbsp;&nbsp;New user</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-cutlery"></i>&nbsp;&nbsp;Preferences</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-briefcase"></i>&nbsp;&nbsp;Account</div>
+      <div class="left-bar-extend-element" (click)="selectSettingScenario('newTemplate')"><i class="left-bar-extend-element-icon glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;New template</div>
+      <div class="left-bar-extend-element" (click)="selectSettingScenario('editTemplate')"><i class="left-bar-extend-element-icon glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Edit template</div>
+      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon glyphicon glyphicon-user"></i>&nbsp;&nbsp;New user</div>
+      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon glyphicon glyphicon-cutlery"></i>&nbsp;&nbsp;Preferences</div>
+      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon glyphicon glyphicon-briefcase"></i>&nbsp;&nbsp;Account</div>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div [ngClass]="{'right-bar-show': show === 'show', 'right-bar-hide': show === 'hide', 'right-bar': show === 'default'}">
   <div class="extend-bar" (click)="showBar()">
-    <i class="fa" [ngClass]="{'fa-chevron-left': show === 'hide' || show === 'default', 'fa-chevron-right': show === 'show'}"></i>
+    <i class="glyphicon" [ngClass]="{'glyphicon-chevron-left': show === 'hide' || show === 'default', 'glyphicon-chevron-right': show === 'show'}"></i>
   </div>
   <div class="right-bar-content">
     <div class="newTemaplateForm" *ngIf="scenario==='newTemplate'">
@@ -12,14 +12,14 @@
         <div class="form-group">
           <label for="templateElements">Elements</label>
           <div class="template-element" *ngFor="let element of templateElements">
-            <i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture': element.type === 'picture'}"></i>{{element.type}}
-            <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="fa fa-minus"></i></button>
+            <i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': element.type === 'text', 'glyphicon-picture': element.type === 'picture'}"></i>{{element.type}}
+            <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="glyphicon glyphicon-minus"></i></button>
           </div>
           <div class="template-element" dropdown>
-            <span class="dropdown-element" dropdownToggle><i class="template-element-icon fa" [ngClass]="{'fa-font': chosenElement.type === 'text', 'fa-picture': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}<i class="dropdown-icon fa fa-chevron-down"></i></span>
-            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)"><i class="fa fa-plus"></i></button>
+            <span class="dropdown-element" dropdownToggle><i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': chosenElement.type === 'text', 'glyphicon-picture': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}<i class="dropdown-icon glyphicon glyphicon-chevron-down"></i></span>
+            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)"><i class="glyphicon glyphicon-plus"></i></button>
             <ul class="dropdown-menu " dropdownMenu>
-              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture': element.type === 'picture'}"></i>{{element.type}}</li>
+              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon glyphicon" [ngClass]="{'glyphicon-font': element.type === 'text', 'glyphicon-picture': element.type === 'picture'}"></i>{{element.type}}</li>
             </ul>
           </div>
           <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()">Save</button>
