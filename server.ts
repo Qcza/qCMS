@@ -12,7 +12,8 @@ const app = express();
 app.use('/', express.static(__dirname));
 app.use('/css', express.static(__dirname + '/app/styles/'))
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
-app.use('/fonts', express.static(__dirname + '/node_modules/bootstrap/fonts/'));
+app.use('/css', express.static(__dirname + '/static/font-awesome/css'));
+app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts'));
 
 // app.get('/', function (req: express.Request, res: express.Response) {
 //     res.sendFile(path.resolve(__dirname, 'index.html'));
