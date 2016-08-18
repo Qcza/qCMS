@@ -73,7 +73,17 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.saveTemplate = function () {
         var _this = this;
-        this.appService.pushTemplate(this.template).subscribe(function (response) { return _this.response = response; }, function (error) { return _this.errorMessage = error; });
+        this.appService.pushTemplate(this.template).subscribe(function (response) {
+            _this.response = response,
+                _this.resetNewTemplateForm(response);
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    RightBarComponent.prototype.resetNewTemplateForm = function (response) {
+        if (this.response.response === 'Document insert success') {
+            this.templateName = '';
+            this.templateElements = [];
+            this.chosenElement.title = '';
+        }
     };
     __decorate([
         core_1.Input(), 

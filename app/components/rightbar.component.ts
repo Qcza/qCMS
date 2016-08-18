@@ -81,11 +81,22 @@ export class RightBarComponent implements OnChanges {
     this.chosenElement = element;
   }
 
-  saveTemplate() {
+  saveTemplate():void {
     this.appService.pushTemplate(this.template).subscribe(
-      response => this.response = response,
+      response => {
+        this.response = response,
+        this.resetNewTemplateForm(response)
+      },
       error => this.errorMessage = <any>error
     );
+  }
+
+  resetNewTemplateForm(response:string):void {
+    if (this.response.response === 'Document insert success') {
+      this.templateName = '';
+      this.templateElements = [];
+      this.chosenElement.title = '';
+    }
   }
 
 }

@@ -35,10 +35,18 @@ app.post('/templates', function (req: express.Request, res: express.Response) {
 app.get('/templates', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    let cursor:mongodb.Cursor = db.collection('templates').find();
-    let response:string = JSON.stringify(cursor);
-  res.send(response);
+    let cursor:any = db.collection('templates').find().toArray(function (err, documents) {
+      assert.equal(null, err)
+      let response:string = JSON.stringify(documents)
+      res.send(response)
+    });
+    db.close();
   })
 })
 
 app.listen(3000);
+
+//helpers
+function getAllDocuments (db, collection:string, callback) {
+  let cursor:Promise<any> = db.collection(collection).find().toArray(callback);
+}

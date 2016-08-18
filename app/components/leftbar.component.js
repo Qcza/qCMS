@@ -9,14 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var app_service_1 = require('../services/app.service');
 var LeftBarComponent = (function () {
-    function LeftBarComponent() {
+    function LeftBarComponent(appService) {
+        this.appService = appService;
         this.brand = '@qCMS';
         this.extend = null;
         this.scenario = null;
         this.active = null;
         this.onSelect = new core_1.EventEmitter();
     }
+    LeftBarComponent.prototype.ngOnInit = function () {
+        this.getTemplates();
+    };
     LeftBarComponent.prototype.selectSettingScenario = function (scenario) {
         this.onSelect.emit(scenario);
     };
@@ -34,6 +39,10 @@ var LeftBarComponent = (function () {
             this.setScenario(scenario);
         }
     };
+    LeftBarComponent.prototype.getTemplates = function () {
+        var _this = this;
+        this.appService.getTemplates().subscribe(function (templates) { return _this.templates = templates; }, function (error) { return _this.errMessage = error; });
+    };
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
@@ -41,10 +50,11 @@ var LeftBarComponent = (function () {
     LeftBarComponent = __decorate([
         core_1.Component({
             selector: 'left-bar',
+            providers: [app_service_1.AppService],
             templateUrl: 'app/templates/leftbar.component.html',
             styleUrls: ['app/styles/leftbar.component.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_service_1.AppService])
     ], LeftBarComponent);
     return LeftBarComponent;
 }());

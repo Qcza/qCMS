@@ -26,9 +26,11 @@
           <input class="form-control qcms-form-input" id="documentName" type="text">
         </div>
         <div class="form-group">
-          <label for="documentTemplate">Template</label>
-          <div id="documentTemplate">
-            ToDo::ListOfCurrentTemplates
+          <label for="documentTemplates">Template</label>
+          <div id="documentTemplates">
+            <div class="document-template" *ngFor="let template of templates">
+              <i class="fa fa-file"></i>&nbsp;&nbsp;{{template.name}}
+            </div>
           </div>
         </div>
         <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="fa fa-plus"></i></button>

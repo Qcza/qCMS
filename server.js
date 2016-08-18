@@ -28,10 +28,17 @@ app.post('/templates', function (req, res) {
 app.get('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        var cursor = db.collection('templates').find();
-        var response = JSON.stringify(cursor);
-        res.send(response);
+        var cursor = db.collection('templates').find().toArray(function (err, documents) {
+            assert.equal(null, err);
+            var response = JSON.stringify(documents);
+            res.send(response);
+        });
+        db.close();
     });
 });
 app.listen(3000);
+//helpers
+function getAllDocuments(db, collection, callback) {
+    var cursor = db.collection(collection).find().toArray(callback);
+}
 //# sourceMappingURL=server.js.map
