@@ -3,6 +3,7 @@ export interface ElementInterface {
   title: string;
   type:string;
   value:any;
+  icon:string; //font-awesome icon
 }
 
 export interface TemplateInterface {

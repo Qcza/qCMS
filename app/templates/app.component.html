@@ -3,11 +3,24 @@
     <left-bar (onSelect)="onSelect($event)"></left-bar>
   </div>
   <div class="col-sm-10 col-md-6 document-contener">
-    <div class="document">
-      <textarea class="document-textarea" autofocus></textarea>
+    <div class="template-element" *ngFor="let element of template.elements">
+      <div class="document" *ngIf="element.type === 'header'">
+        <div class="document-ribbon"><i class="fa fa-{{element.icon}}"></i>&nbsp;&nbsp;{{element.title}} <small>({{element.value.length}})</small></div>
+        <textarea class="document-textarea" rows="1" [(ngModel)]="element.value" autofocus></textarea>
+      </div>
+      <div class="document" *ngIf="element.type === 'text'">
+        <div class="document-ribbon"><i class="fa fa-{{element.icon}}"></i>&nbsp;&nbsp;{{element.title}} <small>({{element.value.length}})</small></div>
+        <textarea class="document-textarea" rows="16" [(ngModel)]="element.value" autofocus></textarea>
+      </div>
+      <div class="document" *ngIf="element.type === 'picture'">
+        <div class="document-ribbon"><i class="fa fa-{{element.icon}}"></i>&nbsp;&nbsp;{{element.title}}</div>
+        <textarea class="document-textarea" rows="8" [(ngModel)]="element.value" placeholder="#ToDo Picture Element" autofocus></textarea>
+      </div>
     </div>
   </div>
   <div class="col-sm-1 col-md-3">
-    <right-bar [scenario]='scenario'></right-bar>
+    <right-bar [scenario]='scenario' (onRefresh)="onRefresh($event)"></right-bar>
   </div>
 </div>
+
+<div class="fixed-background"></div>

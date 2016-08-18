@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Template, ElementInterface } from '../models/template';
 
 @Component({
@@ -27,11 +27,12 @@ export class RightBarComponent implements OnChanges {
   }
 
   elementsList:Array<ElementInterface> = [
-    {index: 0, title: '', type: 'header', value: null},
-    {index: 1, title: '', type: 'text', value: null},
-    {index: 2, title: '', type: 'picture', value: null},
+    {index: 0, title: '', type: 'header', value: '', icon: 'header'},
+    {index: 1, title: '', type: 'text', value: '', icon: 'file-text-o'},
+    {index: 2, title: '', type: 'picture', value: '', icon: 'picture-o'},
   ]
 
+  template:Template;
   templateName:string;
   templateElements:Array<ElementInterface> = [];
 
@@ -43,30 +44,39 @@ export class RightBarComponent implements OnChanges {
     element.index = indexes.length > 0 ? Math.max.apply(null, indexes) +1 : 0;
     let elementToPush:ElementInterface = Object.assign({}, element);
     this.templateElements.push(elementToPush);
+
+    this.refreshTemplate();
   }
 
   removeElement(index:number):void {
     for (let i of this.templateElements) {
       if (i.index === index) {
         this.templateElements.splice(this.templateElements.indexOf(i), 1);
+        this.refreshTemplate();
         return
       }
     }
   }
 
+  @Output() onRefresh = new EventEmitter<Template>()
+  refreshTemplate() {
+    this.template = new Template(this.templateName, this.templateElements);
+    this.onRefresh.emit(this.template);
+  }
+
   chosenElement:ElementInterface = {
     title: '',
     index: 0,
-    type: 'text',
-    value: null
+    type: 'header',
+    value: '',
+    icon: 'header'
   }
   choseElement(element:ElementInterface):void {
     this.chosenElement = element;
   }
 
   saveTemplate() {
-    let template = new Template(this.templateName, this.templateElements)
-    console.log(template)
+    console.log(this.template)
   }
 
- }
+}

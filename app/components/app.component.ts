@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LeftBarComponent } from './leftbar.component';
 import { RightBarComponent } from './rightbar.component';
+import { Template, ElementInterface } from '../models/template';
 
 @Component({
   selector: 'main-app',
@@ -10,9 +11,28 @@ import { RightBarComponent } from './rightbar.component';
 })
 
 export class AppComponent { 
-  scenario:string
+  scenario:string;
+  template:Template;
+
+  defaultTemplateName:string = 'Default';
+  defaultTemplateElements:Array<ElementInterface> = [{
+    index: 0,
+    title: 'Text',
+    type: 'text',
+    value: '',
+    icon: 'file-text-o'
+  }];
+
+  constructor () {
+    this.template = new Template(this.defaultTemplateName, this.defaultTemplateElements);
+  }
 
   onSelect(scenario:string) {
     this.scenario = scenario;
   }
- }
+
+  onRefresh(template:Template) {
+    this.template = template;
+  }
+
+}

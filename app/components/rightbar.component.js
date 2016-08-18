@@ -14,16 +14,18 @@ var RightBarComponent = (function () {
     function RightBarComponent() {
         this.show = 'default';
         this.elementsList = [
-            { index: 0, title: '', type: 'header', value: null },
-            { index: 1, title: '', type: 'text', value: null },
-            { index: 2, title: '', type: 'picture', value: null },
+            { index: 0, title: '', type: 'header', value: '', icon: 'header' },
+            { index: 1, title: '', type: 'text', value: '', icon: 'file-text-o' },
+            { index: 2, title: '', type: 'picture', value: '', icon: 'picture-o' },
         ];
         this.templateElements = [];
+        this.onRefresh = new core_1.EventEmitter();
         this.chosenElement = {
             title: '',
             index: 0,
-            type: 'text',
-            value: null
+            type: 'header',
+            value: '',
+            icon: 'header'
         };
     }
     RightBarComponent.prototype.ngOnChanges = function (changes) {
@@ -48,27 +50,36 @@ var RightBarComponent = (function () {
         element.index = indexes.length > 0 ? Math.max.apply(null, indexes) + 1 : 0;
         var elementToPush = Object.assign({}, element);
         this.templateElements.push(elementToPush);
+        this.refreshTemplate();
     };
     RightBarComponent.prototype.removeElement = function (index) {
         for (var _i = 0, _a = this.templateElements; _i < _a.length; _i++) {
             var i = _a[_i];
             if (i.index === index) {
                 this.templateElements.splice(this.templateElements.indexOf(i), 1);
+                this.refreshTemplate();
                 return;
             }
         }
+    };
+    RightBarComponent.prototype.refreshTemplate = function () {
+        this.template = new template_1.Template(this.templateName, this.templateElements);
+        this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.choseElement = function (element) {
         this.chosenElement = element;
     };
     RightBarComponent.prototype.saveTemplate = function () {
-        var template = new template_1.Template(this.templateName, this.templateElements);
-        console.log(template);
+        console.log(this.template);
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
     ], RightBarComponent.prototype, "scenario", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onRefresh", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

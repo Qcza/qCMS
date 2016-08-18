@@ -11,11 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var leftbar_component_1 = require('./leftbar.component');
 var rightbar_component_1 = require('./rightbar.component');
+var template_1 = require('../models/template');
 var AppComponent = (function () {
     function AppComponent() {
+        this.defaultTemplateName = 'Default';
+        this.defaultTemplateElements = [{
+                index: 0,
+                title: 'Text',
+                type: 'text',
+                value: '',
+                icon: 'file-text-o'
+            }];
+        this.template = new template_1.Template(this.defaultTemplateName, this.defaultTemplateElements);
     }
     AppComponent.prototype.onSelect = function (scenario) {
         this.scenario = scenario;
+    };
+    AppComponent.prototype.onRefresh = function (template) {
+        this.template = template;
     };
     AppComponent = __decorate([
         core_1.Component({
