@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var template_1 = require('../models/template');
+var app_service_1 = require('../services/app.service');
 var RightBarComponent = (function () {
-    function RightBarComponent() {
+    function RightBarComponent(appService) {
+        this.appService = appService;
         this.show = 'default';
         this.elementsList = [
             { index: 0, title: '', type: 'header', value: '', icon: 'header' },
@@ -70,7 +72,8 @@ var RightBarComponent = (function () {
         this.chosenElement = element;
     };
     RightBarComponent.prototype.saveTemplate = function () {
-        console.log(this.template);
+        var _this = this;
+        this.appService.pushTemplate(this.template).subscribe(function (response) { return _this.response = response; }, function (error) { return _this.errorMessage = error; });
     };
     __decorate([
         core_1.Input(), 
@@ -83,10 +86,11 @@ var RightBarComponent = (function () {
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',
+            providers: [app_service_1.AppService],
             templateUrl: 'app/templates/rightbar.component.html',
             styleUrls: ['app/styles/rightbar.component.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_service_1.AppService])
     ], RightBarComponent);
     return RightBarComponent;
 }());

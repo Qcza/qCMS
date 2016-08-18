@@ -1,16 +1,22 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Template, ElementInterface } from '../models/template';
+import { AppService } from '../services/app.service';
 
 @Component({
     selector: 'right-bar',
+    providers: [AppService],
     templateUrl: 'app/templates/rightbar.component.html',
     styleUrls: ['app/styles/rightbar.component.css']
 })
 
-export class RightBarComponent implements OnChanges { 
+export class RightBarComponent implements OnChanges {
+
+  constructor (private appService: AppService) {  } 
 
   show:string = 'default';
   @Input() scenario:string;
+  errorMessage:any;
+  response:any;
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario != null) {
@@ -76,7 +82,10 @@ export class RightBarComponent implements OnChanges {
   }
 
   saveTemplate() {
-    console.log(this.template)
+    this.appService.pushTemplate(this.template).subscribe(
+      response => this.response = response,
+      error => this.errorMessage = <any>error
+    );
   }
 
 }

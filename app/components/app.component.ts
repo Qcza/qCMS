@@ -27,12 +27,11 @@ export class AppComponent {
     this.template = new Template(this.defaultTemplateName, this.defaultTemplateElements);
   }
 
-  onSelect(scenario:string) {
+  onSelect(scenario:string):void {
     this.scenario = scenario;
   }
 
-  onRefresh(template:Template) {
+  onRefresh(template:Template):void {
     this.template = template;
   }
-
 }
