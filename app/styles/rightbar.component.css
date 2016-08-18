@@ -1,26 +1,26 @@
-/* line 3, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 3, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 body {
   margin: 0;
   overflow-x: hidden; }
 
-/* line 8, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 8, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-form-input {
   border-radius: 0;
   border: 1px solid #9c56fc; }
-  /* line 12, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+  /* line 12, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .qcms-form-input:focus {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd;
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b988fd; }
 
-/* line 17, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 17, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms {
   background-color: #6404e8;
   border-radius: 0;
   color: #fff;
   outline: none; }
 
-/* line 23, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 23, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms-reverse {
   background-color: #fff;
   border: 1px solid #6404e8;
@@ -28,40 +28,40 @@ body {
   color: #6404e8;
   outline: none; }
 
-/* line 30, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 30, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms-icon {
   font-size: 12pt;
   padding: 10px; }
-  /* line 34, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+  /* line 34, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .btn-qcms-icon:hover {
     background-color: #fff;
     border: 1px solid #6404e8;
     color: #6404e8; }
 
-/* line 39, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 39, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms-element {
   font-size: 12pt; }
-  /* line 42, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+  /* line 42, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .btn-qcms-element:hover {
     background-color: #fff;
     border: 1px solid #6404e8;
     color: #6404e8; }
 
-/* line 47, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 47, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .btn-qcms-cta {
   margin: 8px 0; }
-  /* line 50, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+  /* line 50, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .btn-qcms-cta:hover {
     background-color: #fff;
     border: 1px solid #6404e8;
     color: #6404e8; }
 
-/* line 55, /home/qcza/Projekty/qCMS/app/styles/sass/main.sass */
+/* line 55, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-dropdown-menu {
   border-radius: 0;
   color: #6404e8; }
 
-/* line 7, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 7, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .right-bar {
   background-color: #fff;
   display: block;
@@ -70,7 +70,7 @@ body {
   right: -288px;
   width: 300px;
   z-index: 2; }
-  /* line 16, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+  /* line 16, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .right-bar:hover {
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
@@ -82,7 +82,7 @@ body {
   100% {
     right: -282px; } }
 
-/* line 28, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 28, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .right-bar-show {
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
@@ -101,7 +101,7 @@ body {
   100% {
     right: 0; } }
 
-/* line 47, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 47, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .right-bar-hide {
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
@@ -120,7 +120,7 @@ body {
   100% {
     right: -288px; } }
 
-/* line 66, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 66, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .extend-bar {
   background-color: #6404e8;
   color: #fff;
@@ -129,14 +129,14 @@ body {
   position: absolute;
   width: 15px; }
 
-/* line 74, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 74, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .right-bar-content {
   color: #6404e8;
   padding: 20px;
   padding-left: 35px;
   z-index: 2; }
 
-/* line 80, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 80, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element {
   border: solid 1px #6404e8;
   display: block;
@@ -146,35 +146,45 @@ body {
   padding: 10px;
   position: relative; }
 
-/* line 89, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 89, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-icon {
   font-size: 12pt;
   margin-right: 12px; }
 
-/* line 93, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 93, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+.template-element-icon-no-margin {
+  font-size: 12pt; }
+
+/* line 96, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-btn {
   font-size: 12pt;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0; }
-  /* line 100, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+  /* line 103, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .template-element-btn:hover {
     background-color: #fff;
     border-left: 1px solid #6404e8;
     color: #6404e8; }
 
-/* line 105, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 108, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+.template-element-title-input {
+  border: 0;
+  max-width: 60%;
+  outline: none; }
+
+/* line 113, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .drodown-menu-element {
   cursor: pointer;
   margin: 8px; }
-  /* line 109, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+  /* line 117, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .drodown-menu-element:hover {
     color: #7e24fb; }
 
-/* line 112, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+/* line 120, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .dropdown-element {
   cursor: pointer; }
-  /* line 115, /home/qcza/Projekty/qCMS/app/styles/sass/rightbar.component.sass */
+  /* line 123, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .dropdown-element:hover {
     color: #7e24fb; }

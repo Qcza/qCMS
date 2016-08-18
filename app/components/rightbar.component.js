@@ -14,13 +14,13 @@ var RightBarComponent = (function () {
     function RightBarComponent() {
         this.show = 'default';
         this.elementsList = [
-            { index: 0, type: 'text', value: null },
-            { index: 1, type: 'picture', value: null }
+            { index: 0, title: '', type: 'header', value: null },
+            { index: 1, title: '', type: 'text', value: null },
+            { index: 2, title: '', type: 'picture', value: null },
         ];
-        this.templateElements = [
-            { index: 0, type: 'text', value: null }
-        ];
+        this.templateElements = [];
         this.chosenElement = {
+            title: '',
             index: 0,
             type: 'text',
             value: null
@@ -46,7 +46,8 @@ var RightBarComponent = (function () {
             indexes.push(i.index);
         }
         element.index = indexes.length > 0 ? Math.max.apply(null, indexes) + 1 : 0;
-        this.templateElements.push(element);
+        var elementToPush = Object.assign({}, element);
+        this.templateElements.push(elementToPush);
     };
     RightBarComponent.prototype.removeElement = function (index) {
         for (var _i = 0, _a = this.templateElements; _i < _a.length; _i++) {

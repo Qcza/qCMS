@@ -12,17 +12,18 @@
         <div class="form-group">
           <label for="templateElements">Elements</label>
           <div class="template-element" *ngFor="let element of templateElements">
-            <i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture'}"></i>{{element.type}}
+            <i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture', 'fa-header': element.type === 'header'}"></i>{{element.title}}
             <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="fa fa-minus"></i></button>
           </div>
           <div class="template-element" ngbDropdown>
-            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon fa" [ngClass]="{'fa-font': chosenElement.type === 'text', 'fa-picture-o': chosenElement.type === 'picture'}"></i>{{chosenElement.type}}</span>
-            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)"><i class="fa fa-plus"></i></button>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa" [ngClass]="{'fa-font': chosenElement.type === 'text', 'fa-picture-o': chosenElement.type === 'picture', 'fa-header': chosenElement.type === 'header'}"></i></span>
+            <input class="template-element-title-input" type="text" [(ngModel)]="chosenElement.title" name="chosenElementTitle" placeholder="Enter title">
+            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)" [disabled]="chosenElement.title === ''"><i class="fa fa-plus"></i></button>
             <ul class="dropdown-menu qcms-dropdown-menu">
-              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture'}"></i>{{element.type}}</li>
+              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa" [ngClass]="{'fa-font': element.type === 'text', 'fa-picture-o': element.type === 'picture', 'fa-header': element.type === 'header'}"></i>{{element.type}}</li>
             </ul>
           </div>
-          <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()">Save</button>
+          <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()" [disabled]="templateName === '' || templateElements.length === 0">Save</button>
         </div>
       </form>
     </div>

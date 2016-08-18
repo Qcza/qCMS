@@ -27,14 +27,13 @@ export class RightBarComponent implements OnChanges {
   }
 
   elementsList:Array<ElementInterface> = [
-    {index: 0, type: 'text', value: null},
-    {index: 1, type: 'picture', value: null}
+    {index: 0, title: '', type: 'header', value: null},
+    {index: 1, title: '', type: 'text', value: null},
+    {index: 2, title: '', type: 'picture', value: null},
   ]
 
   templateName:string;
-  templateElements:Array<ElementInterface> = [
-    {index: 0, type: 'text', value: null}
-  ]
+  templateElements:Array<ElementInterface> = [];
 
   addElement(element:ElementInterface):void {
     let indexes:Array<number> = [];
@@ -42,7 +41,8 @@ export class RightBarComponent implements OnChanges {
       indexes.push(i.index);
     }
     element.index = indexes.length > 0 ? Math.max.apply(null, indexes) +1 : 0;
-    this.templateElements.push(element)
+    let elementToPush:ElementInterface = Object.assign({}, element);
+    this.templateElements.push(elementToPush);
   }
 
   removeElement(index:number):void {
@@ -55,6 +55,7 @@ export class RightBarComponent implements OnChanges {
   }
 
   chosenElement:ElementInterface = {
+    title: '',
     index: 0,
     type: 'text',
     value: null

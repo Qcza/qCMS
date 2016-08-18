@@ -1,5 +1,6 @@
 export interface ElementInterface {
   index:number;
+  title: string;
   type:string;
   value:any;
 }
