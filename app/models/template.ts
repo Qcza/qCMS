@@ -4,6 +4,7 @@ export interface ElementInterface {
   type:string;
   value:any;
   icon:string; //font-awesome icon
+  setIcon(type:string):string;
 }
 
 export class Element implements ElementInterface {

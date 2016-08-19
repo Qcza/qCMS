@@ -1,6 +1,6 @@
 import * as request from 'request';
 
-import { Template, ElementInterface } from '../app/models/template';
+import { Template, Element } from '../app/models/template';
 
 const port = 3000;
 const main_url = `http://localhost:${port}`;
@@ -20,14 +20,8 @@ const templates_url = main_url + '/templates';
 describe('Templates', function() {
   describe('POST', function () {
     it('insert new template do collection', function () {
-      let dummyElement:ElementInterface = {
-        index: 0,
-        title: 'dummy',
-        type: 'dummy',
-        value: '',
-        icon: 'dummy',
-      }
-      let elements:Array<ElementInterface> = [ dummyElement ];
+      let dummyElement:Element = new Element();
+      let elements:Array<Element> = [ dummyElement ];
       let dummyTemplate:Template = new Template('dummyTemplate', elements)
       request.post(templates_url, dummyTemplate, function (error, response, body) {
         expect(body.response).toBe('test');
