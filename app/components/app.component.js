@@ -25,6 +25,11 @@ var AppComponent = (function () {
     AppComponent.prototype.onRefresh = function (template) {
         this.template = template;
     };
+    AppComponent.prototype.onAdd = function (templateAdded) {
+        var _this = this;
+        this.templateAdded = templateAdded;
+        setTimeout(function () { return _this.templateAdded = undefined; }, 500);
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'main-app',

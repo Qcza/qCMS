@@ -21,6 +21,7 @@ export class RightBarComponent implements OnChanges {
   alert:Alert;
   elementsTypes:Array<string> = ['header', 'text', 'picture'];
   elementsList:Array<Element> = [];
+  templateAdded:boolean;
 
   constructor (private appService: AppService) { 
       this.bootstrapElements()
@@ -28,9 +29,7 @@ export class RightBarComponent implements OnChanges {
 
   bootstrapElements():void {
     for (let type of this.elementsTypes) {
-      console.log(type)
       let element = new Element(type);
-      console.log(element)
       this.elementsList.push(element);
     }
   }
@@ -75,7 +74,7 @@ export class RightBarComponent implements OnChanges {
     }
   }
 
-  @Output() onRefresh = new EventEmitter<Template>()
+  @Output() onRefresh = new EventEmitter<Template>();
   refreshTemplate() {
     this.template = new Template(this.templateName, this.templateElements);
     this.onRefresh.emit(this.template);
@@ -90,8 +89,9 @@ export class RightBarComponent implements OnChanges {
     this.appService.pushTemplate(this.template).subscribe(
       response => {
         this.response = response,
-        this.resetNewTemplateForm(response)
-        this.showAlerts('success', 'Template saved')
+        this.resetNewTemplateForm(response),
+        this.showAlerts('success', 'Template saved'),
+        this.emitAdd()
       },
       error => {
         this.errorMessage = <any>error,
@@ -116,6 +116,13 @@ export class RightBarComponent implements OnChanges {
     }, 6000);
     setTimeout(() => {
       this.showAlert = false;
-    }, 12000);
+      this.hideAlert = false;
+    }, 7500);
+  }
+
+  @Output() onAdd = new EventEmitter<boolean>();
+  emitAdd() {
+    this.templateAdded = true;
+    this.onAdd.emit(this.templateAdded);
   }
 }

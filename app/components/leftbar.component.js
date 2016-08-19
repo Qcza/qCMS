@@ -22,6 +22,11 @@ var LeftBarComponent = (function () {
     LeftBarComponent.prototype.ngOnInit = function () {
         this.getTemplates();
     };
+    LeftBarComponent.prototype.ngOnChanges = function (changes) {
+        if (this.templateAdded === true) {
+            this.getTemplates();
+        }
+    };
     LeftBarComponent.prototype.selectSettingScenario = function (scenario) {
         this.onSelect.emit(scenario);
     };
@@ -43,6 +48,10 @@ var LeftBarComponent = (function () {
         var _this = this;
         this.appService.getTemplates().subscribe(function (templates) { return _this.templates = templates; }, function (error) { return _this.errMessage = error; });
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "templateAdded", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

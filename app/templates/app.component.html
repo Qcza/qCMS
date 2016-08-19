@@ -1,6 +1,6 @@
 <div class="row main">
   <div class="col-sm-1 col-md-3">
-    <left-bar (onSelect)="onSelect($event)"></left-bar>
+    <left-bar (onSelect)="onSelect($event)" [templateAdded]='templateAdded'></left-bar>
   </div>
   <div class="col-sm-10 col-md-6 document-contener">
     <div class="template-element" *ngFor="let element of template.elements">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="col-sm-1 col-md-3">
-    <right-bar [scenario]='scenario' (onRefresh)="onRefresh($event)"></right-bar>
+    <right-bar [scenario]='scenario' (onRefresh)="onRefresh($event)" (onAdd)="onAdd($event)"></right-bar>
   </div>
 </div>
 

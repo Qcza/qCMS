@@ -21,14 +21,13 @@ var RightBarComponent = (function () {
         this.templateElements = [];
         this.onRefresh = new core_1.EventEmitter();
         this.chosenElement = new template_1.Element();
+        this.onAdd = new core_1.EventEmitter();
         this.bootstrapElements();
     }
     RightBarComponent.prototype.bootstrapElements = function () {
         for (var _i = 0, _a = this.elementsTypes; _i < _a.length; _i++) {
             var type = _a[_i];
-            console.log(type);
             var element = new template_1.Element(type);
-            console.log(element);
             this.elementsList.push(element);
         }
     };
@@ -77,8 +76,9 @@ var RightBarComponent = (function () {
         var _this = this;
         this.appService.pushTemplate(this.template).subscribe(function (response) {
             _this.response = response,
-                _this.resetNewTemplateForm(response);
-            _this.showAlerts('success', 'Template saved');
+                _this.resetNewTemplateForm(response),
+                _this.showAlerts('success', 'Template saved'),
+                _this.emitAdd();
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
@@ -100,7 +100,12 @@ var RightBarComponent = (function () {
         }, 6000);
         setTimeout(function () {
             _this.showAlert = false;
-        }, 12000);
+            _this.hideAlert = false;
+        }, 7500);
+    };
+    RightBarComponent.prototype.emitAdd = function () {
+        this.templateAdded = true;
+        this.onAdd.emit(this.templateAdded);
     };
     __decorate([
         core_1.Input(), 
@@ -110,6 +115,10 @@ var RightBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onRefresh", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onAdd", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

@@ -13,6 +13,7 @@ import { Template, Element } from '../models/template';
 export class AppComponent { 
   scenario:string;
   template:Template;
+  templateAdded:boolean;
 
   defaultTemplateName:string = 'Default';
   defaultElement:Element = new Element();
@@ -28,5 +29,12 @@ export class AppComponent {
 
   onRefresh(template:Template):void {
     this.template = template;
+  }
+
+  onAdd(templateAdded:boolean) {
+    this.templateAdded = templateAdded;
+    setTimeout(
+      () => this.templateAdded = undefined, 500
+    )
   }
 }
