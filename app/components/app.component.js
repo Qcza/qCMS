@@ -13,11 +13,12 @@ var leftbar_component_1 = require('./leftbar.component');
 var rightbar_component_1 = require('./rightbar.component');
 var template_1 = require('../models/template');
 var AppComponent = (function () {
+    //ToDo DefaultTemplate
+    // defaultTemplateName:string = 'Default';
+    // defaultElement:Element = new Element();
+    // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
     function AppComponent() {
-        this.defaultTemplateName = 'Default';
-        this.defaultElement = new template_1.Element();
-        this.defaultTemplateElements = [this.defaultElement];
-        this.template = new template_1.Template(this.defaultTemplateName, this.defaultTemplateElements);
+        this.template = new template_1.Template('', []);
     }
     AppComponent.prototype.onSelect = function (scenario) {
         this.scenario = scenario;

@@ -15,12 +15,13 @@ export class AppComponent {
   template:Template;
   templateAdded:boolean;
 
-  defaultTemplateName:string = 'Default';
-  defaultElement:Element = new Element();
-  defaultTemplateElements:Array<Element> = [ this.defaultElement ];
+  //ToDo DefaultTemplate
+  // defaultTemplateName:string = 'Default';
+  // defaultElement:Element = new Element();
+  // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
 
   constructor () {
-    this.template = new Template(this.defaultTemplateName, this.defaultTemplateElements);
+    this.template = new Template('', []]);
   }
 
   onSelect(scenario:string):void {
