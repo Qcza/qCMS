@@ -106,6 +106,8 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.emitAdd = function () {
         this.templateAdded = true;
         this.onAdd.emit(this.templateAdded);
+        this.template = new template_1.Template('', []);
+        this.onRefresh.emit(this.template);
     };
     __decorate([
         core_1.Input(), 

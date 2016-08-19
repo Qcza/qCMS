@@ -110,7 +110,7 @@ export class RightBarComponent implements OnChanges {
 
   showAlerts(type:string, message:string):void {
     this.showAlert = true;
-    this.alert = new Alert(type, message)
+    this.alert = new Alert(type, message);
     setTimeout(() => {
       this.hideAlert = true;
     }, 6000);
@@ -124,5 +124,7 @@ export class RightBarComponent implements OnChanges {
   emitAdd() {
     this.templateAdded = true;
     this.onAdd.emit(this.templateAdded);
+    this.template = new Template('', []);
+    this.onRefresh.emit(this.template);
   }
 }
