@@ -24,6 +24,9 @@
             </ul>
           </div>
           <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()" [disabled]="templateName === '' || templateElements.length === 0">Save</button>
+          <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+            <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+          </div>
         </div>
       </form>
     </div>

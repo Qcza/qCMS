@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Template, ElementInterface } from '../models/template';
+import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
 @Component({
@@ -17,6 +18,9 @@ export class RightBarComponent implements OnChanges {
   @Input() scenario:string;
   errorMessage:any;
   response:any;
+  showAlert:boolean;
+  hideAlert:boolean;
+  alert:Alert;
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario != null) {
@@ -86,17 +90,31 @@ export class RightBarComponent implements OnChanges {
       response => {
         this.response = response,
         this.resetNewTemplateForm(response)
+        this.showAlerts('success', 'Template saved')
       },
-      error => this.errorMessage = <any>error
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
     );
   }
 
   resetNewTemplateForm(response:string):void {
-    if (this.response.response === 'Document insert success') {
+    if (this.response === 'success') {
       this.templateName = '';
       this.templateElements = [];
       this.chosenElement.title = '';
     }
   }
 
+  showAlerts(type:string, message:string):void {
+    this.showAlert = true;
+    this.alert = new Alert(type, message)
+    setTimeout(() => {
+      this.hideAlert = true;
+    }, 6000);
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 12000);
+  }
 }

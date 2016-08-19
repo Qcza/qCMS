@@ -27,7 +27,8 @@ app.post('/templates', function (req: express.Request, res: express.Response) {
     assert.equal(null, err);
     db.collection('templates').insertOne(req.body);
     db.close();
-    let response:string = JSON.stringify({response: 'Document insert success'});
+    let response:string = JSON.stringify('success');
+    res.status(200);
     res.send(response);
   })
 })

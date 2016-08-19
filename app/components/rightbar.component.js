@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var template_1 = require('../models/template');
+var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
 var RightBarComponent = (function () {
     function RightBarComponent(appService) {
@@ -76,14 +77,29 @@ var RightBarComponent = (function () {
         this.appService.pushTemplate(this.template).subscribe(function (response) {
             _this.response = response,
                 _this.resetNewTemplateForm(response);
-        }, function (error) { return _this.errorMessage = error; });
+            _this.showAlerts('success', 'Template saved');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
     };
     RightBarComponent.prototype.resetNewTemplateForm = function (response) {
-        if (this.response.response === 'Document insert success') {
+        if (this.response === 'success') {
             this.templateName = '';
             this.templateElements = [];
             this.chosenElement.title = '';
         }
+    };
+    RightBarComponent.prototype.showAlerts = function (type, message) {
+        var _this = this;
+        this.showAlert = true;
+        this.alert = new helpers_1.Alert(type, message);
+        setTimeout(function () {
+            _this.hideAlert = true;
+        }, 6000);
+        setTimeout(function () {
+            _this.showAlert = false;
+        }, 12000);
     };
     __decorate([
         core_1.Input(), 

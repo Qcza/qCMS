@@ -55,3 +55,28 @@ body
 .qcms-dropdown-menu
   border-radius: 0
   color: $primary-color
+
+.qcms-alert-fade-in
+  animation-name: alert-fade-in
+  animation-duration: 1.2s
+  animation-fill-mode: forwards
+
+@keyframes alert-fade-in
+  0%
+    opacity: 0
+
+  100%
+    opacity: 1
+
+.qcms-alert-fade-out
+  animation-name: alert-fade-out
+  animation-duration: 1.2s
+  animation-fill-mode: forwards
+
+@keyframes alert-fade-out
+  0%
+    opacity: 1
+
+  100%
+    opacity: 0
+
