@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LeftBarComponent } from './leftbar.component';
 import { RightBarComponent } from './rightbar.component';
-import { Template, ElementInterface } from '../models/template';
+import { Template, Element } from '../models/template';
 
 @Component({
   selector: 'main-app',
@@ -15,13 +15,8 @@ export class AppComponent {
   template:Template;
 
   defaultTemplateName:string = 'Default';
-  defaultTemplateElements:Array<ElementInterface> = [{
-    index: 0,
-    title: 'Text',
-    type: 'text',
-    value: '',
-    icon: 'file-text-o'
-  }];
+  defaultElement:Element = new Element();
+  defaultTemplateElements:Array<Element> = [ this.defaultElement ];
 
   constructor () {
     this.template = new Template(this.defaultTemplateName, this.defaultTemplateElements);

@@ -15,13 +15,8 @@ var template_1 = require('../models/template');
 var AppComponent = (function () {
     function AppComponent() {
         this.defaultTemplateName = 'Default';
-        this.defaultTemplateElements = [{
-                index: 0,
-                title: 'Text',
-                type: 'text',
-                value: '',
-                icon: 'file-text-o'
-            }];
+        this.defaultElement = new template_1.Element();
+        this.defaultTemplateElements = [this.defaultElement];
         this.template = new template_1.Template(this.defaultTemplateName, this.defaultTemplateElements);
     }
     AppComponent.prototype.onSelect = function (scenario) {

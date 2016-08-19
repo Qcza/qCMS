@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { Template, ElementInterface } from '../models/template';
+import { Template, Element } from '../models/template';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
@@ -12,8 +12,6 @@ import { AppService } from '../services/app.service';
 
 export class RightBarComponent implements OnChanges {
 
-  constructor (private appService: AppService) {  } 
-
   show:string = 'default';
   @Input() scenario:string;
   errorMessage:any;
@@ -21,6 +19,21 @@ export class RightBarComponent implements OnChanges {
   showAlert:boolean;
   hideAlert:boolean;
   alert:Alert;
+  elementsTypes:Array<string> = ['header', 'text', 'picture'];
+  elementsList:Array<Element> = [];
+
+  constructor (private appService: AppService) { 
+      this.bootstrapElements()
+   } 
+
+  bootstrapElements():void {
+    for (let type of this.elementsTypes) {
+      console.log(type)
+      let element = new Element(type);
+      console.log(element)
+      this.elementsList.push(element);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario != null) {
@@ -36,23 +49,17 @@ export class RightBarComponent implements OnChanges {
     }
   }
 
-  elementsList:Array<ElementInterface> = [
-    {index: 0, title: '', type: 'header', value: '', icon: 'header'},
-    {index: 1, title: '', type: 'text', value: '', icon: 'file-text-o'},
-    {index: 2, title: '', type: 'picture', value: '', icon: 'picture-o'},
-  ]
-
   template:Template;
   templateName:string;
-  templateElements:Array<ElementInterface> = [];
+  templateElements:Array<Element> = [];
 
-  addElement(element:ElementInterface):void {
+  addElement(element:Element):void {
     let indexes:Array<number> = [];
     for (let i of this.templateElements) {
       indexes.push(i.index);
     }
     element.index = indexes.length > 0 ? Math.max.apply(null, indexes) +1 : 0;
-    let elementToPush:ElementInterface = Object.assign({}, element);
+    let elementToPush:Element = Object.assign({}, element);
     this.templateElements.push(elementToPush);
 
     this.refreshTemplate();
@@ -74,14 +81,8 @@ export class RightBarComponent implements OnChanges {
     this.onRefresh.emit(this.template);
   }
 
-  chosenElement:ElementInterface = {
-    title: '',
-    index: 0,
-    type: 'header',
-    value: '',
-    icon: 'header'
-  }
-  choseElement(element:ElementInterface):void {
+  chosenElement:Element = new Element();
+  choseElement(element:Element):void {
     this.chosenElement = element;
   }
 

@@ -16,21 +16,22 @@ var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
         this.show = 'default';
-        this.elementsList = [
-            { index: 0, title: '', type: 'header', value: '', icon: 'header' },
-            { index: 1, title: '', type: 'text', value: '', icon: 'file-text-o' },
-            { index: 2, title: '', type: 'picture', value: '', icon: 'picture-o' },
-        ];
+        this.elementsTypes = ['header', 'text', 'picture'];
+        this.elementsList = [];
         this.templateElements = [];
         this.onRefresh = new core_1.EventEmitter();
-        this.chosenElement = {
-            title: '',
-            index: 0,
-            type: 'header',
-            value: '',
-            icon: 'header'
-        };
+        this.chosenElement = new template_1.Element();
+        this.bootstrapElements();
     }
+    RightBarComponent.prototype.bootstrapElements = function () {
+        for (var _i = 0, _a = this.elementsTypes; _i < _a.length; _i++) {
+            var type = _a[_i];
+            console.log(type);
+            var element = new template_1.Element(type);
+            console.log(element);
+            this.elementsList.push(element);
+        }
+    };
     RightBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.scenario != null) {
             this.show = 'show';
