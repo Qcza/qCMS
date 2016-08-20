@@ -21,7 +21,7 @@ export class AppComponent {
   // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
 
   constructor () {
-    this.template = new Template('', []]);
+    this.template = new Template('', []);
   }
 
   onSelect(scenario:string):void {
