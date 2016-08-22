@@ -18,15 +18,32 @@ var AppService = (function () {
         this.http = http;
         //Templates services
         this.templatesUrl = 'http://localhost:3000/templates';
+        //Documents services
+        this.documentsUrl = 'http://localhost:3000/documents';
     }
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
     };
-    AppService.prototype.pushTemplate = function (template) {
+    AppService.prototype.postTemplate = function (template) {
         var body = JSON.stringify(template);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.postDocument = function (document) {
+        var body = JSON.stringify(document);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.getDocuments = function () {
+        return this.http.get(this.documentsUrl).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.putDocument = function (document) {
+        var body = JSON.stringify(document);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
     };
     //helpers
     AppService.prototype.extractData = function (res) {

@@ -1,16 +1,24 @@
 import { Template } from './template'
 
 interface DocInterface {
-  name:string;
+  _id:string;
+  date:Date;
+  title:string;
   template:Template;
+  is_selected:boolean;
 }
 
 export class Doc implements DocInterface {
-  name:string;
+  _id:string;
+  date:Date;
+  title:string;
   template:Template;
+  is_selected:boolean;
 
-  constructor (name:string, template:Template) {
-    this.name = name;
+  constructor (title:string, template:Template, id:string = null) {
+    if (id) this._id = id;
+    this.date = new Date();
+    this.title = title;
     this.template = template;
   }
 }

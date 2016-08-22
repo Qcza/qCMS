@@ -10,18 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var template_1 = require('../models/template');
+var document_1 = require('../models/document');
 var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
 var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
         this.show = 'default';
-        this.elementsTypes = ['header', 'text', 'picture'];
+        this.elementsTypes = ['header', 'text'];
         this.elementsList = [];
+        this.documentTitle = '';
         this.templateElements = [];
         this.onRefresh = new core_1.EventEmitter();
         this.chosenElement = new template_1.Element();
-        this.onAdd = new core_1.EventEmitter();
+        this.onAddTemplate = new core_1.EventEmitter();
+        this.onAddDocument = new core_1.EventEmitter();
         this.bootstrapElements();
     }
     RightBarComponent.prototype.bootstrapElements = function () {
@@ -74,21 +77,19 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.saveTemplate = function () {
         var _this = this;
-        this.appService.pushTemplate(this.template).subscribe(function (response) {
+        this.appService.postTemplate(this.template).subscribe(function (response) {
             _this.response = response,
-                _this.resetNewTemplateForm(response),
+                _this.resetTemplateForm(response),
                 _this.showAlerts('success', 'Template saved'),
-                _this.emitAdd();
+                _this.emitAddTemplate();
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
         });
     };
-    RightBarComponent.prototype.resetNewTemplateForm = function (response) {
-        if (this.response === 'success') {
-            this.templateName = '';
-            this.templateElements = [];
-            this.chosenElement.title = '';
+    RightBarComponent.prototype.resetTemplateForm = function (response) {
+        if (response === 'success') {
+            this.template = new template_1.Template();
         }
     };
     RightBarComponent.prototype.showAlerts = function (type, message) {
@@ -103,16 +104,51 @@ var RightBarComponent = (function () {
             _this.hideAlert = false;
         }, 7500);
     };
-    RightBarComponent.prototype.emitAdd = function () {
+    RightBarComponent.prototype.emitAddTemplate = function () {
         this.templateAdded = true;
-        this.onAdd.emit(this.templateAdded);
-        this.template = new template_1.Template('', []);
+        this.onAddTemplate.emit(this.templateAdded);
+        this.template = new template_1.Template();
         this.onRefresh.emit(this.template);
+    };
+    RightBarComponent.prototype.addDocument = function (title, template) {
+        var _this = this;
+        var doc = new document_1.Doc(title, template);
+        this.appService.postDocument(doc).subscribe(function (response) {
+            _this.response = response,
+                _this.showAlerts('success', 'Document saved'),
+                _this.emitAddDocument();
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.editDocument = function (document) {
+        var _this = this;
+        this.appService.putDocument(document).subscribe(function (response) {
+            _this.response = response,
+                _this.showAlerts('success', 'Document saved'),
+                _this.emitAddDocument();
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.emitAddDocument = function () {
+        this.documentAdded = true;
+        this.onAddDocument.emit(this.documentAdded);
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
     ], RightBarComponent.prototype, "scenario", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', template_1.Template)
+    ], RightBarComponent.prototype, "template", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', document_1.Doc)
+    ], RightBarComponent.prototype, "document", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
@@ -120,7 +156,11 @@ var RightBarComponent = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], RightBarComponent.prototype, "onAdd", void 0);
+    ], RightBarComponent.prototype, "onAddTemplate", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onAddDocument", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

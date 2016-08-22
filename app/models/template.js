@@ -16,9 +16,6 @@ var Element = (function () {
         if (type === 'text') {
             return 'file-text-o';
         }
-        if (type === 'picture') {
-            return 'picture-o';
-        }
         if (type === 'header') {
             return 'header';
         }
@@ -28,6 +25,8 @@ var Element = (function () {
 exports.Element = Element;
 var Template = (function () {
     function Template(name, elements, is_default) {
+        if (name === void 0) { name = ''; }
+        if (elements === void 0) { elements = []; }
         if (is_default === void 0) { is_default = false; }
         this.name = name;
         this.elements = elements;

@@ -16,31 +16,27 @@
 <div [ngClass]="{'left-bar-extend-show': extend === 'show', 'left-bar-extend-hide': extend == 'hide'}">
   <div id="allDocumentsScenario" *ngIf="scenario === 'all'">
     <div class="left-bar-content">
+      <div class="left-bar-extend-element" [ngClass]="{'document-template-selected': document.is_selected === true}" *ngFor="let document of documents" (click)="selectRightBarScenario('editDocument');selectDocument(document)"><i class="left-bar-extend-element-icon fa fa-file-o"></i>&nbsp;&nbsp;{{document.title}} <small>({{document.date.slice(0,10)}})</small></div>
     </div>
   </div>
   <div id="newDocumentScenario" *ngIf="scenario === 'new'">
     <div class="left-bar-content left-bar-form">
       <form name="newDocument">
         <div class="form-group">
-          <label for="documentName">Document name</label>
-          <input class="form-control qcms-form-input" id="documentName" type="text">
-        </div>
-        <div class="form-group">
           <label for="documentTemplates">Template</label>
           <div id="documentTemplates">
-            <div class="document-template" *ngFor="let template of templates">
-              <i class="fa fa-file"></i>&nbsp;&nbsp;{{template.name}}
+            <div class="document-template" [ngClass]="{'document-template-selected': template.is_selected === true}" *ngFor="let template of templates" (click)="selectTemplate(template);selectRightBarScenario('useTemplate');">
+              <i class="fa fa-file-o"></i>&nbsp;&nbsp;{{template.name}}
             </div>
           </div>
         </div>
-        <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="fa fa-plus"></i></button>
       </form>
     </div>
   </div>
   <div id="adminScenario" *ngIf="scenario === 'admin'">
     <div class="left-bar-content">
-      <div class="left-bar-extend-element" (click)="selectSettingScenario('newTemplate')"><i class="left-bar-extend-element-icon fa fa-files-o"></i>&nbsp;&nbsp;New template</div>
-      <div class="left-bar-extend-element" (click)="selectSettingScenario('editTemplate')"><i class="left-bar-extend-element-icon fa fa-edit"></i>&nbsp;&nbsp;Edit template</div>
+      <div class="left-bar-extend-element" (click)="newTemplate();selectRightBarScenario('newTemplate')"><i class="left-bar-extend-element-icon fa fa-files-o"></i>&nbsp;&nbsp;New template</div>
+      <div class="left-bar-extend-element" (click)="selectRightBarScenario('editTemplate')"><i class="left-bar-extend-element-icon fa fa-edit"></i>&nbsp;&nbsp;Edit template</div>
       <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-user-plus"></i>&nbsp;&nbsp;New user</div>
       <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-cutlery"></i>&nbsp;&nbsp;Preferences</div>
       <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-briefcase"></i>&nbsp;&nbsp;Account</div>

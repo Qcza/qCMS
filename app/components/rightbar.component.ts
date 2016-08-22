@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Template, Element } from '../models/template';
+import { Doc } from '../models/document';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
@@ -14,14 +15,18 @@ export class RightBarComponent implements OnChanges {
 
   show:string = 'default';
   @Input() scenario:string;
+  @Input() template:Template;
+  @Input() document:Doc;
   errorMessage:any;
   response:any;
   showAlert:boolean;
   hideAlert:boolean;
   alert:Alert;
-  elementsTypes:Array<string> = ['header', 'text', 'picture'];
+  elementsTypes:Array<string> = ['header', 'text'];
   elementsList:Array<Element> = [];
   templateAdded:boolean;
+  documentTitle:string = '';
+  documentAdded:boolean;
 
   constructor (private appService: AppService) { 
       this.bootstrapElements()
@@ -48,7 +53,6 @@ export class RightBarComponent implements OnChanges {
     }
   }
 
-  template:Template;
   templateName:string;
   templateElements:Array<Element> = [];
 
@@ -86,12 +90,12 @@ export class RightBarComponent implements OnChanges {
   }
 
   saveTemplate():void {
-    this.appService.pushTemplate(this.template).subscribe(
+    this.appService.postTemplate(this.template).subscribe(
       response => {
         this.response = response,
-        this.resetNewTemplateForm(response),
+        this.resetTemplateForm(response),
         this.showAlerts('success', 'Template saved'),
-        this.emitAdd()
+        this.emitAddTemplate()
       },
       error => {
         this.errorMessage = <any>error,
@@ -100,11 +104,9 @@ export class RightBarComponent implements OnChanges {
     );
   }
 
-  resetNewTemplateForm(response:string):void {
-    if (this.response === 'success') {
-      this.templateName = '';
-      this.templateElements = [];
-      this.chosenElement.title = '';
+  resetTemplateForm(response:string):void {
+    if (response === 'success') {
+      this.template = new Template();
     }
   }
 
@@ -120,11 +122,46 @@ export class RightBarComponent implements OnChanges {
     }, 7500);
   }
 
-  @Output() onAdd = new EventEmitter<boolean>();
-  emitAdd() {
+  @Output() onAddTemplate = new EventEmitter<boolean>();
+  emitAddTemplate() {
     this.templateAdded = true;
-    this.onAdd.emit(this.templateAdded);
-    this.template = new Template('', []);
+    this.onAddTemplate.emit(this.templateAdded);
+    this.template = new Template();
     this.onRefresh.emit(this.template);
+  }
+
+  addDocument(title:string, template:Template):void {
+    let doc = new Doc(title, template);
+    this.appService.postDocument(doc).subscribe(
+      response => {
+        this.response = response,
+        this.showAlerts('success', 'Document saved'),
+        this.emitAddDocument()
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    );
+  }
+
+  editDocument(document:Doc):void {
+    this.appService.putDocument(document).subscribe(
+      response => {
+        this.response = response,
+        this.showAlerts('success', 'Document saved'),
+        this.emitAddDocument()
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    );
+  }
+
+  @Output() onAddDocument = new EventEmitter<boolean>();
+  emitAddDocument() {
+    this.documentAdded = true;
+    this.onAddDocument.emit(this.documentAdded);
   }
 }

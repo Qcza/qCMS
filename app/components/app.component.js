@@ -18,18 +18,30 @@ var AppComponent = (function () {
     // defaultElement:Element = new Element();
     // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
     function AppComponent() {
-        this.template = new template_1.Template('', []);
+        this.template = new template_1.Template();
     }
-    AppComponent.prototype.onSelect = function (scenario) {
+    AppComponent.prototype.onSelectScenario = function (scenario) {
         this.scenario = scenario;
+    };
+    AppComponent.prototype.onSelectTemplate = function (template) {
+        this.template = template;
+    };
+    AppComponent.prototype.onSelectDocument = function (document) {
+        this.document = document;
+        this.template = document.template;
     };
     AppComponent.prototype.onRefresh = function (template) {
         this.template = template;
     };
-    AppComponent.prototype.onAdd = function (templateAdded) {
+    AppComponent.prototype.onAddTemplate = function (templateAdded) {
         var _this = this;
         this.templateAdded = templateAdded;
         setTimeout(function () { return _this.templateAdded = undefined; }, 500);
+    };
+    AppComponent.prototype.onAddDocument = function (documentAdded) {
+        var _this = this;
+        this.documentAdded = documentAdded;
+        setTimeout(function () { return _this.documentAdded = undefined; }, 500);
     };
     AppComponent = __decorate([
         core_1.Component({

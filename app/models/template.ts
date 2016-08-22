@@ -26,9 +26,6 @@ export class Element implements ElementInterface {
     if (type === 'text') {
       return 'file-text-o';
     }
-    if (type === 'picture') {
-      return 'picture-o';
-    }
     if (type === 'header') {
       return 'header';
     }
@@ -36,17 +33,21 @@ export class Element implements ElementInterface {
 }
 
 export interface TemplateInterface {
+  _id:string;
   name:string;
   elements:Array<Element>;
   is_default:boolean;
+  is_selected:boolean;
 }
 
 export class Template implements TemplateInterface {
+  _id:string;
   name:string;
   elements:Array<Element>;
   is_default:boolean;
+  is_selected:boolean;
 
-  constructor (name:string, elements:Array<Element>, is_default:boolean = false) {
+  constructor (name:string = '', elements:Array<Element> = [], is_default:boolean = false) {
     this.name = name;
     this.elements = elements;
     this.is_default = is_default;

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LeftBarComponent } from './leftbar.component';
 import { RightBarComponent } from './rightbar.component';
 import { Template, Element } from '../models/template';
+import { Doc } from '../models/document';
 
 @Component({
   selector: 'main-app',
@@ -14,6 +15,8 @@ export class AppComponent {
   scenario:string;
   template:Template;
   templateAdded:boolean;
+  documentAdded:boolean;
+  document:Doc;
 
   //ToDo DefaultTemplate
   // defaultTemplateName:string = 'Default';
@@ -21,21 +24,37 @@ export class AppComponent {
   // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
 
   constructor () {
-    this.template = new Template('', []);
+    this.template = new Template();
   }
 
-  onSelect(scenario:string):void {
+  onSelectScenario(scenario:string):void {
     this.scenario = scenario;
+  }
+
+  onSelectTemplate(template:Template):void {
+    this.template = template;
+  }
+
+  onSelectDocument(document:Doc):void {
+    this.document = document;
+    this.template = document.template;
   }
 
   onRefresh(template:Template):void {
     this.template = template;
   }
 
-  onAdd(templateAdded:boolean) {
+  onAddTemplate(templateAdded:boolean):void {
     this.templateAdded = templateAdded;
     setTimeout(
       () => this.templateAdded = undefined, 500
+    )
+  }
+
+  onAddDocument(documentAdded:boolean):void {
+    this.documentAdded = documentAdded;
+    setTimeout(
+      () => this.documentAdded = undefined, 500
     )
   }
 }

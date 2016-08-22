@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var app_service_1 = require('../services/app.service');
+var template_1 = require('../models/template');
+var document_1 = require('../models/document');
 var LeftBarComponent = (function () {
     function LeftBarComponent(appService) {
         this.appService = appService;
@@ -17,18 +19,24 @@ var LeftBarComponent = (function () {
         this.extend = null;
         this.scenario = null;
         this.active = null;
-        this.onSelect = new core_1.EventEmitter();
+        this.onSelectScenario = new core_1.EventEmitter();
+        this.onSelectTemplate = new core_1.EventEmitter();
+        this.onSelectDocument = new core_1.EventEmitter();
     }
     LeftBarComponent.prototype.ngOnInit = function () {
+        this.getDocuments();
         this.getTemplates();
     };
     LeftBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.templateAdded === true) {
             this.getTemplates();
         }
+        if (this.documentAdded === true) {
+            this.getDocuments();
+        }
     };
-    LeftBarComponent.prototype.selectSettingScenario = function (scenario) {
-        this.onSelect.emit(scenario);
+    LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
+        this.onSelectScenario.emit(scenario);
     };
     LeftBarComponent.prototype.setScenario = function (scenario) {
         this.scenario = scenario;
@@ -48,14 +56,56 @@ var LeftBarComponent = (function () {
         var _this = this;
         this.appService.getTemplates().subscribe(function (templates) { return _this.templates = templates; }, function (error) { return _this.errMessage = error; });
     };
+    LeftBarComponent.prototype.selectTemplate = function (template) {
+        template.is_selected = true;
+        for (var _i = 0, _a = this.templates; _i < _a.length; _i++) {
+            var temp = _a[_i];
+            if (temp._id !== template._id && temp.is_selected === true) {
+                temp.is_selected = false;
+            }
+        }
+        var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default);
+        this.onSelectTemplate.emit(selectedTemplate);
+    };
+    LeftBarComponent.prototype.newTemplate = function () {
+        var newTemplate = new template_1.Template();
+        this.onSelectTemplate.emit(newTemplate);
+    };
+    LeftBarComponent.prototype.getDocuments = function () {
+        var _this = this;
+        this.appService.getDocuments().subscribe(function (documents) { return _this.documents = documents; }, function (error) { return _this.errMessage = error; });
+    };
+    LeftBarComponent.prototype.selectDocument = function (document) {
+        document.is_selected = true;
+        for (var _i = 0, _a = this.documents; _i < _a.length; _i++) {
+            var doc = _a[_i];
+            if (doc._id !== document._id && doc.is_selected === true) {
+                doc.is_selected = false;
+            }
+        }
+        var selectedDocument = new document_1.Doc(document.title, document.template, document._id);
+        this.onSelectDocument.emit(selectedDocument);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], LeftBarComponent.prototype, "templateAdded", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "documentAdded", void 0);
+    __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], LeftBarComponent.prototype, "onSelect", void 0);
+    ], LeftBarComponent.prototype, "onSelectScenario", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], LeftBarComponent.prototype, "onSelectTemplate", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], LeftBarComponent.prototype, "onSelectDocument", void 0);
     LeftBarComponent = __decorate([
         core_1.Component({
             selector: 'left-bar',
