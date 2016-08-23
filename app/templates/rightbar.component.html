@@ -39,7 +39,7 @@
     <!-- USE TEMPLATE -->
     <div class="use-template-form" *ngIf="scenario==='useTemplate'">
       <form name="useTemplate">
-        <small><label><i class="fa fa-file-o"></i>&nbsp;&nbsp;{{template.name}}</label></small>
+        <small><label><i class="fa" [ngClass]="{'fa-file-o': template.is_default === false, 'fa-heart-o': template.is_default === true}"></i>&nbsp;&nbsp;{{template.name}}</label></small>
         <hr />
         <div class="form-group">
           <label for="useDocumentTitle">Title</label>
@@ -62,7 +62,7 @@
     <!-- EDIT DOCUMENT -->
     <div class="edit-document-form" *ngIf="scenario==='editDocument'">
       <form name="editDocument">
-        <small><label><i class="fa fa-file-o"></i>&nbsp;&nbsp;{{template.name}}</label></small>
+        <small><label><i class="fa" [ngClass]="{'fa-file-o': template.is_default === false, 'fa-heart-o': template.is_default === true}"></i>&nbsp;&nbsp;{{template.name}}</label></small>
         <hr />
         <div class="form-group">
           <label for="editDocumentTitle">Title</label>
