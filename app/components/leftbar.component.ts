@@ -128,6 +128,17 @@ export class LeftBarComponent implements OnInit, OnChanges {
     this.extendBar('new');
   }
 
+  selectDefaultDocument(elements:Array<Doc>):void {
+    for (let element of elements) {
+      if (element.is_selected === true) {
+        this.extendBar('all');
+        return
+      }
+    }
+    this.selectDocument(elements[0]);
+    this.extendBar('all');
+  }
+
   newTemplate():void {
     let newTemplate = new Template();
     this.onSelectTemplate.emit(newTemplate);

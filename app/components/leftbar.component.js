@@ -115,6 +115,17 @@ var LeftBarComponent = (function () {
         this.selectTemplate(this.findDefault(elements));
         this.extendBar('new');
     };
+    LeftBarComponent.prototype.selectDefaultDocument = function (elements) {
+        for (var _i = 0, elements_2 = elements; _i < elements_2.length; _i++) {
+            var element = elements_2[_i];
+            if (element.is_selected === true) {
+                this.extendBar('all');
+                return;
+            }
+        }
+        this.selectDocument(elements[0]);
+        this.extendBar('all');
+    };
     LeftBarComponent.prototype.newTemplate = function () {
         var newTemplate = new template_1.Template();
         this.onSelectTemplate.emit(newTemplate);

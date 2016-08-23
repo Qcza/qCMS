@@ -1,5 +1,5 @@
 <div class="left-bar">
-  <div class="left-bar-element" (click)="extendBar('all')" [ngClass]="{'left-bar-element-active': active === 'all'}">
+  <div class="left-bar-element" (click)="selectDefaultDocument(documents)" [ngClass]="{'left-bar-element-active': active === 'all'}">
     <i class="fa fa-inbox"></i>
   </div>
   <div class="left-bar-element" (click)="selectDefaultTemplate(templates)" [ngClass]="{'left-bar-element-active': active === 'new'}">
