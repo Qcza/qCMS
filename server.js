@@ -20,6 +20,9 @@ app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
 app.post('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
+        if (req.body.is_default === true) {
+            db.collection('templates').updateMany({}, { $set: { 'is_default': false } });
+        }
         db.collection('templates').insertOne(req.body);
         db.close();
         var response = JSON.stringify('success');
@@ -29,7 +32,7 @@ app.post('/templates', function (req, res) {
 app.get('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        var cursor = db.collection('templates').find().toArray(function (err, documents) {
+        var cursor = db.collection('templates').find().sort({ 'name': 1 }).toArray(function (err, documents) {
             assert.equal(null, err);
             var response = JSON.stringify(documents);
             res.send(response);
@@ -42,16 +45,6 @@ app.delete('/templates/:id', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
         db.collection('templates').deleteOne({ 'id': id });
-        db.close();
-        var response = JSON.stringify('success');
-        res.send(response);
-    });
-});
-app.put('/templates/:id', function (req, res) {
-    var id = req.params.id;
-    MongoClient.connect(dbUrl, function (err, db) {
-        assert.equal(null, err);
-        db.collection('templates').update({ 'id': id }, req.body);
         db.close();
         var response = JSON.stringify('success');
         res.send(response);
@@ -70,7 +63,7 @@ app.post('/documents', function (req, res) {
 app.get('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        var cursor = db.collection('documents').find().toArray(function (err, documents) {
+        var cursor = db.collection('documents').find().sort({ 'date': -1 }).toArray(function (err, documents) {
             assert.equal(null, err);
             var response = JSON.stringify(documents);
             res.send(response);
@@ -85,6 +78,16 @@ app.put('/documents', function (req, res) {
                 'title': req.body.title,
                 'template': req.body.template
             } });
+        db.close();
+        var response = JSON.stringify('success');
+        res.send(response);
+    });
+});
+app.delete('/documents/:id', function (req, res) {
+    var id = new ObjectId(req.params.id);
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('documents').deleteOne({ '_id': id });
         db.close();
         var response = JSON.stringify('success');
         res.send(response);

@@ -21,10 +21,12 @@ var RightBarComponent = (function () {
         this.elementsList = [];
         this.documentTitle = '';
         this.templateElements = [];
+        this.templateDefault = false;
         this.onRefresh = new core_1.EventEmitter();
         this.chosenElement = new template_1.Element();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onAddDocument = new core_1.EventEmitter();
+        this.onDeleteDocument = new core_1.EventEmitter();
         this.bootstrapElements();
     }
     RightBarComponent.prototype.bootstrapElements = function () {
@@ -69,7 +71,7 @@ var RightBarComponent = (function () {
         }
     };
     RightBarComponent.prototype.refreshTemplate = function () {
-        this.template = new template_1.Template(this.templateName, this.templateElements);
+        this.template = new template_1.Template(this.templateName, this.templateElements, this.templateDefault);
         this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.choseElement = function (element) {
@@ -133,9 +135,24 @@ var RightBarComponent = (function () {
                 _this.showAlerts('danger', 'Something went wrong');
         });
     };
+    RightBarComponent.prototype.deleteDocument = function (document) {
+        var _this = this;
+        this.appService.deleteDocument(document).subscribe(function (response) {
+            _this.response = response,
+                _this.showAlerts('success', 'Document deleted'),
+                _this.emitDeleteDocument();
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
     RightBarComponent.prototype.emitAddDocument = function () {
         this.documentAdded = true;
         this.onAddDocument.emit(this.documentAdded);
+    };
+    RightBarComponent.prototype.emitDeleteDocument = function () {
+        this.documentDeleted = true;
+        this.onDeleteDocument.emit(this.documentDeleted);
     };
     __decorate([
         core_1.Input(), 
@@ -161,6 +178,10 @@ var RightBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onAddDocument", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onDeleteDocument", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

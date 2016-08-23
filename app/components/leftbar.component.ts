@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import { AppService } from '../services/app.service';
 import { Template } from '../models/template';
 import { Doc } from '../models/document';
@@ -21,6 +21,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
   errMessage:any;
   @Input() templateAdded:boolean;
   @Input() documentAdded:boolean;
+  @Input() documentDeleted:boolean;
 
   settingMenu:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
@@ -43,6 +44,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
       this.getTemplates();
     }
     if (this.documentAdded === true) {
+      this.getDocuments();
+    }
+    if (this.documentDeleted === true) {
       this.getDocuments();
     }
   }
@@ -84,7 +88,10 @@ export class LeftBarComponent implements OnInit, OnChanges {
 
   getTemplates():void {
     this.appService.getTemplates().subscribe(
-      templates => this.templates = templates,
+      templates => {
+        this.templates = templates,
+        this.selectDefaultTemplate(templates)
+      },
       error => this.errMessage = error
     );
   }
@@ -99,6 +106,26 @@ export class LeftBarComponent implements OnInit, OnChanges {
     }
     let selectedTemplate = new Template(template.name, template.elements, template.is_default);
     this.onSelectTemplate.emit(selectedTemplate);
+  }
+
+  findDefault(templates:Array<Template>):Template {
+    for (let template of templates) {
+      if (template.is_default === true) {
+        return template;
+      }
+    }
+    return new Template();
+  }
+
+  selectDefaultTemplate(elements:Array<Template>):void {
+    for (let element of elements) {
+      if (element.is_selected === true) {
+        this.extendBar('new');
+        return
+      }
+    }
+    this.selectTemplate(this.findDefault(elements));
+    this.extendBar('new');
   }
 
   newTemplate():void {

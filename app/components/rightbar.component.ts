@@ -27,8 +27,10 @@ export class RightBarComponent implements OnChanges {
   templateAdded:boolean;
   documentTitle:string = '';
   documentAdded:boolean;
+  documentDeleted:boolean;
   templateName:string;
   templateElements:Array<Element> = [];
+  templateDefault:boolean = false;
 
   constructor (private appService: AppService) { 
       this.bootstrapElements()
@@ -79,7 +81,7 @@ export class RightBarComponent implements OnChanges {
 
   @Output() onRefresh = new EventEmitter<Template>();
   refreshTemplate() {
-    this.template = new Template(this.templateName, this.templateElements);
+    this.template = new Template(this.templateName, this.templateElements, this.templateDefault);
     this.onRefresh.emit(this.template);
   }
 
@@ -158,9 +160,28 @@ export class RightBarComponent implements OnChanges {
     );
   }
 
+  deleteDocument(document:Doc):void {
+    this.appService.deleteDocument(document).subscribe(
+      response => {
+        this.response = response,
+        this.showAlerts('success', 'Document deleted'),
+        this.emitDeleteDocument()
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    );
+  }
+
   @Output() onAddDocument = new EventEmitter<boolean>();
   emitAddDocument() {
     this.documentAdded = true;
     this.onAddDocument.emit(this.documentAdded);
+  }
+  @Output() onDeleteDocument = new EventEmitter<boolean>();
+  emitDeleteDocument() {
+    this.documentDeleted = true;
+    this.onDeleteDocument.emit(this.documentDeleted);
   }
 }

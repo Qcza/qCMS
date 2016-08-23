@@ -41,6 +41,9 @@ var LeftBarComponent = (function () {
         if (this.documentAdded === true) {
             this.getDocuments();
         }
+        if (this.documentDeleted === true) {
+            this.getDocuments();
+        }
     };
     LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
         if (scenario === 'newTemplate') {
@@ -76,7 +79,10 @@ var LeftBarComponent = (function () {
     };
     LeftBarComponent.prototype.getTemplates = function () {
         var _this = this;
-        this.appService.getTemplates().subscribe(function (templates) { return _this.templates = templates; }, function (error) { return _this.errMessage = error; });
+        this.appService.getTemplates().subscribe(function (templates) {
+            _this.templates = templates,
+                _this.selectDefaultTemplate(templates);
+        }, function (error) { return _this.errMessage = error; });
     };
     LeftBarComponent.prototype.selectTemplate = function (template) {
         template.is_selected = true;
@@ -88,6 +94,26 @@ var LeftBarComponent = (function () {
         }
         var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default);
         this.onSelectTemplate.emit(selectedTemplate);
+    };
+    LeftBarComponent.prototype.findDefault = function (templates) {
+        for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {
+            var template = templates_1[_i];
+            if (template.is_default === true) {
+                return template;
+            }
+        }
+        return new template_1.Template();
+    };
+    LeftBarComponent.prototype.selectDefaultTemplate = function (elements) {
+        for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+            var element = elements_1[_i];
+            if (element.is_selected === true) {
+                this.extendBar('new');
+                return;
+            }
+        }
+        this.selectTemplate(this.findDefault(elements));
+        this.extendBar('new');
     };
     LeftBarComponent.prototype.newTemplate = function () {
         var newTemplate = new template_1.Template();
@@ -149,6 +175,10 @@ var LeftBarComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], LeftBarComponent.prototype, "documentAdded", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "documentDeleted", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

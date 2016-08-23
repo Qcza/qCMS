@@ -43,6 +43,11 @@ var AppComponent = (function () {
         this.documentAdded = documentAdded;
         setTimeout(function () { return _this.documentAdded = undefined; }, 500);
     };
+    AppComponent.prototype.onDeleteDocument = function (documentDeleted) {
+        var _this = this;
+        this.documentDeleted = documentDeleted;
+        setTimeout(function () { return _this.documentDeleted = undefined; }, 500);
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'main-app',

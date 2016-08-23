@@ -10,6 +10,11 @@
           <label for="templateName">Template name</label>
           <input id="templateName" name="templateName" class="form-control qcms-form-input" type="text" [(ngModel)]="templateName">
         </div>
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-qcms btn-sm pull-right" [class.active]="templateDefault" [ngClass]="{'btn-qcms-reverse': templateDefault === true}">
+            <input type="checkbox" name="newTemplateDefault" [(ngModel)]="templateDefault" (click)="refreshTemplate()"> default
+          </label>
+        </div>
         <div class="form-group">
           <label for="templateElements">Elements</label>
           <div class="template-element" *ngFor="let element of templateElements">
@@ -72,7 +77,7 @@
           <input id="editDocumentFile" name="editDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="document.title === ''" (click)="editDocument(document)">Save</button>
-        <button class="btn btn-qcms btn-qcms-icon pull-right"><i class="fa fa-trash-o"></i></button>
+        <button class="btn btn-qcms btn-qcms-icon pull-right" (click)="deleteDocument(document)"><i class="fa fa-trash-o"></i></button>
         <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
             <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
           </div>

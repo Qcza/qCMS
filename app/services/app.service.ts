@@ -44,6 +44,10 @@ export class AppService {
     return this.http.put(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
+  deleteDocument (document:Doc): Observable<any> {
+    return this.http.delete(this.documentsUrl+'/'+document._id).map(this.extractData).catch(this.handleError);
+  }
+
   //helpers
   private extractData(res:Response) {
     let body = res.json();

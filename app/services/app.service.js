@@ -45,6 +45,9 @@ var AppService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.deleteDocument = function (document) {
+        return this.http.delete(this.documentsUrl + '/' + document._id).map(this.extractData).catch(this.handleError);
+    };
     //helpers
     AppService.prototype.extractData = function (res) {
         var body = res.json();

@@ -16,6 +16,7 @@ export class AppComponent {
   template:Template;
   templateAdded:boolean;
   documentAdded:boolean;
+  documentDeleted:boolean;
   document:Doc;
 
   //ToDo DefaultTemplate
@@ -55,6 +56,13 @@ export class AppComponent {
     this.documentAdded = documentAdded;
     setTimeout(
       () => this.documentAdded = undefined, 500
+    )
+  }
+
+  onDeleteDocument(documentDeleted:boolean):void {
+    this.documentDeleted = documentDeleted;
+    setTimeout(
+      () => this.documentDeleted = undefined, 500
     )
   }
 }
