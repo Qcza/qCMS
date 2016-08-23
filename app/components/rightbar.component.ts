@@ -27,6 +27,8 @@ export class RightBarComponent implements OnChanges {
   templateAdded:boolean;
   documentTitle:string = '';
   documentAdded:boolean;
+  templateName:string;
+  templateElements:Array<Element> = [];
 
   constructor (private appService: AppService) { 
       this.bootstrapElements()
@@ -40,7 +42,7 @@ export class RightBarComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.scenario != null) {
+    if (this.scenario !== undefined) {
       this.show = 'show';
     }
   }
@@ -52,9 +54,6 @@ export class RightBarComponent implements OnChanges {
       this.show = 'hide';
     }
   }
-
-  templateName:string;
-  templateElements:Array<Element> = [];
 
   addElement(element:Element):void {
     let indexes:Array<number> = [];

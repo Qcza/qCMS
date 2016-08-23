@@ -35,7 +35,7 @@ var RightBarComponent = (function () {
         }
     };
     RightBarComponent.prototype.ngOnChanges = function (changes) {
-        if (this.scenario != null) {
+        if (this.scenario !== undefined) {
             this.show = 'show';
         }
     };

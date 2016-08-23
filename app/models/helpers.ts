@@ -15,3 +15,8 @@ export class Alert implements AlertInterface {
     this.dismissible = dismissible;
   }
 }
+
+export interface SettingMenuInterface {
+  title:string;
+  icon:string;
+}

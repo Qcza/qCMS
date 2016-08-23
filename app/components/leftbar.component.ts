@@ -2,7 +2,7 @@ import { Component, Output, Input, EventEmitter, OnInit, OnChanges, SimpleChange
 import { AppService } from '../services/app.service';
 import { Template } from '../models/template';
 import { Doc } from '../models/document';
-
+import { SettingMenuInterface } from '../models/helpers';
 
 @Component({
   selector: 'left-bar',
@@ -21,6 +21,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
   errMessage:any;
   @Input() templateAdded:boolean;
   @Input() documentAdded:boolean;
+
+  settingMenu:ArraySettingMenuInterface
+  }
 
 
   constructor (private appService:AppService) {}
@@ -47,6 +50,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
   setScenario(scenario:string):void {
     this.scenario = scenario;
     this.active = scenario;
+    this.openSelected(scenario);
   }
 
   extendBar(scenario:string):void {
@@ -100,5 +104,27 @@ export class LeftBarComponent implements OnInit, OnChanges {
     }
     let selectedDocument = new Doc(document.title, document.template, document._id);
     this.onSelectDocument.emit(selectedDocument);
+  }
+
+   openSelected(scenario:string):void {
+    if (scenario === 'all') {
+      for (let document of this.documents) {
+        if (document.is_selected === true) {
+          let selectedDocument = new Doc(document.title, document.template, document._id);
+          this.onSelectDocument.emit(selectedDocument);
+          this.selectRightBarScenario('editDocument');
+          break;
+        }   
+      }
+    } else if (scenario === 'new') {
+      for (let template of this.templates) {
+        if (template.is_selected === true) {
+          let selectedTemplate = new Template(template.name, template.elements, template.is_default);
+          this.onSelectTemplate.emit(selectedTemplate);
+          this.selectRightBarScenario('useTemplate');
+          break
+        }
+      }
+    }
   }
 }
