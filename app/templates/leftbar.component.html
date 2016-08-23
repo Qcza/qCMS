@@ -35,11 +35,7 @@
   </div>
   <div id="adminScenario" *ngIf="scenario === 'admin'">
     <div class="left-bar-content">
-      <div class="left-bar-extend-element" (click)="newTemplate();selectRightBarScenario('newTemplate')"><i class="left-bar-extend-element-icon fa fa-files-o"></i>&nbsp;&nbsp;New template</div>
-      <div class="left-bar-extend-element" (click)="selectRightBarScenario('editTemplate')"><i class="left-bar-extend-element-icon fa fa-edit"></i>&nbsp;&nbsp;Edit template</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-user-plus"></i>&nbsp;&nbsp;New user</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-cutlery"></i>&nbsp;&nbsp;Preferences</div>
-      <div class="left-bar-extend-element"><i class="left-bar-extend-element-icon fa fa-briefcase"></i>&nbsp;&nbsp;Account</div>
+      <div class="left-bar-extend-element" *ngFor="let element of settingMenu" (click)="selectRightBarScenario(element.scenario)"><i class="left-bar-extend-element-icon fa {{element.icon}}"></i>&nbsp;&nbsp;{{element.title}}</div>
     </div>
   </div>
 </div>

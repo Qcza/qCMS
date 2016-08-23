@@ -22,8 +22,13 @@ export class LeftBarComponent implements OnInit, OnChanges {
   @Input() templateAdded:boolean;
   @Input() documentAdded:boolean;
 
-  settingMenu:ArraySettingMenuInterface
-  }
+  settingMenu:Array<SettingMenuInterface> = [
+    {title: 'New template', icon: 'fa-file-o', is_active: false, scenario: 'newTemplate'},
+    {title: 'Edit template', icon: 'fa-edit', is_active: false, scenario: 'editTemplate'},
+    {title: 'Add user', icon: 'fa-user-plus', is_active: false, scenario: 'addUser'},
+    {title: 'Preferences', icon: 'fa-cutlery', is_active: false, scenario: 'preferences'},
+    {title: 'Account', icon: 'fa-briefcase', is_active: false, scenario: 'account'}
+  ]
 
 
   constructor (private appService:AppService) {}
@@ -44,6 +49,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
 
   @Output() onSelectScenario = new EventEmitter<string>();
   selectRightBarScenario(scenario:string):void {
+    if (scenario === 'newTemplate') {
+      this.newTemplate();
+    }
     this.onSelectScenario.emit(scenario);
   }
 
