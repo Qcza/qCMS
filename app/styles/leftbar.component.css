@@ -206,10 +206,21 @@ body {
     color: #fff; }
 
 /* line 123, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+.left-bar-extend-element-selected {
+  background-color: #6404e8;
+  color: #fff;
+  cursor: pointer;
+  font-size: 11pt;
+  font-weight: normal;
+  padding: 20px;
+  width: 100%;
+  z-index: 2; }
+
+/* line 133, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .left-bar-extend-element-icon {
   font-size: 14pt; }
 
-/* line 126, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+/* line 136, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .left-bar-content {
   background-color: #fff;
   color: #6404e8;
@@ -218,27 +229,27 @@ body {
   width: 299px;
   z-index: 1; }
 
-/* line 134, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+/* line 144, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .left-bar-form {
   padding: 20px; }
 
-/* line 137, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+/* line 147, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .document-template {
   border: 1px solid #6404e8;
   cursor: pointer;
   margin: 4px;
   padding: 10px; }
-  /* line 143, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+  /* line 153, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
   .document-template:hover {
     background-color: #6404e8;
     color: #fff; }
 
-/* line 147, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+/* line 157, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .document-template-selected {
   background-color: #6404e8;
   color: #fff; }
 
-/* line 151, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
+/* line 161, /home/balus/OWN/qcms/app/styles/sass/leftbar.component.sass */
 .document-template-chosen {
   background-color: #6404e8;
   border: 1px solid #6404e8;

@@ -23,11 +23,11 @@ export class LeftBarComponent implements OnInit, OnChanges {
   @Input() documentAdded:boolean;
 
   settingMenu:Array<SettingMenuInterface> = [
-    {title: 'New template', icon: 'fa-file-o', is_active: false, scenario: 'newTemplate'},
-    {title: 'Edit template', icon: 'fa-edit', is_active: false, scenario: 'editTemplate'},
-    {title: 'Add user', icon: 'fa-user-plus', is_active: false, scenario: 'addUser'},
-    {title: 'Preferences', icon: 'fa-cutlery', is_active: false, scenario: 'preferences'},
-    {title: 'Account', icon: 'fa-briefcase', is_active: false, scenario: 'account'}
+    {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
+    {title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate'},
+    {title: 'Add user', icon: 'fa-user-plus', is_selected: false, scenario: 'addUser'},
+    {title: 'Preferences', icon: 'fa-cutlery', is_selected: false, scenario: 'preferences'},
+    {title: 'Account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'}
   ]
 
 
@@ -59,6 +59,17 @@ export class LeftBarComponent implements OnInit, OnChanges {
     this.scenario = scenario;
     this.active = scenario;
     this.openSelected(scenario);
+  }
+
+  selectSettingElement(element:SettingMenuInterface) {
+    if (element.is_selected === false) {
+      for (let e of this.settingMenu) {
+        if (e.is_selected === true) {
+          e.is_selected = false;
+        }
+      }
+      element.is_selected = true;
+    }
   }
 
   extendBar(scenario:string):void {
@@ -131,6 +142,13 @@ export class LeftBarComponent implements OnInit, OnChanges {
           this.onSelectTemplate.emit(selectedTemplate);
           this.selectRightBarScenario('useTemplate');
           break
+        }
+      }
+    } else if (scenario === 'admin') {
+      for (let element of this.settingMenu) {
+        if (element.is_selected === true) {
+          this.selectRightBarScenario(element.scenario);
+          break;
         }
       }
     }

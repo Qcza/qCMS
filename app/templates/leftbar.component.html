@@ -35,7 +35,7 @@
   </div>
   <div id="adminScenario" *ngIf="scenario === 'admin'">
     <div class="left-bar-content">
-      <div class="left-bar-extend-element" *ngFor="let element of settingMenu" (click)="selectRightBarScenario(element.scenario)"><i class="left-bar-extend-element-icon fa {{element.icon}}"></i>&nbsp;&nbsp;{{element.title}}</div>
+      <div class="left-bar-extend-element" *ngFor="let element of settingMenu" [ngClass]="{'left-bar-extend-element-selected': element.is_selected === true}" (click)="selectSettingElement(element);selectRightBarScenario(element.scenario)"><i class="left-bar-extend-element-icon fa {{element.icon}}"></i>&nbsp;&nbsp;{{element.title}}</div>
     </div>
   </div>
 </div>

@@ -20,11 +20,11 @@ var LeftBarComponent = (function () {
         this.scenario = null;
         this.active = null;
         this.settingMenu = [
-            { title: 'New template', icon: 'fa-file-o', is_active: false, scenario: 'newTemplate' },
-            { title: 'Edit template', icon: 'fa-edit', is_active: false, scenario: 'editTemplate' },
-            { title: 'Add user', icon: 'fa-user-plus', is_active: false, scenario: 'addUser' },
-            { title: 'Preferences', icon: 'fa-cutlery', is_active: false, scenario: 'preferences' },
-            { title: 'Account', icon: 'fa-briefcase', is_active: false, scenario: 'account' }
+            { title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate' },
+            { title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
+            { title: 'Add user', icon: 'fa-user-plus', is_selected: false, scenario: 'addUser' },
+            { title: 'Preferences', icon: 'fa-cutlery', is_selected: false, scenario: 'preferences' },
+            { title: 'Account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' }
         ];
         this.onSelectScenario = new core_1.EventEmitter();
         this.onSelectTemplate = new core_1.EventEmitter();
@@ -52,6 +52,17 @@ var LeftBarComponent = (function () {
         this.scenario = scenario;
         this.active = scenario;
         this.openSelected(scenario);
+    };
+    LeftBarComponent.prototype.selectSettingElement = function (element) {
+        if (element.is_selected === false) {
+            for (var _i = 0, _a = this.settingMenu; _i < _a.length; _i++) {
+                var e = _a[_i];
+                if (e.is_selected === true) {
+                    e.is_selected = false;
+                }
+            }
+            element.is_selected = true;
+        }
     };
     LeftBarComponent.prototype.extendBar = function (scenario) {
         if (this.extend === 'show' && this.scenario === scenario) {
@@ -116,6 +127,15 @@ var LeftBarComponent = (function () {
                     var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default);
                     this.onSelectTemplate.emit(selectedTemplate);
                     this.selectRightBarScenario('useTemplate');
+                    break;
+                }
+            }
+        }
+        else if (scenario === 'admin') {
+            for (var _d = 0, _e = this.settingMenu; _d < _e.length; _d++) {
+                var element = _e[_d];
+                if (element.is_selected === true) {
+                    this.selectRightBarScenario(element.scenario);
                     break;
                 }
             }

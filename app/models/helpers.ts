@@ -19,6 +19,6 @@ export class Alert implements AlertInterface {
 export interface SettingMenuInterface {
   title:string;
   icon:string;
-  is_active: boolean;
+  is_selected: boolean;
   scenario:string;
 }
