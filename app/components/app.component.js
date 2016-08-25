@@ -38,6 +38,16 @@ var AppComponent = (function () {
         this.templateAdded = templateAdded;
         setTimeout(function () { return _this.templateAdded = undefined; }, 500);
     };
+    AppComponent.prototype.onDeleteTemplate = function (templateDeleted) {
+        var _this = this;
+        this.templateDeleted = templateDeleted;
+        setTimeout(function () { return _this.templateDeleted = undefined; }, 500);
+    };
+    AppComponent.prototype.onEditTemplate = function (templateEdited) {
+        var _this = this;
+        this.templateEdited = templateEdited;
+        setTimeout(function () { return _this.templateEdited = undefined; }, 500);
+    };
     AppComponent.prototype.onAddDocument = function (documentAdded) {
         var _this = this;
         this.documentAdded = documentAdded;
@@ -47,6 +57,11 @@ var AppComponent = (function () {
         var _this = this;
         this.documentDeleted = documentDeleted;
         setTimeout(function () { return _this.documentDeleted = undefined; }, 500);
+    };
+    AppComponent.prototype.onEditDocument = function (documentEdited) {
+        var _this = this;
+        this.documentEdited = documentEdited;
+        setTimeout(function () { return _this.documentEdited = undefined; }, 500);
     };
     AppComponent = __decorate([
         core_1.Component({

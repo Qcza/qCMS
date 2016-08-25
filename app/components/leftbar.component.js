@@ -36,13 +36,22 @@ var LeftBarComponent = (function () {
     };
     LeftBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.templateAdded === true) {
-            this.getTemplates();
+            this.getTemplates('added');
+        }
+        if (this.templateDeleted === true) {
+            this.getTemplates('deleted');
+        }
+        if (this.templateEdited === true) {
+            this.getTemplates('edited');
         }
         if (this.documentAdded === true) {
-            this.getDocuments();
+            this.getDocuments('added');
         }
         if (this.documentDeleted === true) {
-            this.getDocuments();
+            this.getDocuments('deleted');
+        }
+        if (this.documentEdited === true) {
+            this.getDocuments('edit');
         }
     };
     LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
@@ -77,11 +86,27 @@ var LeftBarComponent = (function () {
             this.setScenario(scenario);
         }
     };
-    LeftBarComponent.prototype.getTemplates = function () {
+    LeftBarComponent.prototype.handleScenariosTemp = function (templates, scenario) {
+        if (scenario) {
+            if (scenario === 'edit') {
+                return;
+            }
+            else if (scenario === 'deleted') {
+                this.selectDefaultTemplate(templates);
+            }
+            else if (scenario === 'added') {
+                return;
+            }
+        }
+        else {
+            this.selectDefaultTemplate(templates);
+        }
+    };
+    LeftBarComponent.prototype.getTemplates = function (scenario) {
         var _this = this;
         this.appService.getTemplates().subscribe(function (templates) {
             _this.templates = templates,
-                _this.selectDefaultTemplate(templates);
+                _this.handleScenariosTemp(templates, scenario);
         }, function (error) { return _this.errMessage = error; });
     };
     LeftBarComponent.prototype.selectTemplate = function (template) {
@@ -92,7 +117,7 @@ var LeftBarComponent = (function () {
                 temp.is_selected = false;
             }
         }
-        var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default);
+        var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default, template.collection);
         this.onSelectTemplate.emit(selectedTemplate);
     };
     LeftBarComponent.prototype.findDefault = function (templates) {
@@ -126,13 +151,43 @@ var LeftBarComponent = (function () {
         this.selectDocument(elements[0]);
         this.extendBar('all');
     };
+    LeftBarComponent.prototype.selectCurrentDocument = function (documents) {
+        for (var _i = 0, documents_1 = documents; _i < documents_1.length; _i++) {
+            var doc = documents_1[_i];
+            if (doc._id === this.document._id) {
+                doc.is_selected = true;
+                return;
+            }
+        }
+    };
+    LeftBarComponent.prototype.handleScenariosDoc = function (documents, scenario) {
+        if (scenario) {
+            if (scenario === 'edit') {
+                this.selectCurrentDocument(documents);
+            }
+            else if (scenario === 'deleted') {
+                this.selectDocument(documents[0]);
+            }
+            else if (scenario === 'added') {
+                this.selectDocument(documents[0]);
+                this.openSelected('editDocument');
+                this.extendBar('all');
+            }
+        }
+        else {
+            return;
+        }
+    };
     LeftBarComponent.prototype.newTemplate = function () {
         var newTemplate = new template_1.Template();
         this.onSelectTemplate.emit(newTemplate);
     };
-    LeftBarComponent.prototype.getDocuments = function () {
+    LeftBarComponent.prototype.getDocuments = function (scenario) {
         var _this = this;
-        this.appService.getDocuments().subscribe(function (documents) { return _this.documents = documents; }, function (error) { return _this.errMessage = error; });
+        this.appService.getDocuments().subscribe(function (documents) {
+            _this.documents = documents,
+                _this.handleScenariosDoc(documents, scenario);
+        }, function (error) { return _this.errMessage = error; });
     };
     LeftBarComponent.prototype.selectDocument = function (document) {
         document.is_selected = true;
@@ -185,11 +240,27 @@ var LeftBarComponent = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "templateDeleted", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "templateEdited", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
     ], LeftBarComponent.prototype, "documentAdded", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], LeftBarComponent.prototype, "documentDeleted", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], LeftBarComponent.prototype, "documentEdited", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', document_1.Doc)
+    ], LeftBarComponent.prototype, "document", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

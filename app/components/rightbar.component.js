@@ -25,8 +25,11 @@ var RightBarComponent = (function () {
         this.templateDefault = false;
         this.onRefresh = new core_1.EventEmitter();
         this.onAddTemplate = new core_1.EventEmitter();
+        this.onDeleteTemplate = new core_1.EventEmitter();
+        this.onEditTemplate = new core_1.EventEmitter();
         this.onAddDocument = new core_1.EventEmitter();
         this.onDeleteDocument = new core_1.EventEmitter();
+        this.onEditDocument = new core_1.EventEmitter();
     }
     RightBarComponent.prototype.ngOnInit = function () {
         this.getCollections();
@@ -128,6 +131,12 @@ var RightBarComponent = (function () {
         this.template = new template_1.Template();
         this.onRefresh.emit(this.template);
     };
+    RightBarComponent.prototype.emitDeleteTemplate = function () {
+        return;
+    };
+    RightBarComponent.prototype.emitEditemplate = function () {
+        return;
+    };
     RightBarComponent.prototype.addDocument = function (title, template) {
         var _this = this;
         var doc = new document_1.Doc(title, template);
@@ -145,7 +154,7 @@ var RightBarComponent = (function () {
         this.appService.putDocument(document).subscribe(function (response) {
             _this.response = response,
                 _this.showAlerts('success', 'Document saved'),
-                _this.emitAddDocument();
+                _this.emitEditDocument();
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
@@ -170,6 +179,10 @@ var RightBarComponent = (function () {
         this.documentDeleted = true;
         this.onDeleteDocument.emit(this.documentDeleted);
     };
+    RightBarComponent.prototype.emitEditDocument = function () {
+        this.documentEdited = true;
+        this.onEditDocument.emit(this.documentEdited);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -193,11 +206,23 @@ var RightBarComponent = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onDeleteTemplate", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onEditTemplate", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onAddDocument", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onDeleteDocument", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onEditDocument", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

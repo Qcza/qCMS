@@ -20,8 +20,12 @@ export class LeftBarComponent implements OnInit, OnChanges {
   documents:Array<Doc>;
   errMessage:any;
   @Input() templateAdded:boolean;
+  @Input() templateDeleted:boolean;
+  @Input() templateEdited:boolean;
   @Input() documentAdded:boolean;
   @Input() documentDeleted:boolean;
+  @Input() documentEdited:boolean;
+  @Input() document:Doc;
 
   settingMenu:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
@@ -41,13 +45,22 @@ export class LeftBarComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.templateAdded === true) {
-      this.getTemplates();
+      this.getTemplates('added');
+    }
+    if (this.templateDeleted === true) {
+      this.getTemplates('deleted');
+    }
+    if (this.templateEdited === true) {
+      this.getTemplates('edited');
     }
     if (this.documentAdded === true) {
-      this.getDocuments();
+      this.getDocuments('added');
     }
     if (this.documentDeleted === true) {
-      this.getDocuments();
+      this.getDocuments('deleted');
+    }
+    if (this.documentEdited === true) {
+      this.getDocuments('edit');
     }
   }
 
@@ -86,11 +99,28 @@ export class LeftBarComponent implements OnInit, OnChanges {
     }
   }
 
-  getTemplates():void {
+  handleScenariosTemp(templates:Array<Template>, scenario?:string) {
+    if (scenario) {
+      if (scenario === 'edit') {
+        return
+      }
+      else if (scenario === 'deleted') {
+        this.selectDefaultTemplate(templates);
+      }
+      else if (scenario === 'added') {
+        return
+      }
+    }
+    else {
+      this.selectDefaultTemplate(templates);
+    }
+  }
+
+  getTemplates(scenario?:string):void {
     this.appService.getTemplates().subscribe(
       templates => {
         this.templates = templates,
-        this.selectDefaultTemplate(templates)
+        this.handleScenariosTemp(templates, scenario)
       },
       error => this.errMessage = error
     );
@@ -104,7 +134,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
         temp.is_selected = false;
       }
     }
-    let selectedTemplate = new Template(template.name, template.elements, template.is_default);
+    let selectedTemplate = new Template(template.name, template.elements, template.is_default, template.collection);
     this.onSelectTemplate.emit(selectedTemplate);
   }
 
@@ -139,14 +169,45 @@ export class LeftBarComponent implements OnInit, OnChanges {
     this.extendBar('all');
   }
 
+  selectCurrentDocument(documents:Array<Doc>):void {
+    for (let doc of documents) {
+      if (doc._id === this.document._id) {
+        doc.is_selected = true;
+        return
+      }
+    }
+  }
+
+  handleScenariosDoc(documents:Array<Doc>, scenario?:string) {
+    if (scenario) {
+      if (scenario === 'edit') {
+        this.selectCurrentDocument(documents);
+      }
+      else if (scenario === 'deleted') {
+        this.selectDocument(documents[0]);
+      }
+      else if (scenario === 'added') {
+        this.selectDocument(documents[0]);
+        this.openSelected('editDocument');
+        this.extendBar('all');
+      }
+    }
+    else {
+      return
+    }
+  }
+
   newTemplate():void {
     let newTemplate = new Template();
     this.onSelectTemplate.emit(newTemplate);
   }
 
-  getDocuments():void {
+  getDocuments(scenario?:string):void {
     this.appService.getDocuments().subscribe(
-      documents => this.documents = documents,
+      documents => {
+        this.documents = documents,
+        this.handleScenariosDoc(documents, scenario) 
+      },
       error => this.errMessage = error
     );
   }

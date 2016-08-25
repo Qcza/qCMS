@@ -4,9 +4,13 @@
       (onSelectScenario)="onSelectScenario($event)" 
       (onSelectTemplate)="onSelectTemplate($event)" 
       (onSelectDocument)="onSelectDocument($event)" 
-      [templateAdded]='templateAdded' 
+      [templateAdded]='templateAdded'
+      [templateAdded]='templateDeleted'
+      [templateAdded]='templateEdited'
       [documentAdded]="documentAdded"
-      [documentDeleted]="documentDeleted">
+      [documentDeleted]="documentDeleted"
+      [documentEdited]="documentEdited"
+      [document]="document">
     </left-bar>
   </div>
   <div class="col-sm-10 col-md-6 document-contener">
@@ -32,8 +36,11 @@
       [document]="document" 
       (onRefresh)="onRefresh($event)" 
       (onAddTemplate)="onAddTemplate($event)" 
+      (onDeleteTemplate)="onDeleteTemplate($event)" 
+      (onEditTemplate)="onEditTemplate($event)" 
       (onAddDocument)="onAddDocument($event)" 
-      (onDeleteDocument)="onDeleteDocument($event)">
+      (onDeleteDocument)="onDeleteDocument($event)"
+      (onEditDocument)="onEditDocument($event)">
     </right-bar>
   </div>
 </div>
