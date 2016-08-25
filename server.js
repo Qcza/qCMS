@@ -118,9 +118,9 @@ app.delete('/documents/:id', function (req, res) {
         res.send(response);
     });
 });
-//COLLECTIONS
+//HELPERS
 // GET COLLECTIONS
-app.get('/collections', function (req, res) {
+app.get('/helpers/collections', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
         db.collection('helpers').findOne({ 'name': 'collections' }, function (err, document) {
@@ -130,9 +130,16 @@ app.get('/collections', function (req, res) {
         db.close();
     });
 });
+// GET ELEMENTS
+app.get('/helpers/elements', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('helpers').findOne({ 'name': 'elements' }, function (err, document) {
+            var response = JSON.stringify(document.types);
+            res.send(response);
+        });
+        db.close();
+    });
+});
 app.listen(3000);
-//helpers
-// function getAllDocuments (db, collection:string, callback) {
-//   let cursor:Promise<any> = db.collection(collection).find().toArray(callback);
-// } 
 //# sourceMappingURL=server.js.map

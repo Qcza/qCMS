@@ -27,8 +27,11 @@ export class Element implements ElementInterface {
     if (type === 'text') {
       return 'file-text-o';
     }
-    if (type === 'header') {
+    else if (type === 'header') {
       return 'header';
+    }
+    else {
+      return  'question';
     }
   }
 }

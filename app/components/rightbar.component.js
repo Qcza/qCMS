@@ -17,7 +17,6 @@ var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
         this.show = 'default';
-        this.elementsTypes = ['header', 'text']; //Add to DB
         this.elementsList = [];
         this.chosenElement = new template_1.Element();
         this.documentTitle = '';
@@ -28,17 +27,10 @@ var RightBarComponent = (function () {
         this.onAddTemplate = new core_1.EventEmitter();
         this.onAddDocument = new core_1.EventEmitter();
         this.onDeleteDocument = new core_1.EventEmitter();
-        this.bootstrapElements();
     }
     RightBarComponent.prototype.ngOnInit = function () {
         this.getCollections();
-    };
-    RightBarComponent.prototype.bootstrapElements = function () {
-        for (var _i = 0, _a = this.elementsTypes; _i < _a.length; _i++) {
-            var type = _a[_i];
-            var element = new template_1.Element(type);
-            this.elementsList.push(element);
-        }
+        this.getElements();
     };
     RightBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.scenario !== undefined) {
@@ -87,6 +79,19 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.getCollections = function () {
         var _this = this;
         this.appService.getCollections().subscribe(function (collections) { return _this.documentCollections = collections; }, function (error) { return _this.errMessage = error; });
+    };
+    RightBarComponent.prototype.bootstrapElements = function (elementsTypes) {
+        for (var _i = 0, elementsTypes_1 = elementsTypes; _i < elementsTypes_1.length; _i++) {
+            var type = elementsTypes_1[_i];
+            this.elementsList.push(new template_1.Element(type));
+        }
+    };
+    RightBarComponent.prototype.getElements = function () {
+        var _this = this;
+        this.appService.getElements().subscribe(function (elements) {
+            _this.elementsTypes = elements,
+                _this.bootstrapElements(elements);
+        }, function (error) { return _this.errMessage = error; });
     };
     RightBarComponent.prototype.saveTemplate = function () {
         var _this = this;

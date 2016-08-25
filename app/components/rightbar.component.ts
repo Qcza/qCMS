@@ -22,7 +22,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   showAlert:boolean;
   hideAlert:boolean;
   alert:Alert;
-  elementsTypes:Array<string> = ['header', 'text']; //Add to DB
+  elementsTypes:Array<string>;
   elementsList:Array<Element> = [];
   chosenElement:Element = new Element();
   templateAdded:boolean;
@@ -36,20 +36,12 @@ export class RightBarComponent implements OnChanges, OnInit {
   templateDefault:boolean = false;
   errMessage:any;
 
-  constructor (private appService: AppService) { 
-      this.bootstrapElements()
-   } 
+  constructor (private appService: AppService) { } 
 
    ngOnInit() {
      this.getCollections();
+     this.getElements();
    }
-
-  bootstrapElements():void {
-    for (let type of this.elementsTypes) {
-      let element = new Element(type);
-      this.elementsList.push(element);
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario !== undefined) {
@@ -104,6 +96,22 @@ export class RightBarComponent implements OnChanges, OnInit {
   getCollections():void {
     this.appService.getCollections().subscribe(
       collections => this.documentCollections = collections,
+      error => this.errMessage = error
+    );
+  }
+
+  bootstrapElements (elementsTypes:Array<string>):void {
+    for (let type of elementsTypes) {
+      this.elementsList.push(new Element(type))
+    }
+  }
+
+  getElements():void {
+    this.appService.getElements().subscribe(
+      elements => {
+        this.elementsTypes = elements,
+        this.bootstrapElements(elements)
+    },
       error => this.errMessage = error
     );
   }

@@ -48,13 +48,18 @@ export class AppService {
     return this.http.delete(this.documentsUrl+'/'+document._id).map(this.extractData).catch(this.handleError);
   }
 
-  //Collections services
-  private collectionsUrl = 'http://localhost:3000/collections';
+  //Helpers services
+  private collectionsUrl = 'http://localhost:3000/helpers/collections';
   getCollections (): Observable<any> {
     return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
   }
 
-  //helpers
+  private elementsUrl = 'http://localhost:3000/helpers/elements';
+  getElements (): Observable<any> {
+    return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+  }
+
+  //Helpers
   private extractData(res:Response) {
     let body = res.json();
     return body || {  };

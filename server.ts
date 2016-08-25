@@ -129,9 +129,9 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
   })
 })
 
-//COLLECTIONS
+//HELPERS
 // GET COLLECTIONS
-app.get('/collections', function (req: express.Request, res: express.Response) {
+app.get('/helpers/collections', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
     db.collection('helpers').findOne({'name': 'collections'}, function (err, document) {
@@ -142,10 +142,17 @@ app.get('/collections', function (req: express.Request, res: express.Response) {
   })
 })
 
+// GET ELEMENTS
+app.get('/helpers/elements', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('helpers').findOne({'name': 'elements'}, function (err, document) {
+      let response:string = JSON.stringify(document.types)
+      res.send(response);
+    });
+    db.close();
+  })
+})
+
 
 app.listen(3000);
-
-//helpers
-// function getAllDocuments (db, collection:string, callback) {
-//   let cursor:Promise<any> = db.collection(collection).find().toArray(callback);
-// }

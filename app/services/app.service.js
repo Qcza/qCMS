@@ -20,8 +20,9 @@ var AppService = (function () {
         this.templatesUrl = 'http://localhost:3000/templates';
         //Documents services
         this.documentsUrl = 'http://localhost:3000/documents';
-        //Collections services
-        this.collectionsUrl = 'http://localhost:3000/collections';
+        //Helpers services
+        this.collectionsUrl = 'http://localhost:3000/helpers/collections';
+        this.elementsUrl = 'http://localhost:3000/helpers/elements';
     }
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
@@ -53,7 +54,10 @@ var AppService = (function () {
     AppService.prototype.getCollections = function () {
         return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
     };
-    //helpers
+    AppService.prototype.getElements = function () {
+        return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+    };
+    //Helpers
     AppService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};
