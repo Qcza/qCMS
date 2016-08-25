@@ -48,6 +48,12 @@
         </div>
       </form>
     </div>
+    <!-- EDIT TEMPLATES -->
+    <div class="edit-template-form-l" *ngIf="scenario==='editTemplate'">
+      <div class="document-template" *ngFor="let template of templatesToEdit" on-mouseenter="template.is_selected = true" on-mouseout="template.is_selected = false">
+        <i class="fa" [ngClass]="{'fa-file-o': !template.is_selected, 'fa-edit': template.is_selected === true}"></i>&nbsp;&nbsp;{{template.name}}
+      </div>
+    </div>
     <!-- USE TEMPLATE -->
     <div class="use-template-form" *ngIf="scenario==='useTemplate'">
       <form name="useTemplate">

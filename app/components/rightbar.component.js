@@ -23,6 +23,7 @@ var RightBarComponent = (function () {
         this.documentCollection = '';
         this.templateElements = [];
         this.templateDefault = false;
+        this.templatesToEdit = [];
         this.onRefresh = new core_1.EventEmitter();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onDeleteTemplate = new core_1.EventEmitter();
@@ -38,6 +39,9 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.scenario !== undefined) {
             this.show = 'show';
+        }
+        if (this.scenario === 'editTemplate') {
+            this.getTemplatesToEdit();
         }
     };
     RightBarComponent.prototype.showBar = function () {
@@ -182,6 +186,10 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.emitEditDocument = function () {
         this.documentEdited = true;
         this.onEditDocument.emit(this.documentEdited);
+    };
+    RightBarComponent.prototype.getTemplatesToEdit = function () {
+        var _this = this;
+        this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errMessage = error; });
     };
     __decorate([
         core_1.Input(), 

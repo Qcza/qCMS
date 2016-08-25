@@ -36,6 +36,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   templateElements:Array<Element> = [];
   templateDefault:boolean = false;
   errMessage:any;
+  templatesToEdit:Array<Template> = [];
 
   constructor (private appService: AppService) { } 
 
@@ -47,6 +48,9 @@ export class RightBarComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario !== undefined) {
       this.show = 'show';
+    }
+    if (this.scenario === 'editTemplate') {
+      this.getTemplatesToEdit();
     }
   }
 
@@ -225,5 +229,12 @@ export class RightBarComponent implements OnChanges, OnInit {
   emitEditDocument() {
     this.documentEdited = true;
     this.onEditDocument.emit(this.documentEdited);
+  }
+
+  getTemplatesToEdit():void {
+    this.appService.getTemplates().subscribe(
+      templates => this.templatesToEdit = templates,
+      error => this.errMessage = error
+    );
   }
 }

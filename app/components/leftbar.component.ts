@@ -66,9 +66,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
 
   @Output() onSelectScenario = new EventEmitter<string>();
   selectRightBarScenario(scenario:string):void {
-    if (scenario === 'newTemplate') {
+    if (scenario === 'newTemplate' || scenario === 'editTemplate') {
       this.newTemplate();
-    }
+    } 
     this.onSelectScenario.emit(scenario);
   }
 
@@ -87,6 +87,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
       }
       element.is_selected = true;
     }
+    this.selectRightBarScenario(element.scenario)
   }
 
   extendBar(scenario:string):void {

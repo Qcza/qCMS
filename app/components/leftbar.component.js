@@ -55,7 +55,7 @@ var LeftBarComponent = (function () {
         }
     };
     LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
-        if (scenario === 'newTemplate') {
+        if (scenario === 'newTemplate' || scenario === 'editTemplate') {
             this.newTemplate();
         }
         this.onSelectScenario.emit(scenario);
@@ -75,6 +75,7 @@ var LeftBarComponent = (function () {
             }
             element.is_selected = true;
         }
+        this.selectRightBarScenario(element.scenario);
     };
     LeftBarComponent.prototype.extendBar = function (scenario) {
         if (this.extend === 'show' && this.scenario === scenario) {
