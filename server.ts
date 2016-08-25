@@ -57,12 +57,11 @@ app.post('/templates', function (req: express.Request, res: express.Response) {
 app.get('/templates', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('templates').find().sort({'name': 1}).toArray(function (err, documents) {
-      assert.equal(null, err)
+    db.collection('templates').find().sort({'name': 1}).toArray().then(function(documents) {
       let response:string = JSON.stringify(documents)
       res.send(response)
-    });
-    db.close();
+      db.close();
+    })
   })
 })
 
@@ -71,10 +70,11 @@ app.delete('/templates/:id', function (req: express.Request, res: express.Respon
   let id:string = req.params.id;
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('templates').deleteOne({'id': id});
-    db.close();
-    let response:string = JSON.stringify('success');
-    res.send(response);
+    db.collection('templates').deleteOne({'id': id}).then( function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
   })
 })
 
@@ -83,10 +83,11 @@ app.delete('/templates/:id', function (req: express.Request, res: express.Respon
 app.post('/documents', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('documents').insertOne(req.body);
-    db.close();
-    let response:string = JSON.stringify('success');
-    res.send(response);
+    db.collection('documents').insertOne(req.body).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    });
   })
 })
 
@@ -94,12 +95,11 @@ app.post('/documents', function (req: express.Request, res: express.Response) {
 app.get('/documents', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('documents').find().sort({'date': -1}).toArray(function (err, documents) {
-      assert.equal(null, err)
+    db.collection('documents').find().sort({'date': -1}).toArray().then(function (documents) {
       let response:string = JSON.stringify(documents)
       res.send(response)
-    });
-    db.close();
+      db.close();
+    })
   })
 })
 
@@ -110,10 +110,11 @@ app.put('/documents', function(req: express.Request, res: express.Response) {
     db.collection('documents').updateOne({'_id': new ObjectId(req.body._id)}, {$set: {
       'title': req.body.title,
       'template': req.body.template
-    }});
-    db.close();
-    let response:string = JSON.stringify('success');
-    res.send(response);
+    }}).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
   })
 })
 
@@ -122,10 +123,11 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
   let id:mongodb.ObjectID = new ObjectId(req.params.id);
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('documents').deleteOne({'_id': id});
-    db.close();
-    let response:string = JSON.stringify('success');
-    res.send(response);
+    db.collection('documents').deleteOne({'_id': id}).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
   })
 })
 
@@ -134,11 +136,11 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
 app.get('/helpers/collections', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('helpers').findOne({'name': 'collections'}, function (err, document) {
+    db.collection('helpers').findOne({'name': 'collections'}).then(function (document) {
       let response:string = JSON.stringify(document.collections)
       res.send(response);
-    });
-    db.close();
+      db.close();
+    })
   })
 })
 
@@ -146,13 +148,12 @@ app.get('/helpers/collections', function (req: express.Request, res: express.Res
 app.get('/helpers/elements', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('helpers').findOne({'name': 'elements'}, function (err, document) {
+    db.collection('helpers').findOne({'name': 'elements'}).then(function (document) {
       let response:string = JSON.stringify(document.types)
       res.send(response);
-    });
-    db.close();
+      db.close();
+    })
   })
 })
-
 
 app.listen(3000);

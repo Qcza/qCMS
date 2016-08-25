@@ -52,12 +52,11 @@ app.post('/templates', function (req, res) {
 app.get('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('templates').find().sort({ 'name': 1 }).toArray(function (err, documents) {
-            assert.equal(null, err);
+        db.collection('templates').find().sort({ 'name': 1 }).toArray().then(function (documents) {
             var response = JSON.stringify(documents);
             res.send(response);
+            db.close();
         });
-        db.close();
     });
 });
 // DELETE TEMPLATE
@@ -65,10 +64,11 @@ app.delete('/templates/:id', function (req, res) {
     var id = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('templates').deleteOne({ 'id': id });
-        db.close();
-        var response = JSON.stringify('success');
-        res.send(response);
+        db.collection('templates').deleteOne({ 'id': id }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
     });
 });
 //DOCUMENTS
@@ -76,22 +76,22 @@ app.delete('/templates/:id', function (req, res) {
 app.post('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('documents').insertOne(req.body);
-        db.close();
-        var response = JSON.stringify('success');
-        res.send(response);
+        db.collection('documents').insertOne(req.body).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
     });
 });
 // GET DOCUMENTS
 app.get('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('documents').find().sort({ 'date': -1 }).toArray(function (err, documents) {
-            assert.equal(null, err);
+        db.collection('documents').find().sort({ 'date': -1 }).toArray().then(function (documents) {
             var response = JSON.stringify(documents);
             res.send(response);
+            db.close();
         });
-        db.close();
     });
 });
 // EDIT DOCUMENT
@@ -101,10 +101,11 @@ app.put('/documents', function (req, res) {
         db.collection('documents').updateOne({ '_id': new ObjectId(req.body._id) }, { $set: {
                 'title': req.body.title,
                 'template': req.body.template
-            } });
-        db.close();
-        var response = JSON.stringify('success');
-        res.send(response);
+            } }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
     });
 });
 // DELETE DOCUMENT
@@ -112,10 +113,11 @@ app.delete('/documents/:id', function (req, res) {
     var id = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('documents').deleteOne({ '_id': id });
-        db.close();
-        var response = JSON.stringify('success');
-        res.send(response);
+        db.collection('documents').deleteOne({ '_id': id }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
     });
 });
 //HELPERS
@@ -123,22 +125,22 @@ app.delete('/documents/:id', function (req, res) {
 app.get('/helpers/collections', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('helpers').findOne({ 'name': 'collections' }, function (err, document) {
+        db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
             var response = JSON.stringify(document.collections);
             res.send(response);
+            db.close();
         });
-        db.close();
     });
 });
 // GET ELEMENTS
 app.get('/helpers/elements', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('helpers').findOne({ 'name': 'elements' }, function (err, document) {
+        db.collection('helpers').findOne({ 'name': 'elements' }).then(function (document) {
             var response = JSON.stringify(document.types);
             res.send(response);
+            db.close();
         });
-        db.close();
     });
 });
 app.listen(3000);
