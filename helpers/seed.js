@@ -23,10 +23,12 @@ MongoClient.connect(dbUrl, function (err, db) {
     db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
         if (!document) {
             db.collection('helpers').insertOne(collections).then(function () {
+                console.log('added collections');
                 db.close();
             });
         }
         else {
+            console.log('skipped collections');
             db.close();
         }
     });
@@ -37,13 +39,14 @@ MongoClient.connect(dbUrl, function (err, db) {
     db.collection('helpers').findOne({ 'name': 'elements' }).then(function (document) {
         if (!document) {
             db.collection('helpers').insertOne(elements).then(function () {
+                console.log('added elements');
                 db.close();
             });
         }
         else {
+            console.log('skipped elements');
             db.close();
         }
     });
 });
-console.log('All seeds applied');
 //# sourceMappingURL=seed.js.map
