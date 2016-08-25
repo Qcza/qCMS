@@ -70,7 +70,6 @@ export class RightBarComponent implements OnChanges, OnInit {
     element.index = indexes.length > 0 ? Math.max.apply(null, indexes) +1 : 0;
     let elementToPush:Element = Object.assign({}, element);
     this.templateElements.push(elementToPush);
-
     this.refreshTemplate();
   }
 
@@ -236,5 +235,43 @@ export class RightBarComponent implements OnChanges, OnInit {
       templates => this.templatesToEdit = templates,
       error => this.errMessage = error
     );
+  }
+
+  refreshEditedTemplate(template:Template) {
+    this.template = new Template(template.name, template.elements, template.is_default, template.collection);
+    this.onRefresh.emit(this.template);
+  }
+
+  goDeep(template:Template):void {
+    this.scenario = 'editTemplateDeep';
+    this.refreshEditedTemplate(template);
+  }
+
+  addEditElement(element:Element):void {
+    let indexes:Array<number> = [];
+    for (let i of this.template.elements) {
+      indexes.push(i.index);
+    }
+    element.index = indexes.length > 0 ? Math.max.apply(null, indexes) +1 : 0;
+    let elementToPush:Element = Object.assign({}, element);
+    this.template.elements.push(elementToPush);
+
+    this.refreshEditedTemplate(this.template);
+  }
+
+  removeEditElement(index:number):void {
+    for (let i of this.template.elements) {
+      if (i.index === index) {
+        this.template.elements.splice(this.template.elements.indexOf(i), 1);
+        this.refreshEditedTemplate(this.template);
+        return
+      }
+    }
+  }
+
+  prevEditView() {
+    this.template = new Template();
+    this.onRefresh.emit(this.template);
+    this.scenario = 'editTemplate';
   }
 }

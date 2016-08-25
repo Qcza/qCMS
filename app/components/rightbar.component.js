@@ -191,6 +191,40 @@ var RightBarComponent = (function () {
         var _this = this;
         this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errMessage = error; });
     };
+    RightBarComponent.prototype.refreshEditedTemplate = function (template) {
+        this.template = new template_1.Template(template.name, template.elements, template.is_default, template.collection);
+        this.onRefresh.emit(this.template);
+    };
+    RightBarComponent.prototype.goDeep = function (template) {
+        this.scenario = 'editTemplateDeep';
+        this.refreshEditedTemplate(template);
+    };
+    RightBarComponent.prototype.addEditElement = function (element) {
+        var indexes = [];
+        for (var _i = 0, _a = this.template.elements; _i < _a.length; _i++) {
+            var i = _a[_i];
+            indexes.push(i.index);
+        }
+        element.index = indexes.length > 0 ? Math.max.apply(null, indexes) + 1 : 0;
+        var elementToPush = Object.assign({}, element);
+        this.template.elements.push(elementToPush);
+        this.refreshEditedTemplate(this.template);
+    };
+    RightBarComponent.prototype.removeEditElement = function (index) {
+        for (var _i = 0, _a = this.template.elements; _i < _a.length; _i++) {
+            var i = _a[_i];
+            if (i.index === index) {
+                this.template.elements.splice(this.template.elements.indexOf(i), 1);
+                this.refreshEditedTemplate(this.template);
+                return;
+            }
+        }
+    };
+    RightBarComponent.prototype.prevEditView = function () {
+        this.template = new template_1.Template();
+        this.onRefresh.emit(this.template);
+        this.scenario = 'editTemplate';
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)

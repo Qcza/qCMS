@@ -11,7 +11,7 @@
           <input id="templateName" name="templateName" class="form-control qcms-form-input" type="text" [(ngModel)]="templateName">
         </div>
         <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-qcms btn-sm pull-right" [class.active]="templateDefault" [ngClass]="{'btn-qcms-reverse': templateDefault === true}">
+          <label class="btn btn-qcms btn-sm" [class.active]="templateDefault" [ngClass]="{'btn-qcms-reverse': templateDefault === true}">
             <input type="checkbox" name="newTemplateDefault" [(ngModel)]="templateDefault" (click)="refreshTemplate()"> default
           </label>
         </div>
@@ -50,8 +50,54 @@
     </div>
     <!-- EDIT TEMPLATES -->
     <div class="edit-template-form-l" *ngIf="scenario==='editTemplate'">
-      <div class="document-template" *ngFor="let template of templatesToEdit" on-mouseenter="template.is_selected = true" on-mouseout="template.is_selected = false">
+      <div class="document-template" *ngFor="let template of templatesToEdit" on-mouseenter="template.is_selected = true" on-mouseout="template.is_selected = false" (click)="goDeep(template)">
         <i class="fa" [ngClass]="{'fa-file-o': !template.is_selected, 'fa-edit': template.is_selected === true}"></i>&nbsp;&nbsp;{{template.name}}
+      </div>
+    </div>
+    <div class="edit-template-form-d" *ngIf="scenario==='editTemplateDeep'">
+      <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevEditView()"></i>
+      <hr />
+      <form name="editTemplate">
+        <div class="form-group">
+          <label for="editTemplateName">Template name</label>
+          <input id="editTemplateName" name="editTemplateName" class="form-control qcms-form-input" type="text" [(ngModel)]="template.name">
+        </div>
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-qcms btn-sm" [class.active]="editTemplateDefault" [ngClass]="{'btn-qcms-reverse': template.is_default === true}">
+            <input type="checkbox" name="editTemplateDefault" [(ngModel)]="template.is_default" (click)="refreshEditedTemplate(template)"> default
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="editDocumentCollection">Collection</label>
+          <div id="editDocumentCollection" class="template-element-input" ngbDropdown>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-database"></i></span>
+            <input class="template-element-title-input" type="text" [(ngModel)]="template.collection" name="editDocumentCollection" placeholder="Name new">
+            <ul class="dropdown-menu qcms-dropdown-menu">
+              <li class="drodown-menu-element" *ngFor="let collection of documentCollections" (click)="choseCollection(collection);"><i class="template-element-icon fa fa-database"></i>{{collection}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editTemplateElements">Elements</label>
+          <div id="editTemplateElements">
+            <div class="template-element" *ngFor="let element of template.elements">
+              <i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.title}}
+              <button class="btn btn-qcms template-element-btn" (click)="removeEditElement(element.index)"><i class="fa fa-minus"></i></button>
+            </div>
+            <div class="template-element-input" ngbDropdown>
+              <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-{{chosenElement.icon}}"></i></span>
+              <input class="template-element-title-input" type="text" [(ngModel)]="chosenElement.title" name="chosenElementTitle" placeholder="Enter title">
+              <button class="btn btn-qcms template-element-btn" (click)="addEditElement(chosenElement, 'edit')" [disabled]="chosenElement.title === ''"><i class="fa fa-plus"></i></button>
+              <ul class="dropdown-menu qcms-dropdown-menu">
+                <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.type}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="editTemplate()" [disabled]="template.name === '' || template.elements.length === 0 || template.collection.name === ''">Save</button>
+      </form>
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
       </div>
     </div>
     <!-- USE TEMPLATE -->

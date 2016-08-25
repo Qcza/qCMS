@@ -91,6 +91,17 @@ body {
   100% {
     opacity: 0; } }
 
+/* line 89, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.qcms-nav-icon {
+  color: #6404e8;
+  cursor: pointer;
+  font-size: 20pt;
+  font-weight: lighter;
+  margin: 0; }
+  /* line 96, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  .qcms-nav-icon:hover {
+    color: #9c56fc; }
+
 /* line 8, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
 .main {
   background-color: #f2f2f2; }
