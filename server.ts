@@ -23,6 +23,7 @@ app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
 // });
 
 //TEMPLATES
+// POST TEMPLATE
 app.post('/templates', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
@@ -30,16 +31,33 @@ app.post('/templates', function (req: express.Request, res: express.Response) {
       db.collection('templates').updateMany({}, {$set: {'is_default': false}});
     }
     db.collection('templates').insertOne(req.body);
-    db.close();
+    db.collection('helpers').findOne({'name': 'collections'}).then(function(document) {
+      let new_collections:Array<string> = document.collections;
+      if (new_collections.indexOf(req.body.collection) === -1) { 
+        new_collections.push(req.body.collection);
+        return new_collections
+      } else {
+        return []
+      }
+    }).then(function(collections:Array<string>) {
+      if (collections.length > 0) {
+        db.collection('helpers').updateOne({'name': 'collections'}, {$set: {'collections': collections}}).then(function () {
+          db.close();
+        })
+      } else {
+        db.close();
+      }
+    })
     let response:string = JSON.stringify('success');
     res.send(response);
   })
 })
 
+// GET TEMPLATES
 app.get('/templates', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    let cursor:any = db.collection('templates').find().sort({'name': 1}).toArray(function (err, documents) {
+    db.collection('templates').find().sort({'name': 1}).toArray(function (err, documents) {
       assert.equal(null, err)
       let response:string = JSON.stringify(documents)
       res.send(response)
@@ -48,6 +66,7 @@ app.get('/templates', function (req: express.Request, res: express.Response) {
   })
 })
 
+// DELETE TEMPLATE
 app.delete('/templates/:id', function (req: express.Request, res: express.Response) {
   let id:string = req.params.id;
   MongoClient.connect(dbUrl, function(err, db) {
@@ -60,6 +79,7 @@ app.delete('/templates/:id', function (req: express.Request, res: express.Respon
 })
 
 //DOCUMENTS
+// POST DOCUMENT
 app.post('/documents', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
@@ -70,10 +90,11 @@ app.post('/documents', function (req: express.Request, res: express.Response) {
   })
 })
 
+// GET DOCUMENTS
 app.get('/documents', function (req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    let cursor:any = db.collection('documents').find().sort({'date': -1}).toArray(function (err, documents) {
+    db.collection('documents').find().sort({'date': -1}).toArray(function (err, documents) {
       assert.equal(null, err)
       let response:string = JSON.stringify(documents)
       res.send(response)
@@ -82,6 +103,7 @@ app.get('/documents', function (req: express.Request, res: express.Response) {
   })
 })
 
+// EDIT DOCUMENT
 app.put('/documents', function(req: express.Request, res: express.Response) {
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
@@ -95,6 +117,7 @@ app.put('/documents', function(req: express.Request, res: express.Response) {
   })
 })
 
+// DELETE DOCUMENT
 app.delete('/documents/:id', function (req: express.Request, res: express.Response) {
   let id:mongodb.ObjectID = new ObjectId(req.params.id);
   MongoClient.connect(dbUrl, function(err, db) {
@@ -105,6 +128,20 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
     res.send(response);
   })
 })
+
+//COLLECTIONS
+// GET COLLECTIONS
+app.get('/collections', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('helpers').findOne({'name': 'collections'}, function (err, document) {
+      let response:string = JSON.stringify(document.collections)
+      res.send(response);
+    });
+    db.close();
+  })
+})
+
 
 app.listen(3000);
 

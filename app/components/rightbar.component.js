@@ -17,18 +17,22 @@ var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
         this.show = 'default';
-        this.elementsTypes = ['header', 'text'];
+        this.elementsTypes = ['header', 'text']; //Add to DB
         this.elementsList = [];
+        this.chosenElement = new template_1.Element();
         this.documentTitle = '';
+        this.documentCollection = '';
         this.templateElements = [];
         this.templateDefault = false;
         this.onRefresh = new core_1.EventEmitter();
-        this.chosenElement = new template_1.Element();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onAddDocument = new core_1.EventEmitter();
         this.onDeleteDocument = new core_1.EventEmitter();
         this.bootstrapElements();
     }
+    RightBarComponent.prototype.ngOnInit = function () {
+        this.getCollections();
+    };
     RightBarComponent.prototype.bootstrapElements = function () {
         for (var _i = 0, _a = this.elementsTypes; _i < _a.length; _i++) {
             var type = _a[_i];
@@ -71,11 +75,18 @@ var RightBarComponent = (function () {
         }
     };
     RightBarComponent.prototype.refreshTemplate = function () {
-        this.template = new template_1.Template(this.templateName, this.templateElements, this.templateDefault);
+        this.template = new template_1.Template(this.templateName, this.templateElements, this.templateDefault, this.documentCollection);
         this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.choseElement = function (element) {
-        this.chosenElement = element;
+        this.chosenElement = Object.assign({}, element);
+    };
+    RightBarComponent.prototype.choseCollection = function (collection) {
+        this.documentCollection = collection;
+    };
+    RightBarComponent.prototype.getCollections = function () {
+        var _this = this;
+        this.appService.getCollections().subscribe(function (collections) { return _this.documentCollections = collections; }, function (error) { return _this.errMessage = error; });
     };
     RightBarComponent.prototype.saveTemplate = function () {
         var _this = this;

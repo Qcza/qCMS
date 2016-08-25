@@ -1,3 +1,4 @@
+
 export interface ElementInterface {
   index:number;
   title: string;
@@ -35,6 +36,7 @@ export class Element implements ElementInterface {
 export interface TemplateInterface {
   _id:string;
   name:string;
+  collection:string;
   elements:Array<Element>;
   is_default:boolean;
   is_selected:boolean;
@@ -43,13 +45,15 @@ export interface TemplateInterface {
 export class Template implements TemplateInterface {
   _id:string;
   name:string;
+  collection:string;
   elements:Array<Element>;
   is_default:boolean;
   is_selected:boolean;
 
-  constructor (name:string = '', elements:Array<Element> = [], is_default:boolean = false) {
+  constructor (name:string = '', elements:Array<Element> = [], is_default:boolean = false, collection:string = 'article') {
     this.name = name;
     this.elements = elements;
+    this.collection = collection;
     this.is_default = is_default;
   }
 }

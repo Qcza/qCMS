@@ -24,12 +24,14 @@ var Element = (function () {
 }());
 exports.Element = Element;
 var Template = (function () {
-    function Template(name, elements, is_default) {
+    function Template(name, elements, is_default, collection) {
         if (name === void 0) { name = ''; }
         if (elements === void 0) { elements = []; }
         if (is_default === void 0) { is_default = false; }
+        if (collection === void 0) { collection = 'article'; }
         this.name = name;
         this.elements = elements;
+        this.collection = collection;
         this.is_default = is_default;
     }
     return Template;

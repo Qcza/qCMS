@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { Template, Element } from '../models/template';
 import { Doc } from '../models/document';
 import { Alert } from '../models/helpers';
@@ -11,7 +11,7 @@ import { AppService } from '../services/app.service';
     styleUrls: ['app/styles/rightbar.component.css']
 })
 
-export class RightBarComponent implements OnChanges {
+export class RightBarComponent implements OnChanges, OnInit {
 
   show:string = 'default';
   @Input() scenario:string;
@@ -22,19 +22,27 @@ export class RightBarComponent implements OnChanges {
   showAlert:boolean;
   hideAlert:boolean;
   alert:Alert;
-  elementsTypes:Array<string> = ['header', 'text'];
+  elementsTypes:Array<string> = ['header', 'text']; //Add to DB
   elementsList:Array<Element> = [];
+  chosenElement:Element = new Element();
   templateAdded:boolean;
   documentTitle:string = '';
   documentAdded:boolean;
   documentDeleted:boolean;
+  documentCollections:Array<string>;
+  documentCollection:string = '';
   templateName:string;
   templateElements:Array<Element> = [];
   templateDefault:boolean = false;
+  errMessage:any;
 
   constructor (private appService: AppService) { 
       this.bootstrapElements()
    } 
+
+   ngOnInit() {
+     this.getCollections();
+   }
 
   bootstrapElements():void {
     for (let type of this.elementsTypes) {
@@ -81,13 +89,23 @@ export class RightBarComponent implements OnChanges {
 
   @Output() onRefresh = new EventEmitter<Template>();
   refreshTemplate() {
-    this.template = new Template(this.templateName, this.templateElements, this.templateDefault);
+    this.template = new Template(this.templateName, this.templateElements, this.templateDefault, this.documentCollection);
     this.onRefresh.emit(this.template);
   }
 
-  chosenElement:Element = new Element();
   choseElement(element:Element):void {
-    this.chosenElement = element;
+    this.chosenElement = Object.assign({}, element);
+  }
+
+  choseCollection(collection:string):void {
+    this.documentCollection = collection;
+  }
+
+  getCollections():void {
+    this.appService.getCollections().subscribe(
+      collections => this.documentCollections = collections,
+      error => this.errMessage = error
+    );
   }
 
   saveTemplate():void {

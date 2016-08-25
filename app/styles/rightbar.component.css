@@ -174,53 +174,62 @@ body {
   display: block;
   font-size: 11pt;
   font-weight: normal;
-  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   position: relative; }
 
 /* line 91, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+.template-element-input {
+  border: solid 1px #6404e8;
+  display: block;
+  font-size: 11pt;
+  font-weight: normal;
+  padding: 10px;
+  position: relative; }
+
+/* line 99, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-icon {
   font-size: 12pt;
   margin-right: 12px; }
 
-/* line 95, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 103, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-icon-no-margin {
   font-size: 12pt; }
 
-/* line 98, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 106, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-btn {
   font-size: 12pt;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0; }
-  /* line 105, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+  /* line 113, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .template-element-btn:hover {
     background-color: #fff;
     border-left: 1px solid #6404e8;
     color: #6404e8; }
 
-/* line 110, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 118, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .template-element-title-input {
   border: 0;
   max-width: 60%;
   outline: none; }
 
-/* line 115, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 123, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .drodown-menu-element {
   cursor: pointer;
   margin: 8px; }
-  /* line 119, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+  /* line 127, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .drodown-menu-element:hover {
     color: #7e24fb; }
 
-/* line 122, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 130, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .dropdown-element {
   cursor: pointer; }
-  /* line 125, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+  /* line 133, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
   .dropdown-element:hover {
     color: #7e24fb; }
 
-/* line 128, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
+/* line 136, /home/balus/OWN/qcms/app/styles/sass/rightbar.component.sass */
 .right-bar-alert {
   margin-top: 80px; }

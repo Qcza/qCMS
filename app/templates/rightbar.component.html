@@ -16,20 +16,32 @@
           </label>
         </div>
         <div class="form-group">
-          <label for="templateElements">Elements</label>
-          <div class="template-element" *ngFor="let element of templateElements">
-            <i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.title}}
-            <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="fa fa-minus"></i></button>
-          </div>
-          <div class="template-element" ngbDropdown>
-            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-{{chosenElement.icon}}"></i></span>
-            <input class="template-element-title-input" type="text" [(ngModel)]="chosenElement.title" name="chosenElementTitle" placeholder="Enter title">
-            <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)" [disabled]="chosenElement.title === ''"><i class="fa fa-plus"></i></button>
+          <label for="documentCollection">Collection</label>
+          <div id="documentCollection" class="template-element-input" ngbDropdown>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-database"></i></span>
+            <input class="template-element-title-input" type="text" [(ngModel)]="documentCollection" name="documentCollection" placeholder="Name new">
             <ul class="dropdown-menu qcms-dropdown-menu">
-              <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.type}}</li>
+              <li class="drodown-menu-element" *ngFor="let collection of documentCollections" (click)="choseCollection(collection);"><i class="template-element-icon fa fa-database"></i>{{collection}}</li>
             </ul>
           </div>
-          <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()" [disabled]="templateName === '' || templateElements.length === 0">Save</button>
+        </div>
+        <div class="form-group">
+          <label for="templateElements">Elements</label>
+          <div id="templateElements">
+            <div class="template-element" *ngFor="let element of templateElements">
+              <i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.title}}
+              <button class="btn btn-qcms template-element-btn" (click)="removeElement(element.index)"><i class="fa fa-minus"></i></button>
+            </div>
+            <div class="template-element-input" ngbDropdown>
+              <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-{{chosenElement.icon}}"></i></span>
+              <input class="template-element-title-input" type="text" [(ngModel)]="chosenElement.title" name="chosenElementTitle" placeholder="Enter title">
+              <button class="btn btn-qcms template-element-btn" (click)="addElement(chosenElement)" [disabled]="chosenElement.title === ''"><i class="fa fa-plus"></i></button>
+              <ul class="dropdown-menu qcms-dropdown-menu">
+                <li class="drodown-menu-element" *ngFor="let element of elementsList" (click)="choseElement(element);"><i class="template-element-icon fa fa-{{element.icon}}"></i>{{element.type}}</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn btn-qcms btn-qcms-cta pull-right" (click)="saveTemplate()" [disabled]="templateName === '' || templateElements.length === 0 || documentCollection.name === ''">Save</button>
           <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
             <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
           </div>

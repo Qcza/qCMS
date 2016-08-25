@@ -17,6 +17,7 @@ app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
 //     res.sendFile(path.resolve(__dirname, 'index.html'));
 // });
 //TEMPLATES
+// POST TEMPLATE
 app.post('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
@@ -24,15 +25,34 @@ app.post('/templates', function (req, res) {
             db.collection('templates').updateMany({}, { $set: { 'is_default': false } });
         }
         db.collection('templates').insertOne(req.body);
-        db.close();
+        db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
+            var new_collections = document.collections;
+            if (new_collections.indexOf(req.body.collection) === -1) {
+                new_collections.push(req.body.collection);
+                return new_collections;
+            }
+            else {
+                return [];
+            }
+        }).then(function (collections) {
+            if (collections.length > 0) {
+                db.collection('helpers').updateOne({ 'name': 'collections' }, { $set: { 'collections': collections } }).then(function () {
+                    db.close();
+                });
+            }
+            else {
+                db.close();
+            }
+        });
         var response = JSON.stringify('success');
         res.send(response);
     });
 });
+// GET TEMPLATES
 app.get('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        var cursor = db.collection('templates').find().sort({ 'name': 1 }).toArray(function (err, documents) {
+        db.collection('templates').find().sort({ 'name': 1 }).toArray(function (err, documents) {
             assert.equal(null, err);
             var response = JSON.stringify(documents);
             res.send(response);
@@ -40,6 +60,7 @@ app.get('/templates', function (req, res) {
         db.close();
     });
 });
+// DELETE TEMPLATE
 app.delete('/templates/:id', function (req, res) {
     var id = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
@@ -51,6 +72,7 @@ app.delete('/templates/:id', function (req, res) {
     });
 });
 //DOCUMENTS
+// POST DOCUMENT
 app.post('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
@@ -60,10 +82,11 @@ app.post('/documents', function (req, res) {
         res.send(response);
     });
 });
+// GET DOCUMENTS
 app.get('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        var cursor = db.collection('documents').find().sort({ 'date': -1 }).toArray(function (err, documents) {
+        db.collection('documents').find().sort({ 'date': -1 }).toArray(function (err, documents) {
             assert.equal(null, err);
             var response = JSON.stringify(documents);
             res.send(response);
@@ -71,6 +94,7 @@ app.get('/documents', function (req, res) {
         db.close();
     });
 });
+// EDIT DOCUMENT
 app.put('/documents', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
@@ -83,6 +107,7 @@ app.put('/documents', function (req, res) {
         res.send(response);
     });
 });
+// DELETE DOCUMENT
 app.delete('/documents/:id', function (req, res) {
     var id = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function (err, db) {
@@ -91,6 +116,18 @@ app.delete('/documents/:id', function (req, res) {
         db.close();
         var response = JSON.stringify('success');
         res.send(response);
+    });
+});
+//COLLECTIONS
+// GET COLLECTIONS
+app.get('/collections', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('helpers').findOne({ 'name': 'collections' }, function (err, document) {
+            var response = JSON.stringify(document.collections);
+            res.send(response);
+        });
+        db.close();
     });
 });
 app.listen(3000);

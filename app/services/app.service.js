@@ -20,6 +20,8 @@ var AppService = (function () {
         this.templatesUrl = 'http://localhost:3000/templates';
         //Documents services
         this.documentsUrl = 'http://localhost:3000/documents';
+        //Collections services
+        this.collectionsUrl = 'http://localhost:3000/collections';
     }
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
@@ -47,6 +49,9 @@ var AppService = (function () {
     };
     AppService.prototype.deleteDocument = function (document) {
         return this.http.delete(this.documentsUrl + '/' + document._id).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.getCollections = function () {
+        return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
     };
     //helpers
     AppService.prototype.extractData = function (res) {

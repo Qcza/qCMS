@@ -48,6 +48,12 @@ export class AppService {
     return this.http.delete(this.documentsUrl+'/'+document._id).map(this.extractData).catch(this.handleError);
   }
 
+  //Collections services
+  private collectionsUrl = 'http://localhost:3000/collections';
+  getCollections (): Observable<any> {
+    return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
+  }
+
   //helpers
   private extractData(res:Response) {
     let body = res.json();
