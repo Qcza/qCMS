@@ -3,7 +3,7 @@
     <left-bar 
       (onSelectScenario)="onSelectScenario($event)" 
       (onSelectTemplate)="onSelectTemplate($event)" 
-      (onSelectDocument)="onSelectDocument($event)" 
+      (onSelectDocument)="onSelectDocument($event)"
       [templateAdded]='templateAdded'
       [templateDeleted]='templateDeleted'
       [templateEdited]='templateEdited'
@@ -40,7 +40,8 @@
       (onEditTemplate)="onEditTemplate($event)" 
       (onAddDocument)="onAddDocument($event)" 
       (onDeleteDocument)="onDeleteDocument($event)"
-      (onEditDocument)="onEditDocument($event)">
+      (onEditDocument)="onEditDocument($event)"
+      (onResetTemplate)="onResetTemplate($event)">
     </right-bar>
   </div>
 </div>

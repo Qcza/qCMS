@@ -120,6 +120,7 @@ var LeftBarComponent = (function () {
         }
         var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default, template.collection);
         this.onSelectTemplate.emit(selectedTemplate);
+        this.selectRightBarScenario('useTemplate');
     };
     LeftBarComponent.prototype.findDefault = function (templates) {
         for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {

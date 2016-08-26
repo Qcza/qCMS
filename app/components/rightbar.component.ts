@@ -39,6 +39,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   templateDefault:boolean = false;
   errMessage:any;
   templatesToEdit:Array<Template> = [];
+  resetTemplate:boolean;
 
   constructor (private appService: AppService) { } 
 
@@ -131,9 +132,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.appService.postTemplate(this.template).subscribe(
       response => {
         this.response = response,
+        this.emitAddTemplate(),
         this.resetTemplateForm(),
-        this.showAlerts('success', 'Template saved'),
-        this.emitAddTemplate()
+        this.showAlerts('success', 'Template saved')
       },
       error => {
         this.errorMessage = <any>error,
@@ -149,6 +150,16 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.templateDefault = false;
     this.template = new Template();
     this.chosenElement = new Element();
+  }
+
+  resetDocumentForm():void {
+     this.documentTitle = '';
+  }
+
+  @Output() onResetTemplate = new EventEmitter<boolean>();
+  resetTemplateValues():void {
+    this.resetTemplate = true;
+    this.onResetTemplate.emit(this.resetTemplate);
   }
 
   showAlerts(type:string, message:string):void {
@@ -192,8 +203,10 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.appService.postDocument(doc).subscribe(
       response => {
         this.response = response,
-        this.showAlerts('success', 'Document saved'),
-        this.emitAddDocument()
+        this.emitAddDocument(),
+        this.resetDocumentForm(),
+        this.resetTemplateValues(),
+        this.showAlerts('success', 'Document saved')
       },
       error => {
         this.errorMessage = <any>error,

@@ -137,6 +137,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
     }
     let selectedTemplate = new Template(template.name, template.elements, template.is_default, template.collection);
     this.onSelectTemplate.emit(selectedTemplate);
+    this.selectRightBarScenario('useTemplate');
   }
 
   findDefault(templates:Array<Template>):Template {

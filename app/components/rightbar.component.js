@@ -25,6 +25,7 @@ var RightBarComponent = (function () {
         this.templateDefault = false;
         this.templatesToEdit = [];
         this.onRefresh = new core_1.EventEmitter();
+        this.onResetTemplate = new core_1.EventEmitter();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onDeleteTemplate = new core_1.EventEmitter();
         this.onEditTemplate = new core_1.EventEmitter();
@@ -107,9 +108,9 @@ var RightBarComponent = (function () {
         var _this = this;
         this.appService.postTemplate(this.template).subscribe(function (response) {
             _this.response = response,
+                _this.emitAddTemplate(),
                 _this.resetTemplateForm(),
-                _this.showAlerts('success', 'Template saved'),
-                _this.emitAddTemplate();
+                _this.showAlerts('success', 'Template saved');
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
@@ -122,6 +123,13 @@ var RightBarComponent = (function () {
         this.templateDefault = false;
         this.template = new template_1.Template();
         this.chosenElement = new template_1.Element();
+    };
+    RightBarComponent.prototype.resetDocumentForm = function () {
+        this.documentTitle = '';
+    };
+    RightBarComponent.prototype.resetTemplateValues = function () {
+        this.resetTemplate = true;
+        this.onResetTemplate.emit(this.resetTemplate);
     };
     RightBarComponent.prototype.showAlerts = function (type, message) {
         var _this = this;
@@ -158,8 +166,10 @@ var RightBarComponent = (function () {
         var doc = new document_1.Doc(title, template);
         this.appService.postDocument(doc).subscribe(function (response) {
             _this.response = response,
-                _this.showAlerts('success', 'Document saved'),
-                _this.emitAddDocument();
+                _this.emitAddDocument(),
+                _this.resetDocumentForm(),
+                _this.resetTemplateValues(),
+                _this.showAlerts('success', 'Document saved');
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
@@ -275,6 +285,10 @@ var RightBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onRefresh", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onResetTemplate", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

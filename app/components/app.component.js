@@ -13,10 +13,6 @@ var leftbar_component_1 = require('./leftbar.component');
 var rightbar_component_1 = require('./rightbar.component');
 var template_1 = require('../models/template');
 var AppComponent = (function () {
-    //ToDo DefaultTemplate
-    // defaultTemplateName:string = 'Default';
-    // defaultElement:Element = new Element();
-    // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
     function AppComponent() {
         this.template = new template_1.Template();
     }
@@ -25,6 +21,10 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.onSelectTemplate = function (template) {
         this.template = template;
+    };
+    AppComponent.prototype.onResetTemplate = function (resetTemplate) {
+        if (resetTemplate === true) {
+        }
     };
     AppComponent.prototype.onSelectDocument = function (document) {
         this.document = document;

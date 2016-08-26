@@ -25,7 +25,7 @@
         <div class="form-group">
           <label for="documentTemplates">Template</label>
           <div id="documentTemplates">
-            <div class="document-template" [ngClass]="{'document-template-selected': template.is_selected === true}" *ngFor="let template of templates" (click)="selectTemplate(template);selectRightBarScenario('useTemplate');">
+            <div class="document-template" [ngClass]="{'document-template-selected': template.is_selected === true}" *ngFor="let template of templates" (click)="selectTemplate(template);">
               <i class="fa" [ngClass]="{'fa-file-o': template.is_default === false, 'fa-heart-o': template.is_default === true}"></i>&nbsp;&nbsp;{{template.name}}
             </div>
           </div>

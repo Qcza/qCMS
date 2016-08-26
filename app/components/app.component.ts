@@ -22,11 +22,6 @@ export class AppComponent {
   documentEdited:boolean;
   document:Doc;
 
-  //ToDo DefaultTemplate
-  // defaultTemplateName:string = 'Default';
-  // defaultElement:Element = new Element();
-  // defaultTemplateElements:Array<Element> = [ this.defaultElement ];
-
   constructor () {
     this.template = new Template();
   }
@@ -36,7 +31,13 @@ export class AppComponent {
   }
 
   onSelectTemplate(template:Template):void {
-    this.template = template;
+    this.template =  template
+  }
+
+  onResetTemplate(resetTemplate:boolean):void {
+    if (resetTemplate === true) {
+      
+    }
   }
 
   onSelectDocument(document:Doc):void {
