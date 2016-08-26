@@ -97,6 +97,11 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.documentCollection = collection;
   }
 
+  editCollection(collection:string):void {
+    this.template.collection = collection;
+  }
+
+
   getCollections():void {
     this.appService.getCollections().subscribe(
       collections => this.documentCollections = collections,
@@ -238,7 +243,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   refreshEditedTemplate(template:Template) {
-    this.template = new Template(template.name, template.elements, template.is_default, template.collection);
+    this.template = new Template(template.name, template.elements, template.is_default, template.collection, template._id);
     this.onRefresh.emit(this.template);
   }
 
@@ -273,5 +278,18 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.template = new Template();
     this.onRefresh.emit(this.template);
     this.scenario = 'editTemplate';
+  }
+
+  editTemplate():void {
+    this.appService.putTemplate(this.template).subscribe(
+      response => {
+        this.response = response,
+        this.showAlerts('success', 'Template saved')
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    );
   }
 }

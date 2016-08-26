@@ -33,6 +33,12 @@ var AppService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.putTemplate = function (template) {
+        var body = JSON.stringify(template);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
+    };
     AppService.prototype.postDocument = function (document) {
         var body = JSON.stringify(document);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });

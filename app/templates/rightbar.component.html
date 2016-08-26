@@ -73,7 +73,7 @@
             <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-database"></i></span>
             <input class="template-element-title-input" type="text" [(ngModel)]="template.collection" name="editDocumentCollection" placeholder="Name new">
             <ul class="dropdown-menu qcms-dropdown-menu">
-              <li class="drodown-menu-element" *ngFor="let collection of documentCollections" (click)="choseCollection(collection);"><i class="template-element-icon fa fa-database"></i>{{collection}}</li>
+              <li class="drodown-menu-element" *ngFor="let collection of documentCollections" (click)="editCollection(collection);"><i class="template-element-icon fa fa-database"></i>{{collection}}</li>
             </ul>
           </div>
         </div>

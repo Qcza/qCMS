@@ -83,6 +83,9 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.choseCollection = function (collection) {
         this.documentCollection = collection;
     };
+    RightBarComponent.prototype.editCollection = function (collection) {
+        this.template.collection = collection;
+    };
     RightBarComponent.prototype.getCollections = function () {
         var _this = this;
         this.appService.getCollections().subscribe(function (collections) { return _this.documentCollections = collections; }, function (error) { return _this.errMessage = error; });
@@ -192,7 +195,7 @@ var RightBarComponent = (function () {
         this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errMessage = error; });
     };
     RightBarComponent.prototype.refreshEditedTemplate = function (template) {
-        this.template = new template_1.Template(template.name, template.elements, template.is_default, template.collection);
+        this.template = new template_1.Template(template.name, template.elements, template.is_default, template.collection, template._id);
         this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.goDeep = function (template) {
@@ -224,6 +227,16 @@ var RightBarComponent = (function () {
         this.template = new template_1.Template();
         this.onRefresh.emit(this.template);
         this.scenario = 'editTemplate';
+    };
+    RightBarComponent.prototype.editTemplate = function () {
+        var _this = this;
+        this.appService.putTemplate(this.template).subscribe(function (response) {
+            _this.response = response,
+                _this.showAlerts('success', 'Template saved');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
     };
     __decorate([
         core_1.Input(), 

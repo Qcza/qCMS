@@ -24,6 +24,13 @@ export class AppService {
     return this.http.post(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
+  putTemplate (template:Template): Observable<any> {
+    let body = JSON.stringify(template);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
+  }
+
   //Documents services
   private documentsUrl = 'http://localhost:3000/documents';
   postDocument (document:Doc): Observable<any> {

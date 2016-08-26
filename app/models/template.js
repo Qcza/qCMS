@@ -27,7 +27,7 @@ var Element = (function () {
 }());
 exports.Element = Element;
 var Template = (function () {
-    function Template(name, elements, is_default, collection) {
+    function Template(name, elements, is_default, collection, id) {
         if (name === void 0) { name = ''; }
         if (elements === void 0) { elements = []; }
         if (is_default === void 0) { is_default = false; }
@@ -36,6 +36,8 @@ var Template = (function () {
         this.elements = elements;
         this.collection = collection;
         this.is_default = is_default;
+        if (id)
+            this._id = id;
     }
     return Template;
 }());

@@ -53,10 +53,11 @@ export class Template implements TemplateInterface {
   is_default:boolean;
   is_selected:boolean;
 
-  constructor (name:string = '', elements:Array<Element> = [], is_default:boolean = false, collection:string = 'article') {
+  constructor (name:string = '', elements:Array<Element> = [], is_default:boolean = false, collection:string = 'article', id?:string) {
     this.name = name;
     this.elements = elements;
     this.collection = collection;
     this.is_default = is_default;
+    if (id) this._id = id;
   }
 }

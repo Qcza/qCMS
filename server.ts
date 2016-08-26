@@ -78,6 +78,23 @@ app.delete('/templates/:id', function (req: express.Request, res: express.Respon
   })
 })
 
+// EDIT TEMPLATE
+app.put('/templates', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function (err, db) {
+    assert.equal(null, err);
+    db.collection('templates').updateOne({'_id': new ObjectId(req.body._id)}, {
+      'name': req.body.name,
+      'collection': req.body.collection,
+      'is_default': req.body.is_default,
+      'elements': req.body.elements
+    }).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
 //DOCUMENTS
 // POST DOCUMENT
 app.post('/documents', function (req: express.Request, res: express.Response) {
