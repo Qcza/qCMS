@@ -17,6 +17,10 @@ export class AppService {
     return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
   }
 
+  getTemplate (id:string): Observable<any> {
+    return this.http.get(this.templatesUrl + '/' +id).map(this.extractData).catch(this.handleError);
+  }
+
   postTemplate (template:Template): Observable<any> {
     let body = JSON.stringify(template);
     let headers = new Headers({'Content-type': 'application/json'});

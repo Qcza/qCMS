@@ -31,13 +31,7 @@ export class AppComponent {
   }
 
   onSelectTemplate(template:Template):void {
-    this.template =  template
-  }
-
-  onResetTemplate(resetTemplate:boolean):void {
-    if (resetTemplate === true) {
-      
-    }
+    this.template =  template;
   }
 
   onSelectDocument(document:Doc):void {

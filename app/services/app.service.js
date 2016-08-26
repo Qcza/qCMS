@@ -27,6 +27,9 @@ var AppService = (function () {
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.getTemplate = function (id) {
+        return this.http.get(this.templatesUrl + '/' + id).map(this.extractData).catch(this.handleError);
+    };
     AppService.prototype.postTemplate = function (template) {
         var body = JSON.stringify(template);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });

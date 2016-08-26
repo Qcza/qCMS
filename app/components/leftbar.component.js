@@ -110,6 +110,10 @@ var LeftBarComponent = (function () {
                 _this.handleScenariosTemp(templates, scenario);
         }, function (error) { return _this.errMessage = error; });
     };
+    LeftBarComponent.prototype.getTemplate = function (id, scenario) {
+        var _this = this;
+        this.appService.getTemplate(id).subscribe(function (template) { return _this.template = template; }, function (error) { return _this.errMessage = error; });
+    };
     LeftBarComponent.prototype.selectTemplate = function (template) {
         template.is_selected = true;
         for (var _i = 0, _a = this.templates; _i < _a.length; _i++) {
@@ -118,7 +122,7 @@ var LeftBarComponent = (function () {
                 temp.is_selected = false;
             }
         }
-        var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default, template.collection);
+        var selectedTemplate = new template_1.Template(template.name, template.elements, template.is_default, template.collection, template._id);
         this.onSelectTemplate.emit(selectedTemplate);
         this.selectRightBarScenario('useTemplate');
     };

@@ -72,6 +72,19 @@ app.get('/templates', function (req: express.Request, res: express.Response) {
   })
 })
 
+// GET TEMPLATE
+app.get('/templates/:id', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    let id:string = req.params.id;
+    db.collection('templates').findOne({'_id': new ObjectId(id)}).then(function(document) {
+      let response:string = JSON.stringify(document)
+      res.send(response)
+      db.close();
+    })
+  })
+})
+
 // DELETE TEMPLATE
 app.delete('/templates/:id', function (req: express.Request, res: express.Response) {
   let id:string = req.params.id;

@@ -39,7 +39,6 @@ export class RightBarComponent implements OnChanges, OnInit {
   templateDefault:boolean = false;
   errMessage:any;
   templatesToEdit:Array<Template> = [];
-  resetTemplate:boolean;
 
   constructor (private appService: AppService) { } 
 
@@ -156,12 +155,6 @@ export class RightBarComponent implements OnChanges, OnInit {
      this.documentTitle = '';
   }
 
-  @Output() onResetTemplate = new EventEmitter<boolean>();
-  resetTemplateValues():void {
-    this.resetTemplate = true;
-    this.onResetTemplate.emit(this.resetTemplate);
-  }
-
   showAlerts(type:string, message:string):void {
     this.showAlert = true;
     this.alert = new Alert(type, message);
@@ -205,7 +198,6 @@ export class RightBarComponent implements OnChanges, OnInit {
         this.response = response,
         this.emitAddDocument(),
         this.resetDocumentForm(),
-        this.resetTemplateValues(),
         this.showAlerts('success', 'Document saved')
       },
       error => {

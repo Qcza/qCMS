@@ -19,6 +19,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
   templates:Array<Template>;
   documents:Array<Doc>;
   errMessage:any;
+  template:Template;
   @Input() templateAdded:boolean;
   @Input() templateDeleted:boolean;
   @Input() templateEdited:boolean;
@@ -126,6 +127,13 @@ export class LeftBarComponent implements OnInit, OnChanges {
       error => this.errMessage = error
     );
   }
+  
+  getTemplate(id:string, scenario?:string):void {
+    this.appService.getTemplate(id).subscribe(
+      template => this.template = template,
+      error => this.errMessage = error
+    );
+  }
 
   @Output() onSelectTemplate = new EventEmitter<Template>();
   selectTemplate(template:Template):void {
@@ -135,7 +143,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
         temp.is_selected = false;
       }
     }
-    let selectedTemplate = new Template(template.name, template.elements, template.is_default, template.collection);
+    let selectedTemplate = new Template(template.name, template.elements, template.is_default, template.collection, template._id);
     this.onSelectTemplate.emit(selectedTemplate);
     this.selectRightBarScenario('useTemplate');
   }

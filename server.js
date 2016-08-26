@@ -67,6 +67,18 @@ app.get('/templates', function (req, res) {
         });
     });
 });
+// GET TEMPLATE
+app.get('/templates/:id', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        var id = req.params.id;
+        db.collection('templates').findOne({ '_id': new ObjectId(id) }).then(function (document) {
+            var response = JSON.stringify(document);
+            res.send(response);
+            db.close();
+        });
+    });
+});
 // DELETE TEMPLATE
 app.delete('/templates/:id', function (req, res) {
     var id = req.params.id;

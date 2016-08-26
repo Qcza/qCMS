@@ -22,10 +22,6 @@ var AppComponent = (function () {
     AppComponent.prototype.onSelectTemplate = function (template) {
         this.template = template;
     };
-    AppComponent.prototype.onResetTemplate = function (resetTemplate) {
-        if (resetTemplate === true) {
-        }
-    };
     AppComponent.prototype.onSelectDocument = function (document) {
         this.document = document;
         this.template = document.template;
