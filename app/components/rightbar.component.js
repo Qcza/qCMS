@@ -117,7 +117,12 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.resetTemplateForm = function (response) {
         if (response === 'success') {
+            this.documentCollection = '';
+            this.templateName = undefined;
+            this.templateElements = [];
+            this.templateDefault = false;
             this.template = new template_1.Template();
+            this.chosenElement = new template_1.Element();
         }
     };
     RightBarComponent.prototype.showAlerts = function (type, message) {
@@ -233,6 +238,8 @@ var RightBarComponent = (function () {
         this.appService.putTemplate(this.template).subscribe(function (response) {
             _this.response = response,
                 _this.showAlerts('success', 'Template saved');
+            _this.templateAdded = true;
+            _this.onAddTemplate.emit(_this.templateAdded);
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');

@@ -142,7 +142,12 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   resetTemplateForm(response:string):void {
     if (response === 'success') {
+      this.documentCollection = '';
+      this.templateName = undefined;
+      this.templateElements = [];
+      this.templateDefault = false;
       this.template = new Template();
+      this.chosenElement = new Element();
     }
   }
 
@@ -285,6 +290,8 @@ export class RightBarComponent implements OnChanges, OnInit {
       response => {
         this.response = response,
         this.showAlerts('success', 'Template saved')
+        this.templateAdded = true;
+        this.onAddTemplate.emit(this.templateAdded);
       },
       error => {
         this.errorMessage = <any>error,
