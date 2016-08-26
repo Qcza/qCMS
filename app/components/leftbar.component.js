@@ -93,7 +93,7 @@ var LeftBarComponent = (function () {
                 return;
             }
             else if (scenario === 'deleted') {
-                this.selectDefaultTemplate(templates);
+                this.selectRightBarScenario('editTemplate');
             }
             else if (scenario === 'added') {
                 return;

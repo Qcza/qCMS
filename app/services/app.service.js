@@ -39,6 +39,9 @@ var AppService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.deleteTemplate = function (template) {
+        return this.http.delete(this.templatesUrl + '/' + template._id).map(this.extractData).catch(this.handleError);
+    };
     AppService.prototype.postDocument = function (document) {
         var body = JSON.stringify(document);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });

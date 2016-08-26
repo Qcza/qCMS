@@ -31,6 +31,10 @@ export class AppService {
     return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
+  deleteTemplate (template:Template): Observable<any> {
+    return this.http.delete(this.templatesUrl+'/'+template._id).map(this.extractData).catch(this.handleError);
+  }
+
   //Documents services
   private documentsUrl = 'http://localhost:3000/documents';
   postDocument (document:Doc): Observable<any> {

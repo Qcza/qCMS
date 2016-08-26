@@ -54,23 +54,14 @@ body {
     color: #6404e8; }
 
 /* line 53, /home/balus/OWN/qcms/app/styles/sass/main.sass */
-.btn-qcms-cta {
-  margin: 8px 0; }
-  /* line 56, /home/balus/OWN/qcms/app/styles/sass/main.sass */
-  .btn-qcms-cta:hover {
-    background-color: #fff;
-    border: 1px solid #6404e8;
-    color: #6404e8; }
-
-/* line 61, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-dropdown-menu {
   border-radius: 0;
   color: #6404e8; }
 
-/* line 65, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+/* line 57, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-alert-fade-in {
   animation-name: alert-fade-in;
-  animation-duration: 1.2s;
+  animation-duration: .8s;
   animation-fill-mode: forwards; }
 
 @keyframes alert-fade-in {
@@ -79,10 +70,10 @@ body {
   100% {
     opacity: 1; } }
 
-/* line 77, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+/* line 69, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-alert-fade-out {
   animation-name: alert-fade-out;
-  animation-duration: 1.2s;
+  animation-duration: .8s;
   animation-fill-mode: forwards; }
 
 @keyframes alert-fade-out {
@@ -91,14 +82,14 @@ body {
   100% {
     opacity: 0; } }
 
-/* line 89, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+/* line 81, /home/balus/OWN/qcms/app/styles/sass/main.sass */
 .qcms-nav-icon {
   color: #6404e8;
   cursor: pointer;
   font-size: 20pt;
   font-weight: lighter;
   margin: 0; }
-  /* line 96, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+  /* line 88, /home/balus/OWN/qcms/app/styles/sass/main.sass */
   .qcms-nav-icon:hover {
     color: #9c56fc; }
 

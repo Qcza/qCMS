@@ -107,7 +107,7 @@ var RightBarComponent = (function () {
         var _this = this;
         this.appService.postTemplate(this.template).subscribe(function (response) {
             _this.response = response,
-                _this.resetTemplateForm(response),
+                _this.resetTemplateForm(),
                 _this.showAlerts('success', 'Template saved'),
                 _this.emitAddTemplate();
         }, function (error) {
@@ -115,15 +115,13 @@ var RightBarComponent = (function () {
                 _this.showAlerts('danger', 'Something went wrong');
         });
     };
-    RightBarComponent.prototype.resetTemplateForm = function (response) {
-        if (response === 'success') {
-            this.documentCollection = '';
-            this.templateName = undefined;
-            this.templateElements = [];
-            this.templateDefault = false;
-            this.template = new template_1.Template();
-            this.chosenElement = new template_1.Element();
-        }
+    RightBarComponent.prototype.resetTemplateForm = function () {
+        this.documentCollection = '';
+        this.templateName = undefined;
+        this.templateElements = [];
+        this.templateDefault = false;
+        this.template = new template_1.Template();
+        this.chosenElement = new template_1.Element();
     };
     RightBarComponent.prototype.showAlerts = function (type, message) {
         var _this = this;
@@ -131,11 +129,11 @@ var RightBarComponent = (function () {
         this.alert = new helpers_1.Alert(type, message);
         setTimeout(function () {
             _this.hideAlert = true;
-        }, 6000);
+        }, 2000);
         setTimeout(function () {
             _this.showAlert = false;
             _this.hideAlert = false;
-        }, 7500);
+        }, 3000);
     };
     RightBarComponent.prototype.emitAddTemplate = function () {
         this.templateAdded = true;
@@ -144,10 +142,16 @@ var RightBarComponent = (function () {
         this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.emitDeleteTemplate = function () {
-        return;
+        this.templateDeleted = true;
+        this.onDeleteTemplate.emit(this.templateDeleted);
+        this.scenario = 'editTemplate';
+        this.resetTemplateForm();
+        this.onRefresh.emit(this.template);
     };
-    RightBarComponent.prototype.emitEditemplate = function () {
-        return;
+    RightBarComponent.prototype.emitEditTemplate = function () {
+        this.templateEdited = true;
+        this.onEditTemplate.emit(this.templateEdited);
+        this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.addDocument = function (title, template) {
         var _this = this;
@@ -229,7 +233,7 @@ var RightBarComponent = (function () {
         }
     };
     RightBarComponent.prototype.prevEditView = function () {
-        this.template = new template_1.Template();
+        this.resetTemplateForm();
         this.onRefresh.emit(this.template);
         this.scenario = 'editTemplate';
     };
@@ -238,8 +242,18 @@ var RightBarComponent = (function () {
         this.appService.putTemplate(this.template).subscribe(function (response) {
             _this.response = response,
                 _this.showAlerts('success', 'Template saved');
-            _this.templateAdded = true;
-            _this.onAddTemplate.emit(_this.templateAdded);
+            _this.emitEditTemplate();
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.deleteTemplate = function (template) {
+        var _this = this;
+        this.appService.deleteTemplate(template).subscribe(function (response) {
+            _this.response = response,
+                _this.showAlerts('success', 'Template deleted'),
+                _this.emitDeleteTemplate();
         }, function (error) {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');

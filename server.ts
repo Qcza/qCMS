@@ -77,7 +77,7 @@ app.delete('/templates/:id', function (req: express.Request, res: express.Respon
   let id:string = req.params.id;
   MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
-    db.collection('templates').deleteOne({'id': id}).then( function () {
+    db.collection('templates').deleteOne({'_id': new ObjectId(id)}).then( function () {
       let response:string = JSON.stringify('success');
       res.send(response);
       db.close();

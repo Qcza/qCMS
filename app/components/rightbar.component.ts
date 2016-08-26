@@ -26,6 +26,8 @@ export class RightBarComponent implements OnChanges, OnInit {
   elementsList:Array<Element> = [];
   chosenElement:Element = new Element();
   templateAdded:boolean;
+  templateDeleted:boolean;
+  templateEdited:boolean;
   documentTitle:string = '';
   documentAdded:boolean;
   documentDeleted:boolean;
@@ -129,7 +131,7 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.appService.postTemplate(this.template).subscribe(
       response => {
         this.response = response,
-        this.resetTemplateForm(response),
+        this.resetTemplateForm(),
         this.showAlerts('success', 'Template saved'),
         this.emitAddTemplate()
       },
@@ -140,15 +142,13 @@ export class RightBarComponent implements OnChanges, OnInit {
     );
   }
 
-  resetTemplateForm(response:string):void {
-    if (response === 'success') {
-      this.documentCollection = '';
-      this.templateName = undefined;
-      this.templateElements = [];
-      this.templateDefault = false;
-      this.template = new Template();
-      this.chosenElement = new Element();
-    }
+  resetTemplateForm():void {
+    this.documentCollection = '';
+    this.templateName = undefined;
+    this.templateElements = [];
+    this.templateDefault = false;
+    this.template = new Template();
+    this.chosenElement = new Element();
   }
 
   showAlerts(type:string, message:string):void {
@@ -156,11 +156,11 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.alert = new Alert(type, message);
     setTimeout(() => {
       this.hideAlert = true;
-    }, 6000);
+    }, 2000);
     setTimeout(() => {
       this.showAlert = false;
       this.hideAlert = false;
-    }, 7500);
+    }, 3000);
   }
 
   @Output() onAddTemplate = new EventEmitter<boolean>();
@@ -173,12 +173,18 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   @Output() onDeleteTemplate = new EventEmitter<boolean>();
   emitDeleteTemplate() {
-    return
+    this.templateDeleted = true;
+    this.onDeleteTemplate.emit(this.templateDeleted);
+    this.scenario = 'editTemplate';
+    this.resetTemplateForm();
+    this.onRefresh.emit(this.template);
   }
 
   @Output() onEditTemplate = new EventEmitter<boolean>();
-  emitEditemplate() {
-    return
+  emitEditTemplate() {
+    this.templateEdited = true;
+    this.onEditTemplate.emit(this.templateEdited);
+    this.onRefresh.emit(this.template);
   }
 
   addDocument(title:string, template:Template):void {
@@ -279,8 +285,8 @@ export class RightBarComponent implements OnChanges, OnInit {
     }
   }
 
-  prevEditView() {
-    this.template = new Template();
+  prevEditView():void {
+    this.resetTemplateForm();
     this.onRefresh.emit(this.template);
     this.scenario = 'editTemplate';
   }
@@ -290,8 +296,21 @@ export class RightBarComponent implements OnChanges, OnInit {
       response => {
         this.response = response,
         this.showAlerts('success', 'Template saved')
-        this.templateAdded = true;
-        this.onAddTemplate.emit(this.templateAdded);
+        this.emitEditTemplate();
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    );
+  }
+
+  deleteTemplate(template:Template):void {
+    this.appService.deleteTemplate(template).subscribe(
+      response => {
+        this.response = response,
+        this.showAlerts('success', 'Template deleted'),
+        this.emitDeleteTemplate()
       },
       error => {
         this.errorMessage = <any>error,
