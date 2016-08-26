@@ -18,13 +18,8 @@ app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
 // });
 //TEMPLATES
 // POST TEMPLATE
-app.post('/templates', function (req, res) {
-    MongoClient.connect(dbUrl, function (err, db) {
-        assert.equal(null, err);
-        if (req.body.is_default === true) {
-            db.collection('templates').updateMany({}, { $set: { 'is_default': false } });
-        }
-        db.collection('templates').insertOne(req.body);
+function addTemplate(db, req) {
+    db.collection('templates').insertOne(req.body).then(function () {
         db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
             var new_collections = document.collections;
             if (new_collections.indexOf(req.body.collection) === -1) {
@@ -44,6 +39,19 @@ app.post('/templates', function (req, res) {
                 db.close();
             }
         });
+    });
+}
+app.post('/templates', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        if (req.body.is_default === true) {
+            db.collection('templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
+                addTemplate(db, req);
+            });
+        }
+        else {
+            addTemplate(db, req);
+        }
         var response = JSON.stringify('success');
         res.send(response);
     });
@@ -72,19 +80,29 @@ app.delete('/templates/:id', function (req, res) {
     });
 });
 // EDIT TEMPLATE
+function updateTemplate(db, req) {
+    db.collection('templates').updateOne({ '_id': new ObjectId(req.body._id) }, {
+        'name': req.body.name,
+        'collection': req.body.collection,
+        'is_default': req.body.is_default,
+        'elements': req.body.elements
+    }).then(function () {
+        db.close();
+    });
+}
 app.put('/templates', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('templates').updateOne({ '_id': new ObjectId(req.body._id) }, {
-            'name': req.body.name,
-            'collection': req.body.collection,
-            'is_default': req.body.is_default,
-            'elements': req.body.elements
-        }).then(function () {
-            var response = JSON.stringify('success');
-            res.send(response);
-            db.close();
-        });
+        if (req.body.is_default === true) {
+            db.collection('templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
+                updateTemplate(db, req);
+            });
+        }
+        else {
+            updateTemplate(db, req);
+        }
+        var response = JSON.stringify('success');
+        res.send(response);
     });
 });
 //DOCUMENTS
