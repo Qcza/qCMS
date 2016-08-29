@@ -231,9 +231,6 @@ var RightBarComponent = (function () {
         this.scenario = 'editTemplateDeep';
         this.refreshEditedTemplate(template);
     };
-    RightBarComponent.prototype.goDeepAddUser = function () {
-        this.scenario = 'addUserDeep';
-    };
     RightBarComponent.prototype.addEditElement = function (element) {
         var indexes = [];
         for (var _i = 0, _a = this.template.elements; _i < _a.length; _i++) {
@@ -286,8 +283,18 @@ var RightBarComponent = (function () {
                 _this.showAlerts('danger', 'Something went wrong');
         });
     };
+    RightBarComponent.prototype.goDeepAddUser = function () {
+        this.scenario = 'addUserDeep';
+    };
+    RightBarComponent.prototype.goDeepEditUser = function (user) {
+        this.scenario = 'editUserDeep';
+        this.user = new user_1.User(user.login, user.fname, user.lname, user.role, undefined, user._id);
+    };
     RightBarComponent.prototype.choseRole = function (role) {
         this.userRole = role;
+    };
+    RightBarComponent.prototype.choseRoleEdit = function (role) {
+        this.user.role = role;
     };
     RightBarComponent.prototype.resetAddUserForm = function () {
         this.userLogin = '';

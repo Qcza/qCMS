@@ -153,7 +153,7 @@
     </div>
     <!-- USERS -->
     <div class="user-form" *ngIf="scenario==='users'">
-      <div class="document-template" *ngFor="let user of users">
+      <div class="document-template" *ngFor="let user of users" (click)="goDeepEditUser(user)">
         {{user.login}}
       </div>
       <button class="btn btn-qcms btn-qcms-icon btn-list-fix pull-right" (click)="goDeepAddUser()"><i class="fa fa-user-plus"></i></button>
@@ -184,12 +184,12 @@
         <div class="form-group">
           <label for="addUserRole">Role</label>
           <div class="template-element-input" ngbDropdown>
-              <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-user"></i></span>
-              {{userRole}}
-              <ul class="dropdown-menu qcms-dropdown-menu">
-                <li class="drodown-menu-element" *ngFor="let role of userRoles" (click)="choseRole(role);"><i class="template-element-icon fa fa-user"></i>{{role}}</li>
-              </ul>
-            </div>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-user"></i></span>
+            {{userRole}}
+            <ul class="dropdown-menu qcms-dropdown-menu">
+              <li class="drodown-menu-element" *ngFor="let role of userRoles" (click)="choseRole(role);"><i class="template-element-icon fa fa-user"></i>{{role}}</li>
+            </ul>
+          </div>
         </div>
         <div class="form-group">
           <label for="addUserPw">Password</label>
@@ -200,9 +200,53 @@
           <input id="addUserPwConfirm" name="addUserPwConfirm" type="password" class="form-control qcms-form-input" [ngClass]="{'qcms-input-error': userPwCon !== userPw}" [(ngModel)]="userPwCon">
         </div>
         <button class="btn btn-qcms pull-right" (click)="addUser()" [disabled]="userLogin === '' || userFname === '' || userLname === '' || userRole === '' || userPw === '' || userPwCon !== userPw">Save</button>
-      </form>
+      </form> 
       <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
         <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
       </div>
-  </div>
+    </div>
+    <div class="edit-user-form" *ngIf="scenario==='editUserDeep'">
+      <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
+      <hr />
+      <form name="editUser">
+        <div class="form-group">
+          <label for="editUserLogin">Login</label>
+          <input id="editUserLogin" name="editUserLogin" type="text" class="form-control qcms-form-input" [(ngModel)]="user.login">
+        </div>
+        <div class="form-group">
+          <label for="editUserFname">First name</label>
+          <input id="editUserFname" name="editUserFname" type="text" class="form-control qcms-form-input" [(ngModel)]="user.fname">
+        </div>
+        <div class="form-group">
+          <label for="editUserLname">Last name</label>
+          <input id="editUserLname" name="editUserLname" type="text" class="form-control qcms-form-input" [(ngModel)]="user.lname">
+        </div>
+        <div class="form-group">
+          <label for="editUserImage">Profile image</label>
+          <input id="editUserImage" name="editUserImage" type="text" class="form-control qcms-form-input" placeholder="#ToDo" disabled>
+        </div>
+        <div class="form-group">
+          <label for="editUserRole">Role</label>
+          <div class="template-element-input" ngbDropdown>
+            <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-user"></i></span>
+            {{user.role}}
+            <ul class="dropdown-menu qcms-dropdown-menu">
+              <li class="drodown-menu-element" *ngFor="let role of userRoles" (click)="choseRoleEdit(role);"><i class="template-element-icon fa fa-user"></i>{{role}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editUserPw">New password</label>
+          <input id="editUserPw" name="editUserPw" type="password" class="form-control qcms-form-input" [(ngModel)]="userPw">
+        </div>
+        <div class="form-group" *ngIf="userPw && userPw.length > 0">
+          <label for="editUserPwConfirm">Confirm password</label>
+          <input id="editUserPwConfirm" name="editUserPwConfirm" type="password" class="form-control qcms-form-input" [ngClass]="{'qcms-input-error': userPwCon !== userPw}" [(ngModel)]="userPwCon">
+        </div>
+        <button class="btn btn-qcms pull-right" (click)="editUser()" [disabled]="user.login === '' || user.fname === '' || user.lname === '' || user.role === '' ||  userPwCon !== userPw">Save</button>
+      </form> 
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+      </div>
+    </div>
 </div>

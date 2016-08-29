@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { Template, Element } from '../models/template';
 import { Doc } from '../models/document';
-import { User } from '../models/user';
+import { User, UserInterface } from '../models/user';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
@@ -295,10 +295,6 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.refreshEditedTemplate(template);
   }
 
-  goDeepAddUser():void {
-    this.scenario = 'addUserDeep';
-  }
-
   addEditElement(element:Element):void {
     let indexes:Array<number> = [];
     for (let i of this.template.elements) {
@@ -360,8 +356,21 @@ export class RightBarComponent implements OnChanges, OnInit {
     );
   }
 
+  goDeepAddUser():void {
+    this.scenario = 'addUserDeep';
+  }
+
+  goDeepEditUser(user:UserInterface):void {
+    this.scenario = 'editUserDeep';
+    this.user = new User(user.login, user.fname, user.lname, user.role, undefined, user._id);
+  }
+
   choseRole(role:string) {
     this.userRole = role;
+  }
+
+  choseRoleEdit(role:string) {
+    this.user.role = role;
   }
 
   resetAddUserForm():void {
