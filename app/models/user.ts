@@ -1,5 +1,6 @@
 export interface UserInterface {
   _id:string;
+  login:string;
   fname:string;
   lname:string;
   imgurl:string;
@@ -9,17 +10,19 @@ export interface UserInterface {
 
 export class User implements UserInterface {
   _id:string;
+  login:string;
   fname:string;
   lname:string;
   imgurl:string; // ToDo
   role:string;
   pw:string;
 
-  constructor (fname, lname, role = 'user', pw?, id?) {
-    if (id) this._id = id;
+  constructor (login, fname, lname, role = 'user', pw?, id?) {
+    this.login = login;
     this.fname = fname;
     this.lname = lname;
     this.role = role;
+    if (id) this._id = id;
     if (pw) this.pw = pw;
   }
 }

@@ -1,4 +1,5 @@
 $primary-color: #6404e8
+$error-color: #d9534f
 
 body
   margin: 0
@@ -41,6 +42,9 @@ body
     background-color: #fff
     border: 1px solid $primary-color
     color: $primary-color
+
+.btn-list-fix
+  margin: 4px
 
 .btn-qcms-element
   font-size: 12pt
@@ -87,4 +91,31 @@ body
 
   &:hover
     color: lighten($primary-color, 20%)
+
+.qcms-input-error
+  border: solid 1px $error-color !important
+  animation-name: nope
+  animation-duration: .5s
+  animation-fill-mode: forwards
+
+  &:focus
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px lighten($error-color, 10%)
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px lighten($error-color, 10%)
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px lighten($error-color, 10%)
+
+@keyframes nope
+  0%
+    transform: none
+
+  25%
+    transform: translate(5px)
+
+  50%
+    transform: translate(-5px)
+
+  75%
+    transform: translate(5px)
+
+  100%
+    transform: none
 

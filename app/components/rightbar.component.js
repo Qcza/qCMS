@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var template_1 = require('../models/template');
 var document_1 = require('../models/document');
+var user_1 = require('../models/user');
 var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
 var RightBarComponent = (function () {
@@ -19,11 +20,18 @@ var RightBarComponent = (function () {
         this.show = 'default';
         this.elementsList = [];
         this.chosenElement = new template_1.Element();
+        // DOCUMENTS
         this.documentTitle = '';
         this.documentCollection = '';
         this.templateElements = [];
         this.templateDefault = false;
         this.templatesToEdit = [];
+        this.userLogin = '';
+        this.userFname = '';
+        this.userLname = '';
+        this.userRole = '';
+        this.userPw = '';
+        this.userPwCon = '';
         this.onRefresh = new core_1.EventEmitter();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onDeleteTemplate = new core_1.EventEmitter();
@@ -35,6 +43,7 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.ngOnInit = function () {
         this.getCollections();
         this.getElements();
+        this.getRoles();
     };
     RightBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.scenario !== undefined) {
@@ -42,6 +51,9 @@ var RightBarComponent = (function () {
         }
         if (this.scenario === 'editTemplate') {
             this.getTemplatesToEdit();
+        }
+        if (this.scenario === 'users') {
+            this.getUsers();
         }
     };
     RightBarComponent.prototype.showBar = function () {
@@ -88,7 +100,7 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.getCollections = function () {
         var _this = this;
-        this.appService.getCollections().subscribe(function (collections) { return _this.documentCollections = collections; }, function (error) { return _this.errMessage = error; });
+        this.appService.getCollections().subscribe(function (collections) { return _this.documentCollections = collections; }, function (error) { return _this.errorMessage = error; });
     };
     RightBarComponent.prototype.bootstrapElements = function (elementsTypes) {
         for (var _i = 0, elementsTypes_1 = elementsTypes; _i < elementsTypes_1.length; _i++) {
@@ -101,7 +113,11 @@ var RightBarComponent = (function () {
         this.appService.getElements().subscribe(function (elements) {
             _this.elementsTypes = elements,
                 _this.bootstrapElements(elements);
-        }, function (error) { return _this.errMessage = error; });
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    RightBarComponent.prototype.getRoles = function () {
+        var _this = this;
+        this.appService.getRoles().subscribe(function (roles) { return _this.userRoles = roles; }, function (error) { return _this.errorMessage = error; });
     };
     RightBarComponent.prototype.saveTemplate = function () {
         var _this = this;
@@ -205,15 +221,18 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.getTemplatesToEdit = function () {
         var _this = this;
-        this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errMessage = error; });
+        this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errorMessage = error; });
     };
     RightBarComponent.prototype.refreshEditedTemplate = function (template) {
         this.template = new template_1.Template(template.name, template.elements, template.is_default, template.collection, template._id);
         this.onRefresh.emit(this.template);
     };
-    RightBarComponent.prototype.goDeep = function (template) {
+    RightBarComponent.prototype.goDeepEditTemplate = function (template) {
         this.scenario = 'editTemplateDeep';
         this.refreshEditedTemplate(template);
+    };
+    RightBarComponent.prototype.goDeepAddUser = function () {
+        this.scenario = 'addUserDeep';
     };
     RightBarComponent.prototype.addEditElement = function (element) {
         var indexes = [];
@@ -241,6 +260,10 @@ var RightBarComponent = (function () {
         this.onRefresh.emit(this.template);
         this.scenario = 'editTemplate';
     };
+    RightBarComponent.prototype.prevUsersView = function () {
+        this.resetAddUserForm();
+        this.scenario = 'users';
+    };
     RightBarComponent.prototype.editTemplate = function () {
         var _this = this;
         this.appService.putTemplate(this.template).subscribe(function (response) {
@@ -262,6 +285,34 @@ var RightBarComponent = (function () {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
         });
+    };
+    RightBarComponent.prototype.choseRole = function (role) {
+        this.userRole = role;
+    };
+    RightBarComponent.prototype.resetAddUserForm = function () {
+        this.userLogin = '';
+        this.userFname = '';
+        this.userLname = '';
+        this.userRole = '';
+        this.userPw = '';
+        this.userPwCon = '';
+    };
+    RightBarComponent.prototype.addUser = function () {
+        var _this = this;
+        var user = new user_1.User(this.userLogin, this.userFname, this.userLname, this.userRole, this.userPw);
+        this.appService.postUsers(user).subscribe(function (response) {
+            _this.response = response,
+                _this.getUsers(),
+                _this.prevUsersView(),
+                _this.showAlerts('success', 'User added');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.appService.getUsers().subscribe(function (users) { return _this.users = users; }, function (error) { return _this.errorMessage = error; });
     };
     __decorate([
         core_1.Input(), 

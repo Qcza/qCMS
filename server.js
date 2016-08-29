@@ -93,7 +93,8 @@ app.delete('/templates/:id', function (req, res) {
 });
 // EDIT TEMPLATE
 function updateTemplate(db, req) {
-    db.collection('templates').updateOne({ '_id': new ObjectId(req.body._id) }, {
+    var id = req.params.id;
+    db.collection('templates').updateOne({ '_id': new ObjectId(id) }, {
         'name': req.body.name,
         'collection': req.body.collection,
         'is_default': req.body.is_default,
@@ -102,7 +103,7 @@ function updateTemplate(db, req) {
         db.close();
     });
 }
-app.put('/templates', function (req, res) {
+app.put('/templates/:id', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
         if (req.body.is_default === true) {
@@ -141,10 +142,11 @@ app.get('/documents', function (req, res) {
     });
 });
 // EDIT DOCUMENT
-app.put('/documents', function (req, res) {
+app.put('/documents/:id', function (req, res) {
+    var id = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('documents').updateOne({ '_id': new ObjectId(req.body._id) }, { $set: {
+        db.collection('documents').updateOne({ '_id': new ObjectId(id) }, { $set: {
                 'title': req.body.title,
                 'template': req.body.template
             } }).then(function () {
@@ -182,15 +184,16 @@ app.post('/users', function (req, res) {
 app.get('/users', function (req, res) {
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('users').find().sort({ 'lname': 1 }).toArray().then(function (documents) {
+        db.collection('users').find().sort({ 'login': 1 }).toArray().then(function (documents) {
             var response = JSON.stringify(documents);
             res.send(response);
             db.close();
         });
     });
 });
-// EDIT USERS
-app.put('/users', function (req, res) {
+// EDIT USER
+app.put('/users:id', function (req, res) {
+    var id = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
         db.collection('users').updateOne({ '_id': new ObjectId(req.body._id) }, {
@@ -236,6 +239,17 @@ app.get('/helpers/elements', function (req, res) {
         assert.equal(null, err);
         db.collection('helpers').findOne({ 'name': 'elements' }).then(function (document) {
             var response = JSON.stringify(document.types);
+            res.send(response);
+            db.close();
+        });
+    });
+});
+// GET ROLES
+app.get('/helpers/roles', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('helpers').findOne({ 'name': 'roles' }).then(function (document) {
+            var response = JSON.stringify(document.roles);
             res.send(response);
             db.close();
         });

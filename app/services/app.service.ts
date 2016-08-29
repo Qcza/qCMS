@@ -35,7 +35,7 @@ export class AppService {
     let body = JSON.stringify(template);
     let headers = new Headers({'Content-type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
+    return this.http.put(this.templatesUrl+'/'+template._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteTemplate (template:Template): Observable<any> {
@@ -59,7 +59,7 @@ export class AppService {
     let body = JSON.stringify(document);
     let headers = new Headers({'Content-type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.put(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
+    return this.http.put(this.documentsUrl+'/'+document._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteDocument (document:Doc): Observable<any> {
@@ -83,7 +83,7 @@ export class AppService {
     let body = JSON.stringify(user);
     let headers = new Headers({'Content-type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.put(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+    return this.http.put(this.usersUrl+'/'+user._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteUser (user:User): Observable<any> {
@@ -99,6 +99,11 @@ export class AppService {
   private elementsUrl = this.domain + '/helpers/elements';
   getElements (): Observable<any> {
     return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+  }
+
+  private rolesUrl = this.domain + '/helpers/roles';
+  getRoles (): Observable<any> {
+    return this.http.get(this.rolesUrl).map(this.extractData).catch(this.handleError);
   }
 
   // Helpers

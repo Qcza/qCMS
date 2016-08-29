@@ -31,6 +31,19 @@ const elements:ElementsTypes = {
   ]
 }
 
+interface Roles {
+  name:string;
+  roles:Array<string>;
+}
+
+const roles:Roles = {
+  name: 'roles',
+  roles: [
+    'user',
+    'admin'
+  ]
+}
+
 // SEED COLLECTIONS
 MongoClient.connect(dbUrl, function(err, db) {
     assert.equal(null, err);
@@ -41,8 +54,10 @@ MongoClient.connect(dbUrl, function(err, db) {
           db.close();
         });
       } else {
-        console.log('skipped collections');
-        db.close()
+        db.collection('helpers').updateOne({'name': 'collections'}, {$set: {'collections': collections.collections}}).then(function () {
+          console.log('updated collections');
+          db.close();
+        })
       }
     })
 });
@@ -57,8 +72,28 @@ MongoClient.connect(dbUrl, function(err, db) {
           db.close();
         });
       } else {
-        console.log('skipped elements');
-        db.close()
+        db.collection('helpers').updateOne({'name': 'elements'}, {$set: {'types': elements.types}}).then(function () {
+          console.log('updated elements types');
+          db.close();
+        })
+      }
+    })
+});
+
+// SEED ROLES
+MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('helpers').findOne({'name': 'roles'}).then(function(document) {
+      if (!document) {
+        db.collection('helpers').insertOne(roles).then(function() {
+          console.log('added roles');
+          db.close();
+        });
+      } else {
+        db.collection('helpers').updateOne({'name': 'roles'}, {$set: {'roles': roles.roles}}).then(function () {
+          console.log('updated roles');
+          db.close();
+        })
       }
     })
 });

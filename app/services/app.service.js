@@ -26,6 +26,7 @@ var AppService = (function () {
         // Helpers services
         this.collectionsUrl = this.domain + '/helpers/collections';
         this.elementsUrl = this.domain + '/helpers/elements';
+        this.rolesUrl = this.domain + '/helpers/roles';
     }
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
@@ -43,7 +44,7 @@ var AppService = (function () {
         var body = JSON.stringify(template);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.put(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
+        return this.http.put(this.templatesUrl + '/' + template._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteTemplate = function (template) {
         return this.http.delete(this.templatesUrl + '/' + template._id).map(this.extractData).catch(this.handleError);
@@ -61,7 +62,7 @@ var AppService = (function () {
         var body = JSON.stringify(document);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.put(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
+        return this.http.put(this.documentsUrl + '/' + document._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteDocument = function (document) {
         return this.http.delete(this.documentsUrl + '/' + document._id).map(this.extractData).catch(this.handleError);
@@ -79,7 +80,7 @@ var AppService = (function () {
         var body = JSON.stringify(user);
         var headers = new http_1.Headers({ 'Content-type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.put(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+        return this.http.put(this.usersUrl + '/' + user._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteUser = function (user) {
         return this.http.delete(this.usersUrl + '/' + user._id).map(this.extractData).catch(this.handleError);
@@ -89,6 +90,9 @@ var AppService = (function () {
     };
     AppService.prototype.getElements = function () {
         return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.getRoles = function () {
+        return this.http.get(this.rolesUrl).map(this.extractData).catch(this.handleError);
     };
     // Helpers
     AppService.prototype.extractData = function (res) {

@@ -50,7 +50,7 @@
     </div>
     <!-- EDIT TEMPLATES -->
     <div class="edit-template-form-l" *ngIf="scenario==='editTemplate'">
-      <div class="document-template" *ngFor="let template of templatesToEdit" on-mouseenter="template.is_selected = true" on-mouseout="template.is_selected = false" (click)="goDeep(template)">
+      <div class="document-template" *ngFor="let template of templatesToEdit" on-mouseenter="template.is_selected = true" on-mouseout="template.is_selected = false" (click)="goDeepEditTemplate(template)">
         <i class="fa" [ngClass]="{'fa-file-o': !template.is_selected, 'fa-edit': template.is_selected === true}"></i>&nbsp;&nbsp;{{template.name}}
       </div>
       <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
@@ -121,11 +121,11 @@
           <label for="useDocumentFile"><i class="fa fa-chain"></i> File</label>
           <input id="useDocumentFile" name="useDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
-        <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template)">Save</button>
-        <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
-            <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
-          </div>
+        <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template);">Save</button>
       </form>
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+      </div>
     </div>
     <!-- EDIT DOCUMENT -->
     <div class="edit-document-form" *ngIf="scenario==='editDocument'">
@@ -146,10 +146,63 @@
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="document.title === ''" (click)="editDocument(document)">Save</button>
         <button class="btn btn-qcms btn-qcms-icon pull-right" (click)="deleteDocument(document)"><i class="fa fa-trash-o"></i></button>
-        <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
-            <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
-          </div>
       </form>
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+      </div>
     </div>
+    <!-- USERS -->
+    <div class="user-form" *ngIf="scenario==='users'">
+      <div class="document-template" *ngFor="let user of users">
+        {{user.login}}
+      </div>
+      <button class="btn btn-qcms btn-qcms-icon btn-list-fix pull-right" (click)="goDeepAddUser()"><i class="fa fa-user-plus"></i></button>
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+      </div>
+    </div>
+    <div class="add-user-form" *ngIf="scenario==='addUserDeep'">
+      <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
+      <hr />
+      <form name="addUser">
+        <div class="form-group">
+          <label for="addUserLogin">Login</label>
+          <input id="addUserLogin" name="addUserLogin" type="text" class="form-control qcms-form-input" [(ngModel)]="userLogin">
+        </div>
+        <div class="form-group">
+          <label for="addUserFname">First name</label>
+          <input id="addUserFname" name="addUserFname" type="text" class="form-control qcms-form-input" [(ngModel)]="userFname">
+        </div>
+        <div class="form-group">
+          <label for="addUserLname">Last name</label>
+          <input id="addUserLname" name="addUserLname" type="text" class="form-control qcms-form-input" [(ngModel)]="userLname">
+        </div>
+        <div class="form-group">
+          <label for="addUserImage">Profile image</label>
+          <input id="addUserImage" name="addUserImage" type="text" class="form-control qcms-form-input" placeholder="#ToDo" disabled>
+        </div>
+        <div class="form-group">
+          <label for="addUserRole">Role</label>
+          <div class="template-element-input" ngbDropdown>
+              <span class="dropdown-element" ngbDropdownToggle><i class="template-element-icon-no-margin fa fa-user"></i></span>
+              {{userRole}}
+              <ul class="dropdown-menu qcms-dropdown-menu">
+                <li class="drodown-menu-element" *ngFor="let role of userRoles" (click)="choseRole(role);"><i class="template-element-icon fa fa-user"></i>{{role}}</li>
+              </ul>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="addUserPw">Password</label>
+          <input id="addUserPw" name="addUserPw" type="password" class="form-control qcms-form-input" [(ngModel)]="userPw">
+        </div>
+        <div class="form-group" *ngIf="userPw && userPw.length > 0">
+          <label for="addUserPwConfirm">Confirm password</label>
+          <input id="addUserPwConfirm" name="addUserPwConfirm" type="password" class="form-control qcms-form-input" [ngClass]="{'qcms-input-error': userPwCon !== userPw}" [(ngModel)]="userPwCon">
+        </div>
+        <button class="btn btn-qcms pull-right" (click)="addUser()" [disabled]="userLogin === '' || userFname === '' || userLname === '' || userRole === '' || userPw === '' || userPwCon !== userPw">Save</button>
+      </form>
+      <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
+        <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
+      </div>
   </div>
 </div>

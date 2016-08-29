@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { Template, Element } from '../models/template';
 import { Doc } from '../models/document';
+import { User } from '../models/user';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
@@ -25,26 +26,41 @@ export class RightBarComponent implements OnChanges, OnInit {
   elementsTypes:Array<string>;
   elementsList:Array<Element> = [];
   chosenElement:Element = new Element();
-  templateAdded:boolean;
-  templateDeleted:boolean;
-  templateEdited:boolean;
+
+  // DOCUMENTS
   documentTitle:string = '';
   documentAdded:boolean;
   documentDeleted:boolean;
   documentEdited:boolean;
   documentCollections:Array<string>;
   documentCollection:string = '';
+
+  // TEMPLATES
   templateName:string;
   templateElements:Array<Element> = [];
   templateDefault:boolean = false;
-  errMessage:any;
   templatesToEdit:Array<Template> = [];
+  templateAdded:boolean;
+  templateDeleted:boolean;
+  templateEdited:boolean;
+
+  // USERS
+  user:User;
+  users:Array<User>;
+  userRoles:Array<string>;
+  userLogin:string = '';
+  userFname:string = '';
+  userLname:string = '';
+  userRole:string = '';
+  userPw:string = '';
+  userPwCon:string = '';
 
   constructor (private appService: AppService) { } 
 
    ngOnInit() {
      this.getCollections();
      this.getElements();
+     this.getRoles();
    }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -53,6 +69,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     }
     if (this.scenario === 'editTemplate') {
       this.getTemplatesToEdit();
+    }
+    if (this.scenario === 'users') {
+      this.getUsers();
     }
   }
 
@@ -107,7 +126,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   getCollections():void {
     this.appService.getCollections().subscribe(
       collections => this.documentCollections = collections,
-      error => this.errMessage = error
+      error => this.errorMessage = error
     );
   }
 
@@ -123,9 +142,17 @@ export class RightBarComponent implements OnChanges, OnInit {
         this.elementsTypes = elements,
         this.bootstrapElements(elements)
     },
-      error => this.errMessage = error
+      error => this.errorMessage = error
     );
   }
+
+  getRoles():void {
+    this.appService.getRoles().subscribe(
+      roles => this.userRoles = roles,
+      error => this.errorMessage = error
+    );
+  }
+
 
   saveTemplate():void {
     this.appService.postTemplate(this.template).subscribe(
@@ -254,7 +281,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   getTemplatesToEdit():void {
     this.appService.getTemplates().subscribe(
       templates => this.templatesToEdit = templates,
-      error => this.errMessage = error
+      error => this.errorMessage = error
     );
   }
 
@@ -263,9 +290,13 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.onRefresh.emit(this.template);
   }
 
-  goDeep(template:Template):void {
+  goDeepEditTemplate(template:Template):void {
     this.scenario = 'editTemplateDeep';
     this.refreshEditedTemplate(template);
+  }
+
+  goDeepAddUser():void {
+    this.scenario = 'addUserDeep';
   }
 
   addEditElement(element:Element):void {
@@ -296,6 +327,11 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.scenario = 'editTemplate';
   }
 
+  prevUsersView():void {
+    this.resetAddUserForm();
+    this.scenario = 'users'
+  }
+
   editTemplate():void {
     this.appService.putTemplate(this.template).subscribe(
       response => {
@@ -322,5 +358,41 @@ export class RightBarComponent implements OnChanges, OnInit {
         this.showAlerts('danger', 'Something went wrong')
       }
     );
+  }
+
+  choseRole(role:string) {
+    this.userRole = role;
+  }
+
+  resetAddUserForm():void {
+    this.userLogin = '';
+    this.userFname = '';
+    this.userLname = '';
+    this.userRole = '';
+    this.userPw = '';
+    this.userPwCon = '';
+  }
+
+  addUser() {
+    let user = new User(this.userLogin, this.userFname, this.userLname, this.userRole, this.userPw)
+    this.appService.postUsers(user).subscribe(
+      response => {
+        this.response = response,
+        this.getUsers(),
+        this.prevUsersView(),
+        this.showAlerts('success', 'User added')
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    )
+  }
+
+  getUsers() {
+    this.appService.getUsers().subscribe(
+      users => this.users = users,
+      error => this.errorMessage = <any>error
+    )
   }
 }

@@ -22,7 +22,7 @@ var LeftBarComponent = (function () {
         this.settingMenu = [
             { title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate' },
             { title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
-            { title: 'Manage users', icon: 'fa-user-plus', is_selected: false, scenario: 'addUser' },
+            { title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users' },
             { title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' },
             { title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences' }
         ];
@@ -55,7 +55,7 @@ var LeftBarComponent = (function () {
         }
     };
     LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
-        if (scenario === 'newTemplate' || scenario === 'editTemplate') {
+        if (scenario === 'newTemplate' || scenario === 'editTemplate' || scenario === 'users') {
             this.newTemplate();
         }
         this.onSelectScenario.emit(scenario);
