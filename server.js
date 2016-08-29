@@ -166,6 +166,58 @@ app.delete('/documents/:id', function (req, res) {
         });
     });
 });
+// USERS
+// POST USERS
+app.post('/users', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('users').insertOne(req.body).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
+    });
+});
+// GET USERS
+app.get('/users', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('users').find().sort({ 'lname': 1 }).toArray().then(function (documents) {
+            var response = JSON.stringify(documents);
+            res.send(response);
+            db.close();
+        });
+    });
+});
+// EDIT USERS
+app.put('/users', function (req, res) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('users').updateOne({ '_id': new ObjectId(req.body._id) }, {
+            'fname': req.body.fname,
+            'lname': req.body.lname,
+            'imgurl': req.body.imgurl,
+            'role': req.body.role,
+            'pw': req.body.pw
+        }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
+    });
+});
+// DELETE USER
+app.delete('/users/:id', function (req, res) {
+    var id = new ObjectId(req.params._id);
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('users').deleteOne({ '_id': id }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
+    });
+});
 //HELPERS
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req, res) {

@@ -177,6 +177,62 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
   })
 })
 
+// USERS
+// POST USERS
+app.post('/users', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').insertOne(req.body).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
+// GET USERS
+app.get('/users', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').find().sort({'lname': 1}).toArray().then(function (documents) {
+      let response:string = JSON.stringify(documents);
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
+// EDIT USERS
+app.put('/users', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').updateOne({'_id': new ObjectId(req.body._id)}, {
+      'fname': req.body.fname,
+      'lname': req.body.lname,
+      'imgurl': req.body.imgurl,
+      'role': req.body.role,
+      'pw': req.body.pw
+    }).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
+// DELETE USER
+app.delete('/users/:id', function (req: express.Request, res: express.Response) {
+  let id:mongodb.ObjectID = new ObjectId(req.params._id);
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').deleteOne({'_id': id}).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
 //HELPERS
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req: express.Request, res: express.Response) {

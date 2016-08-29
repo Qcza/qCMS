@@ -114,11 +114,11 @@
           <input id="useDocumentTitle" name="useDocumentTitle" class="form-control qcms-form-input" type="text" [(ngModel)]="documentTitle">
         </div>
         <div class="form-group">
-          <label for="useDocumentPicture">Picture</label>
+          <label for="useDocumentPicture"><i class="fa fa-picture-o"></i> Picture</label>
           <input id="useDocumentPicture" name="useDocumentPicture" class="form-control qcms-form-input" type="text" placeholder="#ToDo picture input" disabled>
         </div>
         <div class="form-group">
-          <label for="useDocumentFile">File</label>
+          <label for="useDocumentFile"><i class="fa fa-chain"></i> File</label>
           <input id="useDocumentFile" name="useDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template)">Save</button>
@@ -137,11 +137,11 @@
           <input id="editDocumentTitle" name="editDocumentTitle" class="form-control qcms-form-input" type="text" [(ngModel)]="document.title">
         </div>
         <div class="form-group">
-          <label for="editDocumentPicture">Picture</label>
+          <label for="editDocumentPicture"><i class="fa fa-picture-o"></i> Picture</label>
           <input id="editDocumentPicture" name="editDocumentPicture" class="form-control qcms-form-input" type="text" placeholder="#ToDo picture input" disabled>
         </div>
         <div class="form-group">
-          <label for="editDocumentFile">File</label>
+          <label for="editDocumentFile"><i class="fa fa-chain"></i> File</label>
           <input id="editDocumentFile" name="editDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="document.title === ''" (click)="editDocument(document)">Save</button>

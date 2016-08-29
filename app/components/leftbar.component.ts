@@ -31,9 +31,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
   settingMenu:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
     {title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate'},
-    {title: 'Add user', icon: 'fa-user-plus', is_selected: false, scenario: 'addUser'},
-    {title: 'Preferences', icon: 'fa-cutlery', is_selected: false, scenario: 'preferences'},
-    {title: 'Account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'}
+    {title: 'Manage users', icon: 'fa-user-plus', is_selected: false, scenario: 'addUser'},
+    {title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'},
+    {title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences'}
   ]
 
 

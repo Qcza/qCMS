@@ -16,13 +16,16 @@ require('rxjs/add/operator/catch');
 var AppService = (function () {
     function AppService(http) {
         this.http = http;
-        //Templates services
-        this.templatesUrl = 'http://localhost:3000/templates';
-        //Documents services
-        this.documentsUrl = 'http://localhost:3000/documents';
-        //Helpers services
-        this.collectionsUrl = 'http://localhost:3000/helpers/collections';
-        this.elementsUrl = 'http://localhost:3000/helpers/elements';
+        this.domain = 'http://localhost:3000';
+        // Templates services
+        this.templatesUrl = this.domain + '/templates';
+        // Documents services
+        this.documentsUrl = this.domain + '/documents';
+        // Users services
+        this.usersUrl = this.domain + '/users';
+        // Helpers services
+        this.collectionsUrl = this.domain + '/helpers/collections';
+        this.elementsUrl = this.domain + '/helpers/elements';
     }
     AppService.prototype.getTemplates = function () {
         return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
@@ -63,13 +66,31 @@ var AppService = (function () {
     AppService.prototype.deleteDocument = function (document) {
         return this.http.delete(this.documentsUrl + '/' + document._id).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.postUsers = function (user) {
+        var body = JSON.stringify(user);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.getUsers = function () {
+        return this.http.get(this.usersUrl).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.putUser = function (user) {
+        var body = JSON.stringify(user);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.deleteUser = function (user) {
+        return this.http.delete(this.usersUrl + '/' + user._id).map(this.extractData).catch(this.handleError);
+    };
     AppService.prototype.getCollections = function () {
         return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getElements = function () {
         return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
     };
-    //Helpers
+    // Helpers
     AppService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};

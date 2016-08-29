@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Template } from '../models/template';
 import { Doc } from '../models/document';
+import { User } from '../models/user';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -11,8 +12,10 @@ import 'rxjs/add/operator/catch';
 export class AppService {
   constructor (private http: Http) {  }
 
-  //Templates services
-  private templatesUrl = 'http://localhost:3000/templates';
+  private domain = 'http://localhost:3000';
+
+  // Templates services
+  private templatesUrl = this.domain + '/templates';
   getTemplates (): Observable<any> {
     return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
   }
@@ -39,8 +42,8 @@ export class AppService {
     return this.http.delete(this.templatesUrl+'/'+template._id).map(this.extractData).catch(this.handleError);
   }
 
-  //Documents services
-  private documentsUrl = 'http://localhost:3000/documents';
+  // Documents services
+  private documentsUrl = this.domain + '/documents';
   postDocument (document:Doc): Observable<any> {
     let body = JSON.stringify(document);
     let headers = new Headers({'Content-type': 'application/json'});
@@ -63,18 +66,42 @@ export class AppService {
     return this.http.delete(this.documentsUrl+'/'+document._id).map(this.extractData).catch(this.handleError);
   }
 
-  //Helpers services
-  private collectionsUrl = 'http://localhost:3000/helpers/collections';
+  // Users services
+  private usersUrl = this.domain + '/users';
+  postUsers (user:User): Observable<any> {
+    let body = JSON.stringify(user);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+  }
+
+  getUsers (): Observable<any> {
+    return this.http.get(this.usersUrl).map(this.extractData).catch(this.handleError);
+  }
+
+  putUser (user:User): Observable<any> {
+    let body = JSON.stringify(user);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.put(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
+  }
+
+  deleteUser (user:User): Observable<any> {
+    return this.http.delete(this.usersUrl+'/'+user._id).map(this.extractData).catch(this.handleError);
+  }
+
+  // Helpers services
+  private collectionsUrl = this.domain + '/helpers/collections';
   getCollections (): Observable<any> {
     return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
   }
 
-  private elementsUrl = 'http://localhost:3000/helpers/elements';
+  private elementsUrl = this.domain + '/helpers/elements';
   getElements (): Observable<any> {
     return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
   }
 
-  //Helpers
+  // Helpers
   private extractData(res:Response) {
     let body = res.json();
     return body || {  };
