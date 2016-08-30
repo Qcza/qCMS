@@ -5,6 +5,9 @@ import { User, UserInterface } from '../models/user';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
+import { publicImgsPath, publicFilesPath } from '../main';
+
+
 @Component({
     selector: 'right-bar',
     providers: [AppService],
@@ -13,6 +16,9 @@ import { AppService } from '../services/app.service';
 })
 
 export class RightBarComponent implements OnChanges, OnInit {
+
+  imgPath = publicImgsPath;
+  filesPath = publicFilesPath; 
 
   show:string = 'default';
   @Input() scenario:string;
@@ -362,6 +368,7 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   goDeepEditUser(user:UserInterface):void {
     this.scenario = 'editUserDeep';
+    console.log(user)
     this.user = new User(user.login, user.fname, user.lname, user.role, undefined, user._id);
   }
 
@@ -402,6 +409,39 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.appService.getUsers().subscribe(
       users => this.users = users,
       error => this.errorMessage = <any>error
+    )
+  }
+
+  deleteUser(user:User) {
+    this.appService.deleteUser(user).subscribe(
+      response => {
+        this.response = response,
+        this.getUsers(),
+        this.prevUsersView(),
+        this.showAlerts('success', 'User deleted')
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    )
+  }
+
+  editUser(user:User) {
+    if (this.userPw !== '') {
+      this.user.pw = this.userPw;
+    }
+    this.appService.putUser(user).subscribe(
+      response => {
+        this.response = response,
+        this.getUsers(),
+        this.prevUsersView(),
+        this.showAlerts('success', 'User edited')
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
     )
   }
 }

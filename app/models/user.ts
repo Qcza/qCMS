@@ -3,7 +3,7 @@ export interface UserInterface {
   login:string;
   fname:string;
   lname:string;
-  // imgurl:string;
+  imgurl:string;
   role:string;
   pw:string;
 }
@@ -13,7 +13,7 @@ export class User implements UserInterface {
   login:string;
   fname:string;
   lname:string;
-  // imgurl:string; // ToDo
+  imgurl:string;
   role:string;
   pw:string;
 

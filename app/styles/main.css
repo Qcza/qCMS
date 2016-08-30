@@ -120,3 +120,11 @@ body {
     transform: translate(5px); }
   100% {
     transform: none; } }
+
+/* line 122, /home/balus/OWN/qcms/app/styles/sass/main.sass */
+.qcms-profile-img {
+  border: solid 1px #6404e8;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 2px; }

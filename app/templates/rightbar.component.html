@@ -154,13 +154,15 @@
     <!-- USERS -->
     <div class="user-form" *ngIf="scenario==='users'">
       <div class="document-template" *ngFor="let user of users" (click)="goDeepEditUser(user)">
-        {{user.login}}
+        <img src="{{imgPath}}/qboy.png" class="qcms-profile-img" />
+        {{user.login}} <small>({{user.role}})</small>
       </div>
       <button class="btn btn-qcms btn-qcms-icon btn-list-fix pull-right" (click)="goDeepAddUser()"><i class="fa fa-user-plus"></i></button>
       <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
         <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
       </div>
     </div>
+    <!-- ADD USER -->
     <div class="add-user-form" *ngIf="scenario==='addUserDeep'">
       <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
       <hr />
@@ -205,8 +207,10 @@
         <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>
       </div>
     </div>
+    <!-- EDIT USER -->
     <div class="edit-user-form" *ngIf="scenario==='editUserDeep'">
       <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
+      <img src="{{imgPath}}/qboy.png" class="qcms-profile-img pull-right" />
       <hr />
       <form name="editUser">
         <div class="form-group">
@@ -243,7 +247,8 @@
           <label for="editUserPwConfirm">Confirm password</label>
           <input id="editUserPwConfirm" name="editUserPwConfirm" type="password" class="form-control qcms-form-input" [ngClass]="{'qcms-input-error': userPwCon !== userPw}" [(ngModel)]="userPwCon">
         </div>
-        <button class="btn btn-qcms pull-right" (click)="editUser()" [disabled]="user.login === '' || user.fname === '' || user.lname === '' || user.role === '' ||  userPwCon !== userPw">Save</button>
+        <button class="btn btn-qcms pull-right" (click)="editUser(user)" [disabled]="user.login === '' || user.fname === '' || user.lname === '' || user.role === '' ||  userPwCon !== userPw">Save</button>
+        <button class="btn btn-qcms btn-qcms-icon pull-right" (click)="deleteUser(user)"><i class="fa fa-trash-o"></i></button>
       </form> 
       <div class="qcms-alert-fade-in right-bar-alert" [ngClass]="{'qcms-alert-fade-out': hideAlert === true}" *ngIf="showAlert === true">
         <ngb-alert [type]="alert.type" [dismissible]="alert.dismissible">{{alert.message}}</ngb-alert>

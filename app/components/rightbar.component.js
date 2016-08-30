@@ -14,9 +14,12 @@ var document_1 = require('../models/document');
 var user_1 = require('../models/user');
 var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
+var main_1 = require('../main');
 var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
+        this.imgPath = main_1.publicImgsPath;
+        this.filesPath = main_1.publicFilesPath;
         this.show = 'default';
         this.elementsList = [];
         this.chosenElement = new template_1.Element();
@@ -288,6 +291,7 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.goDeepEditUser = function (user) {
         this.scenario = 'editUserDeep';
+        console.log(user);
         this.user = new user_1.User(user.login, user.fname, user.lname, user.role, undefined, user._id);
     };
     RightBarComponent.prototype.choseRole = function (role) {
@@ -320,6 +324,33 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.getUsers = function () {
         var _this = this;
         this.appService.getUsers().subscribe(function (users) { return _this.users = users; }, function (error) { return _this.errorMessage = error; });
+    };
+    RightBarComponent.prototype.deleteUser = function (user) {
+        var _this = this;
+        this.appService.deleteUser(user).subscribe(function (response) {
+            _this.response = response,
+                _this.getUsers(),
+                _this.prevUsersView(),
+                _this.showAlerts('success', 'User deleted');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.editUser = function (user) {
+        var _this = this;
+        if (this.userPw !== '') {
+            this.user.pw = this.userPw;
+        }
+        this.appService.putUser(user).subscribe(function (response) {
+            _this.response = response,
+                _this.getUsers(),
+                _this.prevUsersView(),
+                _this.showAlerts('success', 'User edited');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
     };
     __decorate([
         core_1.Input(), 

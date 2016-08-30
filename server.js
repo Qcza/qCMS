@@ -192,26 +192,37 @@ app.get('/users', function (req, res) {
     });
 });
 // EDIT USER
-app.put('/users:id', function (req, res) {
-    var id = req.params.id;
+app.put('/users/:id', function (req, res) {
+    var id = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
-        db.collection('users').updateOne({ '_id': new ObjectId(req.body._id) }, {
-            'fname': req.body.fname,
-            'lname': req.body.lname,
-            'imgurl': req.body.imgurl,
-            'role': req.body.role,
-            'pw': req.body.pw
-        }).then(function () {
-            var response = JSON.stringify('success');
-            res.send(response);
-            db.close();
+        db.collection('users').updateOne({ '_id': id }, { $set: {
+                'login': req.body.login,
+                'fname': req.body.fname,
+                'lname': req.body.lname,
+                'imgurl': req.body.imgurl,
+                'role': req.body.role
+            } }).then(function () {
+            if (req.body.pw && req.body.pw !== '') {
+                db.collection('users').updateOne({ '_id': id }, { $set: {
+                        'pw': req.body.pw
+                    } }).then(function () {
+                    var response = JSON.stringify('success');
+                    res.send(response);
+                    db.close();
+                });
+            }
+            else {
+                var response = JSON.stringify('success');
+                res.send(response);
+                db.close();
+            }
         });
     });
 });
 // DELETE USER
 app.delete('/users/:id', function (req, res) {
-    var id = new ObjectId(req.params._id);
+    var id = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function (err, db) {
         assert.equal(null, err);
         db.collection('users').deleteOne({ '_id': id }).then(function () {
