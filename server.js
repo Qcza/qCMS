@@ -9,6 +9,7 @@ var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 var dbUrl = 'mongodb://localhost:27017/qcms';
 var saltRounds = 8;
+var avtUpload = multer({ dest: 'static/public/images/avatars/' });
 var imgUpload = multer({ dest: 'static/public/images/' });
 var fileUpload = multer({ dest: 'static/public/files/' });
 var app = express();
@@ -19,6 +20,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
 app.use('/css', express.static(__dirname + '/static/font-awesome/css/'));
 app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
 app.use('/img', express.static(__dirname + '/static/public/images/'));
+app.use('/img', express.static(__dirname + '/static/public/images/avatars/'));
 app.use('/files', express.static(__dirname + '/static/public/files/'));
 // app.get('/', function (req: express.Request, res: express.Response) {
 //     res.sendFile(path.resolve(__dirname, 'index.html'));

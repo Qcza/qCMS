@@ -12,6 +12,7 @@ const dbUrl = 'mongodb://localhost:27017/qcms'
 
 const saltRounds:number = 8;
 
+const avtUpload = multer({dest: 'static/public/images/avatars/'})
 const imgUpload = multer({dest: 'static/public/images/'});
 const fileUpload = multer({dest: 'static/public/files/'});
 
@@ -24,8 +25,9 @@ app.use('/css', express.static(__dirname + '/app/styles/'))
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 app.use('/css', express.static(__dirname + '/static/font-awesome/css/'));
 app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
-app.use('/img', express.static(__dirname + '/static/public/images/'))
-app.use('/files', express.static(__dirname + '/static/public/files/'))
+app.use('/img', express.static(__dirname + '/static/public/images/'));
+app.use('/img', express.static(__dirname + '/static/public/images/avatars/'));
+app.use('/files', express.static(__dirname + '/static/public/files/'));
 
 // app.get('/', function (req: express.Request, res: express.Response) {
 //     res.sendFile(path.resolve(__dirname, 'index.html'));
