@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
+    "bcrypt": "registry:dt/bcrypt#0.0.0+20160316155526",
     "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
     "core-js": "registry:dt/core-js#0.0.0+20160725163759",
     "express": "registry:dt/express#4.0.0+20160708185218",

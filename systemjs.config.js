@@ -7,14 +7,14 @@
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs',
     '@ng-bootstrap':              'node_modules/@ng-bootstrap',
-    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap'
+    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap',
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     'app':                        { main: 'main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-    '@ng-bootstrap/ng-bootstrap': { main: 'index.js', defaultExtension: 'js' }
+    '@ng-bootstrap/ng-bootstrap': { main: 'index.js', defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',
@@ -28,7 +28,6 @@
     'router-deprecated',
     'upgrade',
   ];
-
   // Bootstrap packages
   var ngBootstrapPackageNames = [
     'accordion',
@@ -58,11 +57,9 @@
   function packUmd(pkgName) {
     packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
   }
-
   function ngBootstrapPackIndex(pkgName) {
     packages['@ng-bootstrap/ng-bootstrap/' + pkgName] = {main: 'index.js', defaultExtension: 'js'};
   }
-
   // Most environments should use UMD; some (Karma) need the individual index files
   var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
   // Add package entries for angular packages

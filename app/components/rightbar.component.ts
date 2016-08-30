@@ -60,6 +60,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   userRole:string = '';
   userPw:string = '';
   userPwCon:string = '';
+  userImage:File;
 
   constructor (private appService: AppService) { } 
 
@@ -368,7 +369,6 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   goDeepEditUser(user:UserInterface):void {
     this.scenario = 'editUserDeep';
-    console.log(user)
     this.user = new User(user.login, user.fname, user.lname, user.role, undefined, user._id);
   }
 
@@ -443,5 +443,9 @@ export class RightBarComponent implements OnChanges, OnInit {
         this.showAlerts('danger', 'Something went wrong')
       }
     )
+  }
+
+  getFile(event) {
+    this.userImage = event.srcElement.files[0]
   }
 }

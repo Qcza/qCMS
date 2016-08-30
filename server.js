@@ -3,9 +3,11 @@ var express = require('express');
 var mongodb = require('mongodb');
 var assert = require('assert');
 var bodyParser = require('body-parser');
+var bcrypt = require('bcrypt');
 var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 var dbUrl = 'mongodb://localhost:27017/qcms';
+var saltRounds = 8;
 var app = express();
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname));
@@ -171,12 +173,16 @@ app.delete('/documents/:id', function (req, res) {
 // USERS
 // POST USERS
 app.post('/users', function (req, res) {
-    MongoClient.connect(dbUrl, function (err, db) {
-        assert.equal(null, err);
-        db.collection('users').insertOne(req.body).then(function () {
-            var response = JSON.stringify('success');
-            res.send(response);
-            db.close();
+    bcrypt.hash(req.body.pw, saltRounds, function (bcerr, hash) {
+        assert.equal(null, bcerr);
+        req.body.pw = hash;
+        MongoClient.connect(dbUrl, function (err, db) {
+            assert.equal(null, err);
+            db.collection('users').insertOne(req.body).then(function () {
+                var response = JSON.stringify('success');
+                res.send(response);
+                db.close();
+            });
         });
     });
 });
@@ -194,8 +200,8 @@ app.get('/users', function (req, res) {
 // EDIT USER
 app.put('/users/:id', function (req, res) {
     var id = new ObjectId(req.params.id);
-    MongoClient.connect(dbUrl, function (err, db) {
-        assert.equal(null, err);
+    MongoClient.connect(dbUrl, function (bcerr, db) {
+        assert.equal(null, bcerr);
         db.collection('users').updateOne({ '_id': id }, { $set: {
                 'login': req.body.login,
                 'fname': req.body.fname,
@@ -204,12 +210,15 @@ app.put('/users/:id', function (req, res) {
                 'role': req.body.role
             } }).then(function () {
             if (req.body.pw && req.body.pw !== '') {
-                db.collection('users').updateOne({ '_id': id }, { $set: {
-                        'pw': req.body.pw
-                    } }).then(function () {
-                    var response = JSON.stringify('success');
-                    res.send(response);
-                    db.close();
+                bcrypt.hash(req.body.pw, saltRounds, function (err, hash) {
+                    assert.equal(null, err);
+                    db.collection('users').updateOne({ '_id': id }, { $set: {
+                            'pw': hash
+                        } }).then(function () {
+                        var response = JSON.stringify('success');
+                        res.send(response);
+                        db.close();
+                    });
                 });
             }
             else {

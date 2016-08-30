@@ -291,7 +291,6 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.goDeepEditUser = function (user) {
         this.scenario = 'editUserDeep';
-        console.log(user);
         this.user = new user_1.User(user.login, user.fname, user.lname, user.role, undefined, user._id);
     };
     RightBarComponent.prototype.choseRole = function (role) {
@@ -351,6 +350,9 @@ var RightBarComponent = (function () {
             _this.errorMessage = error,
                 _this.showAlerts('danger', 'Something went wrong');
         });
+    };
+    RightBarComponent.prototype.getFile = function (event) {
+        this.userImage = event.srcElement.files[0];
     };
     __decorate([
         core_1.Input(), 
