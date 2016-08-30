@@ -154,7 +154,7 @@
     <!-- USERS -->
     <div class="user-form" *ngIf="scenario==='users'">
       <div class="document-template" *ngFor="let user of users" (click)="goDeepEditUser(user)">
-        <img src="{{imgPath}}/qboy.png" class="qcms-profile-img" />
+        <img src="/img/qboy.png" class="qcms-profile-img" />
         {{user.login}} <small>({{user.role}})</small>
       </div>
       <button class="btn btn-qcms btn-qcms-icon btn-list-fix pull-right" (click)="goDeepAddUser()"><i class="fa fa-user-plus"></i></button>
@@ -210,7 +210,7 @@
     <!-- EDIT USER -->
     <div class="edit-user-form" *ngIf="scenario==='editUserDeep'">
       <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
-      <img src="{{imgPath}}/qboy.png" class="qcms-profile-img pull-right" />
+      <img src="/img/qboy.png" class="qcms-profile-img pull-right" />
       <hr />
       <form name="editUser">
         <div class="form-group">

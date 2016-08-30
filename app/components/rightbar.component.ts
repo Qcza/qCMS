@@ -5,8 +5,6 @@ import { User, UserInterface } from '../models/user';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
-import { publicImgsPath, publicFilesPath } from '../main';
-
 
 @Component({
     selector: 'right-bar',
@@ -16,9 +14,6 @@ import { publicImgsPath, publicFilesPath } from '../main';
 })
 
 export class RightBarComponent implements OnChanges, OnInit {
-
-  imgPath = publicImgsPath;
-  filesPath = publicFilesPath; 
 
   show:string = 'default';
   @Input() scenario:string;

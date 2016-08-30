@@ -1,5 +1,3 @@
-import { publicImgsPath } from '../main'
-
 export interface UserInterface {
   _id:string;
   login:string;
@@ -7,6 +5,7 @@ export interface UserInterface {
   lname:string;
   role:string;
   pw:string;
+  image:string;
 }
 
 export class User implements UserInterface {
@@ -16,6 +15,7 @@ export class User implements UserInterface {
   lname:string;
   role:string;
   pw:string;
+  image:string;
 
   constructor (login:string, fname:string, lname:string, role:string = 'user', pw?:string, id?:string) {
     this.login = login;

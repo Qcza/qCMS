@@ -14,12 +14,9 @@ var document_1 = require('../models/document');
 var user_1 = require('../models/user');
 var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
-var main_1 = require('../main');
 var RightBarComponent = (function () {
     function RightBarComponent(appService) {
         this.appService = appService;
-        this.imgPath = main_1.publicImgsPath;
-        this.filesPath = main_1.publicFilesPath;
         this.show = 'default';
         this.elementsList = [];
         this.chosenElement = new template_1.Element();
