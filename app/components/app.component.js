@@ -52,7 +52,7 @@ var AppComponent = (function () {
         this.appService.setSession(session).subscribe(function (sessionId) {
             _this.sessionId = sessionId.sessionId,
                 _this.getSession(),
-                _this.remember ? ng2_cookies_1.Cookie.set('sessionId', _this.sessionId, 365) : ng2_cookies_1.Cookie.set('sessionId', _this.sessionId);
+                _this.remember ? ng2_cookies_1.Cookie.set('sessionId', _this.sessionId, 99) : ng2_cookies_1.Cookie.set('sessionId', _this.sessionId);
         }, function (error) { return _this.errorMessage = error; });
     };
     AppComponent.prototype.deleteSession = function (sessionId) {

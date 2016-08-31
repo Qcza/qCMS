@@ -2,6 +2,7 @@
 var Session = (function () {
     function Session(user, sessionId) {
         this.user = user;
+        this.createdAt = new Date();
         if (sessionId) {
             this.sessionId = sessionId;
         }

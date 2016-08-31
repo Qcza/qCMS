@@ -75,7 +75,7 @@ export class AppComponent {
       sessionId => {
         this.sessionId = sessionId.sessionId,
         this.getSession(),
-        this.remember ? Cookie.set('sessionId', this.sessionId, 365) : Cookie.set('sessionId', this.sessionId)
+        this.remember ? Cookie.set('sessionId', this.sessionId, 99) : Cookie.set('sessionId', this.sessionId)
       },
       error => this.errorMessage = error
     )
