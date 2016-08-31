@@ -56,3 +56,26 @@ $shadow: #888
 
   &:hover
     opacity: .8
+
+.login-form-section
+  animation-duration: .8s
+  animation-fill-mode: forwards
+  animation-name: login-fade-in
+  margin: 0 auto
+  padding-top: 222px
+
+@keyframes login-fade-in
+  0%
+    opacity: 0
+
+  100%
+    opacity: 1
+
+.login-checkbox
+  color: $primary-color
+  cursor: pointer
+
+  &:hover
+    color: lighten($primary-color, 10%)
+
+

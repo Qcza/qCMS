@@ -22,3 +22,8 @@ export interface SettingMenuInterface {
   is_selected: boolean;
   scenario:string;
 }
+
+export interface LoginFields {
+  login:string;
+  pw:string;
+}

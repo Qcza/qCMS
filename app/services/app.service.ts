@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Template } from '../models/template';
 import { Doc } from '../models/document';
 import { User } from '../models/user';
+import { Session } from '../models/session';
+import { LoginFields } from '../models/helpers';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -88,6 +90,26 @@ export class AppService {
 
   deleteUser (user:User): Observable<any> {
     return this.http.delete(this.usersUrl+'/'+user._id).map(this.extractData).catch(this.handleError);
+  }
+
+  loginUser (fields:LoginFields): Observable<any> {
+    let body = JSON.stringify(fields);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.usersUrl + '/signin', body, options).map(this.extractData).catch(this.handleError);
+  }
+
+  // Sessions service
+  private sessionUrl = this.domain + '/sessions';
+  setSession (session:Session): Observable<any> {
+    let body = JSON.stringify(session);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.sessionUrl, body, options).map(this.extractData).catch(this.handleError);
+  }
+
+  getSession (id:string): Observable<any> {
+    return this.http.get(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
   }
 
   // Helpers services

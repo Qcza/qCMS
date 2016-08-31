@@ -264,6 +264,57 @@ app.delete('/users/:id', function (req: express.Request, res: express.Response) 
   })
 })
 
+// SIGN IN
+app.post('/users/signin', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function (err, db) {
+    assert.equal(null, err);
+    db.collection('users').findOne({'login': req.body.login}).then(function (document) {
+      if (document) {
+        bcrypt.compare(req.body.pw, document.pw, function (bcerr, result) {
+          assert.equal(null, bcerr);
+          if (result === true) {
+            let response:string = JSON.stringify(document);
+            res.send(response);
+            db.close();
+          } else {
+            db.close();
+            res.sendStatus(404);
+          }
+        })
+      } else {
+        db.close();
+        res.sendStatus(404);
+      }
+    })
+  })
+})
+
+// SESSIONS
+// SET SESSION
+app.post('/sessions', function (req: express.Request, res: express.Response) {
+  MongoClient.connect(dbUrl, function (err, db) {
+    assert.equal(null, err);
+    db.collection('sessions').insertOne(req.body).then(function () {
+      let response:string = JSON.stringify({'sessionId': req.body.sessionId});
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
+// GET SESSION
+app.get('/sessions/:id', function (req: express.Request, res: express.Response) {
+  let id:string = req.params.id;
+  MongoClient.connect(dbUrl, function (err, db) {
+    assert.equal(null, err);
+    db.collection('sessions').findOne({'sessionId': id}).then(function (document) {
+      let response:string = JSON.stringify(document);
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
 //HELPERS
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req: express.Request, res: express.Response) {

@@ -1,4 +1,6 @@
-<div class="row main">
+<div class="fixed-background"></div>
+
+<div class="row main" *ngIf="sessionId">
   <div class="col-sm-1 col-md-3">
     <left-bar 
       (onSelectScenario)="onSelectScenario($event)" 
@@ -45,4 +47,27 @@
   </div>
 </div>
 
-<div class="fixed-background"></div>
+<div class="row login-page" *ngIf="!sessionId">
+  <div class="col-sm-4 col-md-5"></div>
+  <div class="col-sm-4 col-md-2 login-form-section">
+    <form name="login-form">
+      <div class="form-group">
+        <input id="login-field" name="login-field" class="form-control qcms-form-input" type="text" placeholder="login" [(ngModel)]="loginForm.login" [ngClass]="{'qcms-input-error': loginErr}">
+      </div>
+      <div class="form-group">
+        <input id="pw-field" name="pw-field" class="form-control qcms-form-input" type="password" placeholder="password" [(ngModel)]="loginForm.pw" [ngClass]="{'qcms-input-error': loginErr}">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-qcms pull-right" [disabled]="loginForm.login.length === 0 || loginForm.pw.length === 0" (click)="signIn()">Sign In</button>
+        <label class="login-checkbox" (click)="remember = !remember">Remember me <i class="fa" [ngClass]="{'fa-circle-o': !remember, 'fa-check-circle-o': remember}"></i></label>
+      </div>
+    </form>
+    <p *ngIf="loginErr">
+      <ngb-alert [dismissible]="false" [type]="'danger'">
+        Wrong login or password
+      </ngb-alert>
+    </p>
+  </div>
+  <div class="col-sm-4 col-md-5"></div>
+</div>
+

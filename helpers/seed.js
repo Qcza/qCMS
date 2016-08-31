@@ -1,6 +1,8 @@
 "use strict";
+var user_1 = require('../app/models/user');
 var mongodb = require('mongodb');
 var assert = require('assert');
+var bcrypt = require('bcrypt');
 var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 var dbUrl = 'mongodb://localhost:27017/qcms';
@@ -76,6 +78,25 @@ MongoClient.connect(dbUrl, function (err, db) {
                 db.close();
             });
         }
+    });
+});
+// SEED USER
+bcrypt.hash('ch@ngeIt', 8, function (bcerr, result) {
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('users').findOne({ 'login': 'admin' }).then(function (document) {
+            if (!document) {
+                var admin = new user_1.User('admin', 'admin', 'admin', 'admin', result);
+                db.collection('users').insertOne(admin).then(function () {
+                    console.log('added admin');
+                    db.close();
+                });
+            }
+            else {
+                console.log('skipped admin added');
+                db.close();
+            }
+        });
     });
 });
 //# sourceMappingURL=seed.js.map

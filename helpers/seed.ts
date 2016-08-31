@@ -1,5 +1,8 @@
+import { User } from '../app/models/user'
+
 import * as mongodb from 'mongodb';
 import * as assert from 'assert';
+import * as bcrypt from 'bcrypt';
 
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID;
@@ -97,3 +100,23 @@ MongoClient.connect(dbUrl, function(err, db) {
       }
     })
 });
+
+// SEED USER
+bcrypt.hash('ch@ngeIt', 8, function (bcerr, result) {
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').findOne({'login': 'admin'}).then(function(document) {
+      if (!document) {
+        let admin = new User('admin', 'admin', 'admin', 'admin', result);
+        db.collection('users').insertOne(admin).then(function() {
+          console.log('added admin');
+          db.close();
+        });
+      } else {
+        console.log('skipped admin added');
+        db.close();
+      }
+    })
+  });
+})
+

@@ -8,6 +8,7 @@
     'rxjs':                       'node_modules/rxjs',
     '@ng-bootstrap':              'node_modules/@ng-bootstrap',
     '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap',
+    'ng2-cookies':                'node_modules/ng2-cookies',
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -15,6 +16,7 @@
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     '@ng-bootstrap/ng-bootstrap': { main: 'index.js', defaultExtension: 'js' },
+    'ng2-cookies':                { defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',

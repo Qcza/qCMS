@@ -187,3 +187,25 @@ body {
   /* line 57, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
   .document-ribbon:hover {
     opacity: .8; }
+
+/* line 60, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+.login-form-section {
+  animation-duration: .8s;
+  animation-fill-mode: forwards;
+  animation-name: login-fade-in;
+  margin: 0 auto;
+  padding-top: 222px; }
+
+@keyframes login-fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+/* line 74, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+.login-checkbox {
+  color: #6404e8;
+  cursor: pointer; }
+  /* line 78, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+  .login-checkbox:hover {
+    color: #7e24fb; }
