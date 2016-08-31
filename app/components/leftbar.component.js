@@ -21,12 +21,14 @@ var LeftBarComponent = (function () {
         this.active = null;
         this.settingMenu = [
             { title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate' },
-            { title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
+            { title: 'Edit templates', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
             { title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users' },
             { title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' },
-            { title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences' }
+            { title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences' },
+            { title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out' }
         ];
         this.onSelectScenario = new core_1.EventEmitter();
+        this.onSignOut = new core_1.EventEmitter();
         this.onSelectTemplate = new core_1.EventEmitter();
         this.onSelectDocument = new core_1.EventEmitter();
     }
@@ -75,7 +77,12 @@ var LeftBarComponent = (function () {
             }
             element.is_selected = true;
         }
-        this.selectRightBarScenario(element.scenario);
+        if (element.scenario !== 'sign-out') {
+            this.selectRightBarScenario(element.scenario);
+        }
+        if (element.scenario === 'sign-out') {
+            this.onSignOut.emit(true);
+        }
     };
     LeftBarComponent.prototype.extendBar = function (scenario) {
         if (this.extend === 'show' && this.scenario === scenario) {
@@ -271,6 +278,10 @@ var LeftBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], LeftBarComponent.prototype, "onSelectScenario", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], LeftBarComponent.prototype, "onSignOut", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

@@ -30,10 +30,11 @@ export class LeftBarComponent implements OnInit, OnChanges {
 
   settingMenu:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
-    {title: 'Edit template', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate'},
+    {title: 'Edit templates', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate'},
     {title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users'},
     {title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'},
-    {title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences'}
+    {title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences'},
+    {title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out'}
   ]
 
 
@@ -79,6 +80,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
     this.openSelected(scenario);
   }
 
+  @Output() onSignOut = new EventEmitter<boolean>();
   selectSettingElement(element:SettingMenuInterface) {
     if (element.is_selected === false) {
       for (let e of this.settingMenu) {
@@ -88,7 +90,12 @@ export class LeftBarComponent implements OnInit, OnChanges {
       }
       element.is_selected = true;
     }
-    this.selectRightBarScenario(element.scenario)
+    if (element.scenario !== 'sign-out') {
+      this.selectRightBarScenario(element.scenario)
+    }
+    if (element.scenario === 'sign-out') {
+      this.onSignOut.emit(true);
+    }
   }
 
   extendBar(scenario:string):void {

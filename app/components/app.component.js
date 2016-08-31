@@ -55,6 +55,12 @@ var AppComponent = (function () {
                 _this.remember ? ng2_cookies_1.Cookie.set('sessionId', sessionId, 99) : ng2_cookies_1.Cookie.set('sessionId', sessionId);
         }, function (error) { return _this.errorMessage = error; });
     };
+    AppComponent.prototype.onSignOut = function (signOut) {
+        if (signOut = true) {
+            ng2_cookies_1.Cookie.delete('sessionId');
+            location.reload();
+        }
+    };
     AppComponent.prototype.onSelectScenario = function (scenario) {
         this.scenario = scenario;
     };

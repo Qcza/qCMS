@@ -6,6 +6,7 @@
       (onSelectScenario)="onSelectScenario($event)" 
       (onSelectTemplate)="onSelectTemplate($event)" 
       (onSelectDocument)="onSelectDocument($event)"
+      (onSignOut)="onSignOut($event)"
       [templateAdded]='templateAdded'
       [templateDeleted]='templateDeleted'
       [templateEdited]='templateEdited'
@@ -70,4 +71,6 @@
   </div>
   <div class="col-sm-4 col-md-5"></div>
 </div>
+
+<template ngbModalContainer></template>
 

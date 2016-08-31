@@ -81,6 +81,13 @@ export class AppComponent {
     )
   }
 
+  onSignOut(signOut:boolean):void {
+    if (signOut = true) {
+      Cookie.delete('sessionId');
+      location.reload();
+    }
+  }
+
   onSelectScenario(scenario:string):void {
     this.scenario = scenario;
   }
