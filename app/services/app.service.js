@@ -102,6 +102,9 @@ var AppService = (function () {
     AppService.prototype.getSession = function (id) {
         return this.http.get(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
     };
+    AppService.prototype.deleteSession = function (id) {
+        return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+    };
     AppService.prototype.getCollections = function () {
         return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
     };

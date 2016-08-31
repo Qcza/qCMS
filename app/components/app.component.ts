@@ -73,9 +73,19 @@ export class AppComponent {
   setSession(session:Session):void {
     this.appService.setSession(session).subscribe(
       sessionId => {
-        this.sessionId = sessionId,
+        this.sessionId = sessionId.sessionId,
         this.getSession(),
-        this.remember ? Cookie.set('sessionId', sessionId, 99) : Cookie.set('sessionId', sessionId)
+        this.remember ? Cookie.set('sessionId', this.sessionId, 365) : Cookie.set('sessionId', this.sessionId)
+      },
+      error => this.errorMessage = error
+    )
+  }
+
+  deleteSession(sessionId:string):void {
+    this.appService.deleteSession(sessionId).subscribe(
+      response => {
+        Cookie.delete('sessionId'),
+        location.reload()
       },
       error => this.errorMessage = error
     )
@@ -83,8 +93,7 @@ export class AppComponent {
 
   onSignOut(signOut:boolean):void {
     if (signOut = true) {
-      Cookie.delete('sessionId');
-      location.reload();
+      this.deleteSession(Cookie.get('sessionId'))
     }
   }
 

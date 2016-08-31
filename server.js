@@ -298,6 +298,18 @@ app.get('/sessions/:id', function (req, res) {
         });
     });
 });
+// DELETE SESSION
+app.delete('/sessions/:id', function (req, res) {
+    var id = req.params.id;
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('sessions').deleteOne({ 'sessionId': id }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
+        });
+    });
+});
 //HELPERS
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req, res) {

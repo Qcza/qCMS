@@ -14,7 +14,7 @@ export class Session {
     if (sessionId) {
       this.sessionId = sessionId;
     } else {
-      this.sessionId = (Math.random()+1).toString(36).substring(8) + (new Date()).valueOf().toString;
+      this.sessionId = (Math.random()+1).toString(36).substring(8) + (new Date()).valueOf().toString();
     }
   }
 }

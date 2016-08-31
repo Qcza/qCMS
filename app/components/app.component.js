@@ -50,15 +50,21 @@ var AppComponent = (function () {
     AppComponent.prototype.setSession = function (session) {
         var _this = this;
         this.appService.setSession(session).subscribe(function (sessionId) {
-            _this.sessionId = sessionId,
+            _this.sessionId = sessionId.sessionId,
                 _this.getSession(),
-                _this.remember ? ng2_cookies_1.Cookie.set('sessionId', sessionId, 99) : ng2_cookies_1.Cookie.set('sessionId', sessionId);
+                _this.remember ? ng2_cookies_1.Cookie.set('sessionId', _this.sessionId, 365) : ng2_cookies_1.Cookie.set('sessionId', _this.sessionId);
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    AppComponent.prototype.deleteSession = function (sessionId) {
+        var _this = this;
+        this.appService.deleteSession(sessionId).subscribe(function (response) {
+            ng2_cookies_1.Cookie.delete('sessionId'),
+                location.reload();
         }, function (error) { return _this.errorMessage = error; });
     };
     AppComponent.prototype.onSignOut = function (signOut) {
         if (signOut = true) {
-            ng2_cookies_1.Cookie.delete('sessionId');
-            location.reload();
+            this.deleteSession(ng2_cookies_1.Cookie.get('sessionId'));
         }
     };
     AppComponent.prototype.onSelectScenario = function (scenario) {

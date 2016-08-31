@@ -315,6 +315,19 @@ app.get('/sessions/:id', function (req: express.Request, res: express.Response) 
   })
 })
 
+// DELETE SESSION
+app.delete('/sessions/:id', function (req: express.Request, res: express.Response) {
+  let id:string = req.params.id;
+  MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.collection('sessions').deleteOne({'sessionId': id}).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
+    })
+  })
+})
+
 //HELPERS
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req: express.Request, res: express.Response) {

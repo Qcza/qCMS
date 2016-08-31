@@ -112,6 +112,10 @@ export class AppService {
     return this.http.get(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
   }
 
+  deleteSession (id:string): Observable<any> {
+    return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+  }
+
   // Helpers services
   private collectionsUrl = this.domain + '/helpers/collections';
   getCollections (): Observable<any> {
