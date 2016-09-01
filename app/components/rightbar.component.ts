@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { Template, Element } from '../models/template';
 import { Doc } from '../models/document';
+import { Session } from '../models/session';
 import { User, UserInterface } from '../models/user';
 import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
@@ -19,6 +20,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   @Input() scenario:string;
   @Input() template:Template;
   @Input() document:Doc;
+  @Input() session:Session;
   errorMessage:any;
   response:any;
   showAlert:boolean;

@@ -2,6 +2,7 @@ import { Component, Output, Input, EventEmitter, OnInit, OnChanges, SimpleChange
 import { AppService } from '../services/app.service';
 import { Template } from '../models/template';
 import { Doc } from '../models/document';
+import { Session } from '../models/session';
 import { SettingMenuInterface } from '../models/helpers';
 
 @Component({
@@ -27,6 +28,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
   @Input() documentDeleted:boolean;
   @Input() documentEdited:boolean;
   @Input() document:Doc;
+  @Input() session:Session;
 
   settingMenu:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},

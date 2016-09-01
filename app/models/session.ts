@@ -11,9 +11,13 @@ export class Session {
   user:User;
   createdAt:Date;
 
-  constructor (user:User, sessionId?:string) {
+  constructor (user:User, sessionId?:string, createdAt?:Date) {
     this.user = user;
-    this.createdAt = new Date();
+    if (createdAt) {
+      this.createdAt = createdAt;
+    } else {
+      this.createdAt = new Date();
+    }
     if (sessionId) {
       this.sessionId = sessionId;
     } else {

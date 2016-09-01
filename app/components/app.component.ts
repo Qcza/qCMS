@@ -51,7 +51,7 @@ export class AppComponent {
       return
     }
     this.appService.getSession(this.sessionId).subscribe(
-      session  => this.session = session,
+      session  => this.session = new Session(session.user, session.sessonId, new Date(session.createdAt)),
       error => this.errorMessage = error
     )
   }

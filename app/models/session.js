@@ -1,8 +1,13 @@
 "use strict";
 var Session = (function () {
-    function Session(user, sessionId) {
+    function Session(user, sessionId, createdAt) {
         this.user = user;
-        this.createdAt = new Date();
+        if (createdAt) {
+            this.createdAt = createdAt;
+        }
+        else {
+            this.createdAt = new Date();
+        }
         if (sessionId) {
             this.sessionId = sessionId;
         }

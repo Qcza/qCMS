@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var template_1 = require('../models/template');
 var document_1 = require('../models/document');
+var session_1 = require('../models/session');
 var user_1 = require('../models/user');
 var helpers_1 = require('../models/helpers');
 var app_service_1 = require('../services/app.service');
@@ -363,6 +364,10 @@ var RightBarComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', document_1.Doc)
     ], RightBarComponent.prototype, "document", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', session_1.Session)
+    ], RightBarComponent.prototype, "session", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
