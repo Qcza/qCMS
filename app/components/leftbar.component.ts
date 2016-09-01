@@ -30,12 +30,19 @@ export class LeftBarComponent implements OnInit, OnChanges {
   @Input() document:Doc;
   @Input() session:Session;
 
-  settingMenu:Array<SettingMenuInterface> = [
+  settingMenu:Array<SettingMenuInterface>;
+
+  settingMenuAdmin:Array<SettingMenuInterface> = [
     {title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate'},
     {title: 'Edit templates', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate'},
     {title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users'},
     {title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'},
     {title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences'},
+    {title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out'}
+  ]
+
+  settingMenuUser:Array<SettingMenuInterface> = [
+    {title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account'},
     {title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out'}
   ]
 
@@ -66,6 +73,9 @@ export class LeftBarComponent implements OnInit, OnChanges {
     if (this.documentEdited === true) {
       this.getDocuments('edit');
     }
+    if (this.session) {
+      this.setSetupMenu();
+    }
   }
 
   @Output() onSelectScenario = new EventEmitter<string>();
@@ -74,6 +84,15 @@ export class LeftBarComponent implements OnInit, OnChanges {
       this.newTemplate();
     } 
     this.onSelectScenario.emit(scenario);
+  }
+
+  setSetupMenu():void {
+    if (this.session.user.role === 'admin') {
+      this.settingMenu = this.settingMenuAdmin;
+    }
+    else if (this.session.user.role === 'user') {
+      this.settingMenu = this.settingMenuUser;
+    }
   }
 
   setScenario(scenario:string):void {

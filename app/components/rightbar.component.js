@@ -320,7 +320,17 @@ var RightBarComponent = (function () {
     };
     RightBarComponent.prototype.getUsers = function () {
         var _this = this;
-        this.appService.getUsers().subscribe(function (users) { return _this.users = users; }, function (error) { return _this.errorMessage = error; });
+        this.appService.getUsers().subscribe(function (users) { return _this.users = _this.removeCurrentUser(users); }, function (error) { return _this.errorMessage = error; });
+    };
+    RightBarComponent.prototype.removeCurrentUser = function (users) {
+        var strangers = [];
+        for (var _i = 0, users_1 = users; _i < users_1.length; _i++) {
+            var user = users_1[_i];
+            if (user._id !== this.session.user._id) {
+                strangers.push(user);
+            }
+        }
+        return strangers;
     };
     RightBarComponent.prototype.deleteUser = function (user) {
         var _this = this;

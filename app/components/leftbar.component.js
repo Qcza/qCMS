@@ -20,12 +20,16 @@ var LeftBarComponent = (function () {
         this.extend = null;
         this.scenario = null;
         this.active = null;
-        this.settingMenu = [
+        this.settingMenuAdmin = [
             { title: 'New template', icon: 'fa-file-o', is_selected: false, scenario: 'newTemplate' },
             { title: 'Edit templates', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
             { title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users' },
             { title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' },
             { title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences' },
+            { title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out' }
+        ];
+        this.settingMenuUser = [
+            { title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' },
             { title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out' }
         ];
         this.onSelectScenario = new core_1.EventEmitter();
@@ -56,12 +60,23 @@ var LeftBarComponent = (function () {
         if (this.documentEdited === true) {
             this.getDocuments('edit');
         }
+        if (this.session) {
+            this.setSetupMenu();
+        }
     };
     LeftBarComponent.prototype.selectRightBarScenario = function (scenario) {
         if (scenario === 'newTemplate' || scenario === 'editTemplate' || scenario === 'users') {
             this.newTemplate();
         }
         this.onSelectScenario.emit(scenario);
+    };
+    LeftBarComponent.prototype.setSetupMenu = function () {
+        if (this.session.user.role === 'admin') {
+            this.settingMenu = this.settingMenuAdmin;
+        }
+        else if (this.session.user.role === 'user') {
+            this.settingMenu = this.settingMenuUser;
+        }
     };
     LeftBarComponent.prototype.setScenario = function (scenario) {
         this.scenario = scenario;

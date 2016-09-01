@@ -404,9 +404,19 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   getUsers() {
     this.appService.getUsers().subscribe(
-      users => this.users = users,
+      users => this.users = this.removeCurrentUser(users),
       error => this.errorMessage = <any>error
     )
+  }
+
+  removeCurrentUser (users) {
+    let strangers = [];
+    for (let user of users) {
+      if (user._id !== this.session.user._id) {
+        strangers.push(user);
+      }
+    }
+    return strangers;
   }
 
   deleteUser(user:User) {
