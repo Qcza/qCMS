@@ -8,6 +8,8 @@ const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID;
 const dbUrl = 'mongodb://localhost:27017/qcms' 
 
+const cookieExp:number = 3600 * 24 * 99;
+
 //SEEDS
 interface Collections {
   name:string;
@@ -109,8 +111,8 @@ bcrypt.hash('ch@ngeIt', 8, function (bcerr, result) {
       if (!document) {
         let admin = new User('admin', 'admin', 'admin', 'admin', result);
         db.collection('users').insertOne(admin).then(function() {
-          console.log('added admin');
           db.close();
+          console.log('added admin');
         });
       } else {
         console.log('skipped admin added');
@@ -118,5 +120,23 @@ bcrypt.hash('ch@ngeIt', 8, function (bcerr, result) {
       }
     })
   });
+})
+
+// CREATE SESSION COLLECTION
+MongoClient.connect(dbUrl, function(err, db) {
+    assert.equal(null, err);
+    db.listCollections({'name': 'sessions'}).toArray().then(function (documents) {
+      if (documents.length === 0) {
+        db.createCollection('sessions').then(function () {
+          db.collection('sessions').createIndex({ 'createdAt': 1 }, { expireAfterSeconds: cookieExp }).then(function () {
+            db.close();
+            console.log('Created sessions collection');
+          })
+        })
+      } else {
+        db.close();
+        console.log('Skipped creating sessions collection');
+      }
+    })
 })
 

@@ -11,7 +11,6 @@ const ObjectId = mongodb.ObjectID;
 const dbUrl = 'mongodb://localhost:27017/qcms' 
 
 const saltRounds:number = 8;
-const cookieExp:number = 3600 * 24 * 99;
 
 const avtUpload = multer({dest: 'static/public/images/avatars/'})
 const imgUpload = multer({dest: 'static/public/images/'});
@@ -299,9 +298,7 @@ app.post('/sessions', function (req: express.Request, res: express.Response) {
     db.collection('sessions').insertOne(req.body).then(function () {
       let response:string = JSON.stringify({'sessionId': req.body.sessionId});
       res.send(response);
-      db.collection('sessions').createIndex({ 'createdAt': 1 }, { expireAfterSeconds: cookieExp }).then(function () {
-        db.close();
-      })
+      db.close();
     })
   })
 })
@@ -320,6 +317,21 @@ app.get('/sessions/:id', function (req: express.Request, res: express.Response) 
         res.sendStatus(404);
         db.close();
       }
+    })
+  })
+})
+
+// PUT SESSION
+app.put('/sessions/:id', function (req: express.Request, res: express.Response) {
+  let id:string = req.params.id;
+  MongoClient.connect(dbUrl, function (err, db) {
+    assert.equal(null, err);
+    db.collection('sessions').updateOne({'sessionId': id}, {$set: {
+      'user': req.body.user
+    }}).then(function () {
+      let response:string = JSON.stringify('success');
+      res.send(response);
+      db.close();
     })
   })
 })

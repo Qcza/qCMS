@@ -9,7 +9,6 @@ var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 var dbUrl = 'mongodb://localhost:27017/qcms';
 var saltRounds = 8;
-var cookieExp = 3600 * 24 * 99;
 var avtUpload = multer({ dest: 'static/public/images/avatars/' });
 var imgUpload = multer({ dest: 'static/public/images/' });
 var fileUpload = multer({ dest: 'static/public/files/' });
@@ -284,9 +283,7 @@ app.post('/sessions', function (req, res) {
         db.collection('sessions').insertOne(req.body).then(function () {
             var response = JSON.stringify({ 'sessionId': req.body.sessionId });
             res.send(response);
-            db.collection('sessions').createIndex({ 'createdAt': 1 }, { expireAfterSeconds: cookieExp }).then(function () {
-                db.close();
-            });
+            db.close();
         });
     });
 });
@@ -305,6 +302,20 @@ app.get('/sessions/:id', function (req, res) {
                 res.sendStatus(404);
                 db.close();
             }
+        });
+    });
+});
+// PUT SESSION
+app.put('/sessions/:id', function (req, res) {
+    var id = req.params.id;
+    MongoClient.connect(dbUrl, function (err, db) {
+        assert.equal(null, err);
+        db.collection('sessions').updateOne({ 'sessionId': id }, { $set: {
+                'user': req.body.user
+            } }).then(function () {
+            var response = JSON.stringify('success');
+            res.send(response);
+            db.close();
         });
     });
 });

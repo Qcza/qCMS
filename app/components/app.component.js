@@ -33,7 +33,7 @@ var AppComponent = (function () {
         if (!this.sessionId) {
             return;
         }
-        this.appService.getSession(this.sessionId).subscribe(function (session) { return _this.session = new session_1.Session(session.user, session.sessonId, new Date(session.createdAt)); }, function (error) { return _this.errorMessage = error; });
+        this.appService.getSession(this.sessionId).subscribe(function (session) { return _this.session = new session_1.Session(session.user, session.sessionId, new Date(session.createdAt)); }, function (error) { return _this.errorMessage = error; });
     };
     AppComponent.prototype.signIn = function () {
         var _this = this;
@@ -109,6 +109,9 @@ var AppComponent = (function () {
         var _this = this;
         this.documentEdited = documentEdited;
         setTimeout(function () { return _this.documentEdited = undefined; }, 500);
+    };
+    AppComponent.prototype.onRefreshSession = function (refresh) {
+        this.getSession();
     };
     AppComponent = __decorate([
         core_1.Component({

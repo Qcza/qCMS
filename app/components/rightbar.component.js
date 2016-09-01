@@ -33,6 +33,9 @@ var RightBarComponent = (function () {
         this.userRole = '';
         this.userPw = '';
         this.userPwCon = '';
+        // ACCOUNT
+        this.accountPw = '';
+        this.accountPwCon = '';
         this.onRefresh = new core_1.EventEmitter();
         this.onAddTemplate = new core_1.EventEmitter();
         this.onDeleteTemplate = new core_1.EventEmitter();
@@ -40,6 +43,7 @@ var RightBarComponent = (function () {
         this.onAddDocument = new core_1.EventEmitter();
         this.onDeleteDocument = new core_1.EventEmitter();
         this.onEditDocument = new core_1.EventEmitter();
+        this.onRefreshSession = new core_1.EventEmitter();
     }
     RightBarComponent.prototype.ngOnInit = function () {
         this.getCollections();
@@ -362,6 +366,37 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.getFile = function (event) {
         this.userImage = event.srcElement.files[0];
     };
+    RightBarComponent.prototype.editAccount = function (session) {
+        var _this = this;
+        var user = this.session.user;
+        var account = new user_1.User(user.login, user.fname, user.lname, user.role, undefined, user._id);
+        if (this.accountPw !== '') {
+            account.pw = this.accountPw;
+            this.accountPw = '';
+            this.accountPwCon = '';
+        }
+        this.appService.putUser(account).subscribe(function (response) {
+            _this.response = response,
+                _this.editSession(session);
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.editSession = function (session) {
+        var _this = this;
+        this.appService.putSession(session).subscribe(function (response) {
+            _this.response = response,
+                _this.emitRefreshSession(),
+                _this.showAlerts('success', 'Account edited');
+        }, function (error) {
+            _this.errorMessage = error,
+                _this.showAlerts('danger', 'Something went wrong');
+        });
+    };
+    RightBarComponent.prototype.emitRefreshSession = function () {
+        this.onRefreshSession.emit(true);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -406,6 +441,10 @@ var RightBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onEditDocument", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onRefreshSession", void 0);
     RightBarComponent = __decorate([
         core_1.Component({
             selector: 'right-bar',

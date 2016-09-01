@@ -99,7 +99,7 @@ export class AppService {
     return this.http.post(this.usersUrl + '/signin', body, options).map(this.extractData).catch(this.handleError);
   }
 
-  // Sessions service
+  // Sessions services
   private sessionUrl = this.domain + '/sessions';
   setSession (session:Session): Observable<any> {
     let body = JSON.stringify(session);
@@ -115,6 +115,14 @@ export class AppService {
   deleteSession (id:string): Observable<any> {
     return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
   }
+
+  putSession (session:Session): Observable<any> {
+    let body = JSON.stringify(session);
+    let headers = new Headers({'Content-type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.put(this.sessionUrl+'/'+session.sessionId, body, options).map(this.extractData).catch(this.handleError);
+  }
+
 
   // Helpers services
   private collectionsUrl = this.domain + '/helpers/collections';

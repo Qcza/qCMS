@@ -59,6 +59,10 @@ export class RightBarComponent implements OnChanges, OnInit {
   userPwCon:string = '';
   userImage:File;
 
+  // ACCOUNT
+  accountPw:string = '';
+  accountPwCon:string = '';
+
   constructor (private appService: AppService) { } 
 
    ngOnInit() {
@@ -454,5 +458,44 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   getFile(event) {
     this.userImage = event.srcElement.files[0]
+  }
+
+  editAccount(session:Session) {
+    let user = this.session.user;
+    let account = new User(user.login, user.fname, user.lname, user.role, undefined, user._id)
+    if (this.accountPw !== '') {
+      account.pw = this.accountPw;
+      this.accountPw = '';
+      this.accountPwCon = '';
+    }
+    this.appService.putUser(account).subscribe(
+      response => {
+        this.response = response,
+        this.editSession(session)
+      },
+      error => {
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    )
+  }
+
+  editSession(session:Session) {
+    this.appService.putSession(session).subscribe(
+      response => {
+        this.response = response,
+        this.emitRefreshSession(),
+        this.showAlerts('success', 'Account edited')
+      },
+      error => { 
+        this.errorMessage = <any>error,
+        this.showAlerts('danger', 'Something went wrong')
+      }
+    )
+  }
+
+  @Output() onRefreshSession = new EventEmitter<boolean>();
+  emitRefreshSession() {
+    this.onRefreshSession.emit(true);
   }
 }

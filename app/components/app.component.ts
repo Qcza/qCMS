@@ -51,7 +51,7 @@ export class AppComponent {
       return
     }
     this.appService.getSession(this.sessionId).subscribe(
-      session  => this.session = new Session(session.user, session.sessonId, new Date(session.createdAt)),
+      session  => this.session = new Session(session.user, session.sessionId, new Date(session.createdAt)),
       error => this.errorMessage = error
     )
   }
@@ -154,5 +154,9 @@ export class AppComponent {
     setTimeout(
       () => this.documentEdited = undefined, 500
     )
+  }
+
+  onRefreshSession(refresh:boolean):void {
+    this.getSession();
   }
 }

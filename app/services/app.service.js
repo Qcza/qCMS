@@ -23,7 +23,7 @@ var AppService = (function () {
         this.documentsUrl = this.domain + '/documents';
         // Users services
         this.usersUrl = this.domain + '/users';
-        // Sessions service
+        // Sessions services
         this.sessionUrl = this.domain + '/sessions';
         // Helpers services
         this.collectionsUrl = this.domain + '/helpers/collections';
@@ -104,6 +104,12 @@ var AppService = (function () {
     };
     AppService.prototype.deleteSession = function (id) {
         return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+    };
+    AppService.prototype.putSession = function (session) {
+        var body = JSON.stringify(session);
+        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.sessionUrl + '/' + session.sessionId, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getCollections = function () {
         return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);

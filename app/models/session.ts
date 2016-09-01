@@ -13,6 +13,7 @@ export class Session {
 
   constructor (user:User, sessionId?:string, createdAt?:Date) {
     this.user = user;
+    this.user.pw = undefined;
     if (createdAt) {
       this.createdAt = createdAt;
     } else {
