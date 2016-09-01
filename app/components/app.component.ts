@@ -52,7 +52,10 @@ export class AppComponent {
     }
     this.appService.getSession(this.sessionId).subscribe(
       session  => this.session = new Session(session.user, session.sessionId, new Date(session.createdAt)),
-      error => this.errorMessage = error
+      error => {
+        this.errorMessage = error,
+        Cookie.delete('sessionId')
+      }
     )
   }
 

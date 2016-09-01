@@ -33,7 +33,10 @@ var AppComponent = (function () {
         if (!this.sessionId) {
             return;
         }
-        this.appService.getSession(this.sessionId).subscribe(function (session) { return _this.session = new session_1.Session(session.user, session.sessionId, new Date(session.createdAt)); }, function (error) { return _this.errorMessage = error; });
+        this.appService.getSession(this.sessionId).subscribe(function (session) { return _this.session = new session_1.Session(session.user, session.sessionId, new Date(session.createdAt)); }, function (error) {
+            _this.errorMessage = error,
+                ng2_cookies_1.Cookie.delete('sessionId');
+        });
     };
     AppComponent.prototype.signIn = function () {
         var _this = this;
