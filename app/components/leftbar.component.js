@@ -177,7 +177,8 @@ var LeftBarComponent = (function () {
                 return;
             }
         }
-        this.selectDocument(elements[0]);
+        if (elements[0])
+            this.selectDocument(elements[0]);
         this.extendBar('all');
     };
     LeftBarComponent.prototype.selectCurrentDocument = function (documents) {
@@ -195,7 +196,12 @@ var LeftBarComponent = (function () {
                 this.selectCurrentDocument(documents);
             }
             else if (scenario === 'deleted') {
-                this.selectDocument(documents[0]);
+                if (documents[0]) {
+                    this.selectDocument(documents[0]);
+                }
+                else {
+                    this.selectDefaultTemplate(this.templates);
+                }
             }
             else if (scenario === 'added') {
                 this.selectDocument(documents[0]);

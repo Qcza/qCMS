@@ -17,6 +17,7 @@
   <div id="allDocumentsScenario" *ngIf="scenario === 'all'">
     <div class="left-bar-content">
       <div class="left-bar-extend-element" [ngClass]="{'document-template-selected': document.is_selected === true}" *ngFor="let document of documents" (click)="selectRightBarScenario('editDocument');selectDocument(document)"><i class="left-bar-extend-element-icon fa fa-file-o"></i>&nbsp;&nbsp;{{document.title}} <small>({{document.date.slice(0,10)}})</small></div>
+      <div class="left-bar-extend-element list-empty" *ngIf="!documents || documents.length === 0">Nothing to do here :(</div>
     </div>
   </div>
   <div id="newDocumentScenario" *ngIf="scenario === 'new'">

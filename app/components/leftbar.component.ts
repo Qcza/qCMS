@@ -203,7 +203,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
         return
       }
     }
-    this.selectDocument(elements[0]);
+    if (elements[0]) this.selectDocument(elements[0]);
     this.extendBar('all');
   }
 
@@ -222,7 +222,11 @@ export class LeftBarComponent implements OnInit, OnChanges {
         this.selectCurrentDocument(documents);
       }
       else if (scenario === 'deleted') {
-        this.selectDocument(documents[0]);
+        if (documents[0]) {
+          this.selectDocument(documents[0]);
+        } else {
+          this.selectDefaultTemplate(this.templates);
+        }
       }
       else if (scenario === 'added') {
         this.selectDocument(documents[0]);
