@@ -14,6 +14,7 @@ Adjust database settings in..
 ..then seed database.
 >npm run seed
 
+##Starting app##
 Start server
 >npm start
 
@@ -23,7 +24,7 @@ To start server without TypeScrypt and SASS watchers run
 Default server listening port
 >3000
 
-Login with credentials
+First login with credentials
 >login: *admin*
 
 >pwd: *ch@ngeIt*
