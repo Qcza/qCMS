@@ -31,94 +31,118 @@ var AppService = (function () {
         this.rolesUrl = this.domain + '/helpers/roles';
     }
     AppService.prototype.getTemplates = function () {
-        return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.templatesUrl, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getTemplate = function (id) {
-        return this.http.get(this.templatesUrl + '/' + id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.templatesUrl + '/' + id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.postTemplate = function (template) {
         var body = JSON.stringify(template);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.putTemplate = function (template) {
         var body = JSON.stringify(template);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.templatesUrl + '/' + template._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteTemplate = function (template) {
-        return this.http.delete(this.templatesUrl + '/' + template._id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete(this.templatesUrl + '/' + template._id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.postDocument = function (document) {
         var body = JSON.stringify(document);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getDocuments = function () {
-        return this.http.get(this.documentsUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.documentsUrl, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.putDocument = function (document) {
         var body = JSON.stringify(document);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.documentsUrl + '/' + document._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteDocument = function (document) {
-        return this.http.delete(this.documentsUrl + '/' + document._id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete(this.documentsUrl + '/' + document._id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.postUsers = function (user) {
         var body = JSON.stringify(user);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getUsers = function () {
-        return this.http.get(this.usersUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.usersUrl, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.putUser = function (user) {
         var body = JSON.stringify(user);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.usersUrl + '/' + user._id, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteUser = function (user) {
-        return this.http.delete(this.usersUrl + '/' + user._id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete(this.usersUrl + '/' + user._id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.loginUser = function (fields) {
         var body = JSON.stringify(fields);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.usersUrl + '/signin', body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.setSession = function (session) {
         var body = JSON.stringify(session);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.sessionUrl, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getSession = function (id) {
-        return this.http.get(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.sessionUrl + '/' + id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.deleteSession = function (id) {
-        return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete(this.sessionUrl + '/' + id, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.putSession = function (session) {
         var body = JSON.stringify(session);
-        var headers = new http_1.Headers({ 'Content-type': 'application/json' });
+        var headers = new http_1.Headers({ 'Content-type': 'application/json', 'Auth': 'basicqCMSAuth' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.put(this.sessionUrl + '/' + session.sessionId, body, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getCollections = function () {
-        return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.collectionsUrl, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getElements = function () {
-        return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.elementsUrl, options).map(this.extractData).catch(this.handleError);
     };
     AppService.prototype.getRoles = function () {
-        return this.http.get(this.rolesUrl).map(this.extractData).catch(this.handleError);
+        var headers = new http_1.Headers({ 'Auth': 'basicqCMSAuth' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.rolesUrl, options).map(this.extractData).catch(this.handleError);
     };
     // Helpers
     AppService.prototype.extractData = function (res) {

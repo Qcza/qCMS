@@ -19,82 +19,96 @@ export class AppService {
   // Templates services
   private templatesUrl = this.domain + '/templates';
   getTemplates (): Observable<any> {
-    return this.http.get(this.templatesUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.templatesUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   getTemplate (id:string): Observable<any> {
-    return this.http.get(this.templatesUrl + '/' +id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.templatesUrl + '/' +id, options).map(this.extractData).catch(this.handleError);
   }
 
   postTemplate (template:Template): Observable<any> {
     let body = JSON.stringify(template);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.templatesUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
   putTemplate (template:Template): Observable<any> {
     let body = JSON.stringify(template);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.put(this.templatesUrl+'/'+template._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteTemplate (template:Template): Observable<any> {
-    return this.http.delete(this.templatesUrl+'/'+template._id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.templatesUrl+'/'+template._id, options).map(this.extractData).catch(this.handleError);
   }
 
   // Documents services
   private documentsUrl = this.domain + '/documents';
   postDocument (document:Doc): Observable<any> {
     let body = JSON.stringify(document);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.documentsUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
   getDocuments (): Observable<any> {
-    return this.http.get(this.documentsUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.documentsUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   putDocument (document:Doc): Observable<any> {
     let body = JSON.stringify(document);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.put(this.documentsUrl+'/'+document._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteDocument (document:Doc): Observable<any> {
-    return this.http.delete(this.documentsUrl+'/'+document._id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.documentsUrl+'/'+document._id, options).map(this.extractData).catch(this.handleError);
   }
 
   // Users services
   private usersUrl = this.domain + '/users';
   postUsers (user:User): Observable<any> {
     let body = JSON.stringify(user);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.usersUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
   getUsers (): Observable<any> {
-    return this.http.get(this.usersUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.usersUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   putUser (user:User): Observable<any> {
     let body = JSON.stringify(user);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.put(this.usersUrl+'/'+user._id, body, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteUser (user:User): Observable<any> {
-    return this.http.delete(this.usersUrl+'/'+user._id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.usersUrl+'/'+user._id, options).map(this.extractData).catch(this.handleError);
   }
 
   loginUser (fields:LoginFields): Observable<any> {
     let body = JSON.stringify(fields);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.usersUrl + '/signin', body, options).map(this.extractData).catch(this.handleError);
   }
@@ -103,22 +117,26 @@ export class AppService {
   private sessionUrl = this.domain + '/sessions';
   setSession (session:Session): Observable<any> {
     let body = JSON.stringify(session);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.sessionUrl, body, options).map(this.extractData).catch(this.handleError);
   }
 
   getSession (id:string): Observable<any> {
-    return this.http.get(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.sessionUrl + '/' + id, options).map(this.extractData).catch(this.handleError);
   }
 
   deleteSession (id:string): Observable<any> {
-    return this.http.delete(this.sessionUrl + '/' + id).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.sessionUrl + '/' + id, options).map(this.extractData).catch(this.handleError);
   }
 
   putSession (session:Session): Observable<any> {
     let body = JSON.stringify(session);
-    let headers = new Headers({'Content-type': 'application/json'});
+    let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.put(this.sessionUrl+'/'+session.sessionId, body, options).map(this.extractData).catch(this.handleError);
   }
@@ -127,17 +145,23 @@ export class AppService {
   // Helpers services
   private collectionsUrl = this.domain + '/helpers/collections';
   getCollections (): Observable<any> {
-    return this.http.get(this.collectionsUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.collectionsUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   private elementsUrl = this.domain + '/helpers/elements';
   getElements (): Observable<any> {
-    return this.http.get(this.elementsUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.elementsUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   private rolesUrl = this.domain + '/helpers/roles';
   getRoles (): Observable<any> {
-    return this.http.get(this.rolesUrl).map(this.extractData).catch(this.handleError);
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.rolesUrl, options).map(this.extractData).catch(this.handleError);
   }
 
   // Helpers
