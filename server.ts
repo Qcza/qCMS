@@ -6,9 +6,11 @@ import * as bodyParser from 'body-parser';
 import * as bcrypt from 'bcrypt';
 import * as multer from 'multer';
 
+import * as config from './config';
+
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID;
-const dbUrl = 'mongodb://localhost:27017/qcms' 
+const dbUrl = (config.dbUser && config.dbPwd) ? ('mongodb://' + config.dbUser + ':' + config.dbPwd + '@' + config.dbUrl) : ('mongodb://' + config.dbUrl);
 
 const saltRounds:number = 8;
 

@@ -4,9 +4,11 @@ import * as mongodb from 'mongodb';
 import * as assert from 'assert';
 import * as bcrypt from 'bcrypt';
 
+import * as config from '../config';
+
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID;
-const dbUrl = 'mongodb://localhost:27017/qcms' 
+const dbUrl = (config.dbUser && config.dbPwd) ? ('mongodb://' + config.dbUser + ':' + config.dbPwd + '@' + config.dbUrl) : ('mongodb://' + config.dbUrl);
 
 const cookieExp:number = 3600 * 24 * 99;
 

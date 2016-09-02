@@ -3,9 +3,10 @@ var user_1 = require('../app/models/user');
 var mongodb = require('mongodb');
 var assert = require('assert');
 var bcrypt = require('bcrypt');
+var config = require('../config');
 var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
-var dbUrl = 'mongodb://localhost:27017/qcms';
+var dbUrl = (config.dbUser && config.dbPwd) ? ('mongodb://' + config.dbUser + ':' + config.dbPwd + '@' + config.dbUrl) : ('mongodb://' + config.dbUrl);
 var cookieExp = 3600 * 24 * 99;
 var collections = {
     name: 'collections',
