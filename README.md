@@ -10,7 +10,7 @@ Run installation with
 
 >npm install
 
-Start with
+Start server with
 >npm start
 
 To start server without TypeScrypt and SASS watchers run
@@ -21,4 +21,5 @@ Default server listening port
 
 Login with credentials:
 >login: *admin*
+
 >pwd: *ch@ngeIt*
