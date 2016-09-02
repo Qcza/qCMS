@@ -2,7 +2,7 @@
 quickCMS based on MEAN with Angular2.
 
 ##Installation##
-Adjust database setting
+Adjust database setting in
 
 >config.ts
 
@@ -19,7 +19,7 @@ To start server without TypeScrypt and SASS watchers run
 Default server listening port
 >3000
 
-Login with credentials:
+Login with credentials
 >login: *admin*
 
 >pwd: *ch@ngeIt*
