@@ -18,7 +18,7 @@ Adjust database settings in..
 Start server
 >npm start
 
-To start server without TypeScrypt and SASS watchers run
+Start server without TypeScrypt and SASS watchers
 >npm run server
 
 Default server listening port
