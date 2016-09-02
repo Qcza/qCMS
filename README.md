@@ -2,15 +2,15 @@
 quickCMS based on MEAN with Angular2.
 
 ##Installation##
-Adjust database setting in 
+Adjust database setting
 
 >config.ts
 
-Run installation with
+Run installation
 
 >npm install
 
-Start server with
+Start server
 >npm start
 
 To start server without TypeScrypt and SASS watchers run
