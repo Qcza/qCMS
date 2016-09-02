@@ -24,7 +24,7 @@ To start server without TypeScrypt and SASS watchers run
 Default server listening port
 >3000
 
-First login with credentials
+First login credentials
 >login: *admin*
 
 >pwd: *ch@ngeIt*
