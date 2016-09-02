@@ -2,13 +2,17 @@
 quickCMS based on MEAN with Angular2.
 
 ##Installation##
-Adjust database setting in
+Run packages installation
+>npm install
 
+Adjust database setting in..
 >config.ts
 
-Run installation
+..and compile it to .js..
+>npm run tsc
 
->npm install
+..then seed database
+>npm run seed
 
 Start server
 >npm start
