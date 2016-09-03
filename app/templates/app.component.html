@@ -62,8 +62,8 @@
         <input id="pw-field" name="pw-field" class="form-control qcms-form-input" type="password" placeholder="password" [(ngModel)]="loginForm.pw" [ngClass]="{'qcms-input-error': loginErr}">
       </div>
       <div class="form-group">
-        <button class="btn btn-qcms pull-right" [disabled]="loginForm.login.length === 0 || loginForm.pw.length === 0" (click)="signIn()">Sign In</button>
         <label class="login-checkbox" (click)="remember = !remember">Remember me <i class="fa" [ngClass]="{'fa-circle-o': !remember, 'fa-check-circle-o': remember}"></i></label>
+        <button class="btn btn-qcms pull-right" [disabled]="loginForm.login.length === 0 || loginForm.pw.length === 0" (click)="signIn()">Sign In</button>
       </div>
     </form>
     <p *ngIf="loginErr">
