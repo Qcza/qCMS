@@ -21,6 +21,7 @@ var RightBarComponent = (function () {
         this.show = 'default';
         this.elementsList = [];
         this.chosenElement = new template_1.Element();
+        this.deletionConfirm = false;
         // DOCUMENTS
         this.documentTitle = '';
         this.documentCollection = '';
@@ -43,6 +44,7 @@ var RightBarComponent = (function () {
         this.onAddDocument = new core_1.EventEmitter();
         this.onDeleteDocument = new core_1.EventEmitter();
         this.onEditDocument = new core_1.EventEmitter();
+        this.onChangeScenario = new core_1.EventEmitter();
         this.onRefreshSession = new core_1.EventEmitter();
     }
     RightBarComponent.prototype.ngOnInit = function () {
@@ -224,6 +226,9 @@ var RightBarComponent = (function () {
         this.documentEdited = true;
         this.onEditDocument.emit(this.documentEdited);
     };
+    RightBarComponent.prototype.emitChangeScenario = function (scenario) {
+        this.onChangeScenario.emit(scenario);
+    };
     RightBarComponent.prototype.getTemplatesToEdit = function () {
         var _this = this;
         this.appService.getTemplates().subscribe(function (templates) { return _this.templatesToEdit = templates; }, function (error) { return _this.errorMessage = error; });
@@ -233,7 +238,7 @@ var RightBarComponent = (function () {
         this.onRefresh.emit(this.template);
     };
     RightBarComponent.prototype.goDeepEditTemplate = function (template) {
-        this.scenario = 'editTemplateDeep';
+        this.emitChangeScenario('editTemplateDeep');
         this.refreshEditedTemplate(template);
     };
     RightBarComponent.prototype.addEditElement = function (element) {
@@ -260,6 +265,7 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.prevEditView = function () {
         this.resetTemplateForm();
         this.onRefresh.emit(this.template);
+        this.deletionConfirm = false;
         this.scenario = 'editTemplate';
     };
     RightBarComponent.prototype.prevUsersView = function () {
@@ -441,6 +447,10 @@ var RightBarComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], RightBarComponent.prototype, "onEditDocument", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], RightBarComponent.prototype, "onChangeScenario", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)

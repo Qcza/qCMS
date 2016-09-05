@@ -29,6 +29,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   elementsTypes:Array<string>;
   elementsList:Array<Element> = [];
   chosenElement:Element = new Element();
+  deletionConfirm:boolean = false;
 
   // DOCUMENTS
   documentTitle:string = '';
@@ -286,6 +287,11 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.onEditDocument.emit(this.documentEdited);
   }
 
+  @Output() onChangeScenario = new EventEmitter<string>();
+  emitChangeScenario(scenario:string) {
+    this.onChangeScenario.emit(scenario);
+  }
+
   getTemplatesToEdit():void {
     this.appService.getTemplates().subscribe(
       templates => this.templatesToEdit = templates,
@@ -299,7 +305,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   goDeepEditTemplate(template:Template):void {
-    this.scenario = 'editTemplateDeep';
+    this.emitChangeScenario('editTemplateDeep');
     this.refreshEditedTemplate(template);
   }
 
@@ -328,6 +334,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   prevEditView():void {
     this.resetTemplateForm();
     this.onRefresh.emit(this.template);
+    this.deletionConfirm = false;
     this.scenario = 'editTemplate';
   }
 

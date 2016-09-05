@@ -73,6 +73,9 @@ var AppComponent = (function () {
     AppComponent.prototype.onSelectScenario = function (scenario) {
         this.scenario = scenario;
     };
+    AppComponent.prototype.onChangeScenario = function (scenario) {
+        this.scenario = scenario;
+    };
     AppComponent.prototype.onSelectTemplate = function (template) {
         this.template = template;
     };

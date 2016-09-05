@@ -104,6 +104,10 @@ export class AppComponent {
     this.scenario = scenario;
   }
 
+  onChangeScenario(scenario:string):void {
+    this.scenario = scenario;
+  }
+
   onSelectTemplate(template:Template):void {
     this.template =  template;
   }
