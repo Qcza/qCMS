@@ -75,6 +75,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (this.scenario !== undefined) {
       this.show = 'show';
+      this.deletionConfirm = false;
     }
     if (this.scenario === 'editTemplate') {
       this.getTemplatesToEdit();
@@ -335,11 +336,12 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.resetTemplateForm();
     this.onRefresh.emit(this.template);
     this.deletionConfirm = false;
-    this.scenario = 'editTemplate';
+    this.emitChangeScenario('editTemplate');
   }
 
   prevUsersView():void {
     this.resetAddUserForm();
+    this.deletionConfirm = false;
     this.scenario = 'users'
   }
 

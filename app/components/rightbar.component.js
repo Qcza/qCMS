@@ -55,6 +55,7 @@ var RightBarComponent = (function () {
     RightBarComponent.prototype.ngOnChanges = function (changes) {
         if (this.scenario !== undefined) {
             this.show = 'show';
+            this.deletionConfirm = false;
         }
         if (this.scenario === 'editTemplate') {
             this.getTemplatesToEdit();
@@ -266,10 +267,11 @@ var RightBarComponent = (function () {
         this.resetTemplateForm();
         this.onRefresh.emit(this.template);
         this.deletionConfirm = false;
-        this.scenario = 'editTemplate';
+        this.emitChangeScenario('editTemplate');
     };
     RightBarComponent.prototype.prevUsersView = function () {
         this.resetAddUserForm();
+        this.deletionConfirm = false;
         this.scenario = 'users';
     };
     RightBarComponent.prototype.editTemplate = function () {
