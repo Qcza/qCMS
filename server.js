@@ -29,8 +29,8 @@ app.use('/files', express.static(__dirname + '/static/public/files/'));
 //TEMPLATES
 // POST TEMPLATE
 function addTemplate(db, req) {
-    db.collection('templates').insertOne(req.body).then(function () {
-        db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
+    db.collection('qcms_templates').insertOne(req.body).then(function () {
+        db.collection('qcms_helpers').findOne({ 'name': 'collections' }).then(function (document) {
             var new_collections = document.collections;
             if (new_collections.indexOf(req.body.collection) === -1) {
                 new_collections.push(req.body.collection);
@@ -41,7 +41,7 @@ function addTemplate(db, req) {
             }
         }).then(function (collections) {
             if (collections.length > 0) {
-                db.collection('helpers').updateOne({ 'name': 'collections' }, { $set: { 'collections': collections } }).then(function () {
+                db.collection('qcms_helpers').updateOne({ 'name': 'collections' }, { $set: { 'collections': collections } }).then(function () {
                     db.close();
                 });
             }
@@ -59,7 +59,7 @@ app.post('/templates', function (req, res) {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
             if (req.body.is_default === true) {
-                db.collection('templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
+                db.collection('qcms_templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
                     addTemplate(db, req);
                 });
             }
@@ -79,7 +79,7 @@ app.get('/templates', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('templates').find().sort({ 'name': 1 }).toArray().then(function (documents) {
+            db.collection('qcms_templates').find().sort({ 'name': 1 }).toArray().then(function (documents) {
                 var response = JSON.stringify(documents);
                 res.send(response);
                 db.close();
@@ -96,7 +96,7 @@ app.get('/templates/:id', function (req, res) {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
             var id = req.params.id;
-            db.collection('templates').findOne({ '_id': new ObjectId(id) }).then(function (document) {
+            db.collection('qcms_templates').findOne({ '_id': new ObjectId(id) }).then(function (document) {
                 var response = JSON.stringify(document);
                 res.send(response);
                 db.close();
@@ -113,7 +113,7 @@ app.delete('/templates/:id', function (req, res) {
         var id_1 = req.params.id;
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('templates').deleteOne({ '_id': new ObjectId(id_1) }).then(function () {
+            db.collection('qcms_templates').deleteOne({ '_id': new ObjectId(id_1) }).then(function () {
                 var response = JSON.stringify('success');
                 res.send(response);
                 db.close();
@@ -124,7 +124,7 @@ app.delete('/templates/:id', function (req, res) {
 // EDIT TEMPLATE
 function updateTemplate(db, req) {
     var id = req.params.id;
-    db.collection('templates').updateOne({ '_id': new ObjectId(id) }, {
+    db.collection('qcms_templates').updateOne({ '_id': new ObjectId(id) }, {
         'name': req.body.name,
         'collection': req.body.collection,
         'is_default': req.body.is_default,
@@ -141,7 +141,7 @@ app.put('/templates/:id', function (req, res) {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
             if (req.body.is_default === true) {
-                db.collection('templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
+                db.collection('qcms_templates').updateMany({}, { $set: { 'is_default': false } }).then(function () {
                     updateTemplate(db, req);
                 });
             }
@@ -162,7 +162,7 @@ app.post('/documents', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('documents').insertOne(req.body).then(function () {
+            db.collection('qcms_documents').insertOne(req.body).then(function () {
                 var response = JSON.stringify('success');
                 res.send(response);
                 db.close();
@@ -178,7 +178,7 @@ app.get('/documents', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('documents').find().sort({ 'date': -1 }).toArray().then(function (documents) {
+            db.collection('qcms_documents').find().sort({ 'date': -1 }).toArray().then(function (documents) {
                 var response = JSON.stringify(documents);
                 res.send(response);
                 db.close();
@@ -195,7 +195,7 @@ app.put('/documents/:id', function (req, res) {
         var id_2 = req.params.id;
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('documents').updateOne({ '_id': new ObjectId(id_2) }, { $set: {
+            db.collection('qcms_documents').updateOne({ '_id': new ObjectId(id_2) }, { $set: {
                     'title': req.body.title,
                     'template': req.body.template
                 } }).then(function () {
@@ -215,7 +215,7 @@ app.delete('/documents/:id', function (req, res) {
         var id_3 = new ObjectId(req.params.id);
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('documents').deleteOne({ '_id': id_3 }).then(function () {
+            db.collection('qcms_documents').deleteOne({ '_id': id_3 }).then(function () {
                 var response = JSON.stringify('success');
                 res.send(response);
                 db.close();
@@ -235,7 +235,7 @@ app.post('/users', function (req, res) {
             req.body.pw = hash;
             MongoClient.connect(dbUrl, function (err, db) {
                 assert.equal(null, err);
-                db.collection('users').insertOne(req.body).then(function () {
+                db.collection('qcms_users').insertOne(req.body).then(function () {
                     var response = JSON.stringify('success');
                     res.send(response);
                     db.close();
@@ -252,7 +252,7 @@ app.get('/users', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('users').find().sort({ 'login': 1 }).toArray().then(function (documents) {
+            db.collection('qcms_users').find().sort({ 'login': 1 }).toArray().then(function (documents) {
                 var response = JSON.stringify(documents);
                 res.send(response);
                 db.close();
@@ -269,7 +269,7 @@ app.put('/users/:id', function (req, res) {
         var id_4 = new ObjectId(req.params.id);
         MongoClient.connect(dbUrl, function (bcerr, db) {
             assert.equal(null, bcerr);
-            db.collection('users').updateOne({ '_id': id_4 }, { $set: {
+            db.collection('qcms_users').updateOne({ '_id': id_4 }, { $set: {
                     'login': req.body.login,
                     'fname': req.body.fname,
                     'lname': req.body.lname,
@@ -279,7 +279,7 @@ app.put('/users/:id', function (req, res) {
                 if (req.body.pw && req.body.pw !== '') {
                     bcrypt.hash(req.body.pw, saltRounds, function (err, hash) {
                         assert.equal(null, err);
-                        db.collection('users').updateOne({ '_id': id_4 }, { $set: {
+                        db.collection('qcms_users').updateOne({ '_id': id_4 }, { $set: {
                                 'pw': hash
                             } }).then(function () {
                             var response = JSON.stringify('success');
@@ -306,7 +306,7 @@ app.delete('/users/:id', function (req, res) {
         var id_5 = new ObjectId(req.params.id);
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('users').deleteOne({ '_id': id_5 }).then(function () {
+            db.collection('qcms_users').deleteOne({ '_id': id_5 }).then(function () {
                 var response = JSON.stringify('success');
                 res.send(response);
                 db.close();
@@ -322,7 +322,7 @@ app.post('/users/signin', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('users').findOne({ 'login': req.body.login }).then(function (document) {
+            db.collection('qcms_users').findOne({ 'login': req.body.login }).then(function (document) {
                 if (document) {
                     bcrypt.compare(req.body.pw, document.pw, function (bcerr, result) {
                         assert.equal(null, bcerr);
@@ -355,7 +355,7 @@ app.post('/sessions', function (req, res) {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
             req.body.createdAt = new Date(req.body.createdAt);
-            db.collection('sessions').insertOne(req.body).then(function () {
+            db.collection('qcms_sessions').insertOne(req.body).then(function () {
                 var response = JSON.stringify({ 'sessionId': req.body.sessionId });
                 res.send(response);
                 db.close();
@@ -372,7 +372,7 @@ app.get('/sessions/:id', function (req, res) {
         var id_6 = req.params.id;
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('sessions').findOne({ 'sessionId': id_6 }).then(function (document) {
+            db.collection('qcms_sessions').findOne({ 'sessionId': id_6 }).then(function (document) {
                 if (document) {
                     var response = JSON.stringify(document);
                     res.send(response);
@@ -395,7 +395,7 @@ app.put('/sessions/:id', function (req, res) {
         var id_7 = req.params.id;
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('sessions').updateOne({ 'sessionId': id_7 }, { $set: {
+            db.collection('qcms_sessions').updateOne({ 'sessionId': id_7 }, { $set: {
                     'user': req.body.user
                 } }).then(function () {
                 var response = JSON.stringify('success');
@@ -414,7 +414,7 @@ app.delete('/sessions/:id', function (req, res) {
         var id_8 = req.params.id;
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('sessions').deleteOne({ 'sessionId': id_8 }).then(function () {
+            db.collection('qcms_sessions').deleteOne({ 'sessionId': id_8 }).then(function () {
                 var response = JSON.stringify('success');
                 res.send(response);
                 db.close();
@@ -431,7 +431,7 @@ app.get('/helpers/collections', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('helpers').findOne({ 'name': 'collections' }).then(function (document) {
+            db.collection('qcms_helpers').findOne({ 'name': 'collections' }).then(function (document) {
                 var response = JSON.stringify(document.collections);
                 res.send(response);
                 db.close();
@@ -447,7 +447,7 @@ app.get('/helpers/elements', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('helpers').findOne({ 'name': 'elements' }).then(function (document) {
+            db.collection('qcms_helpers').findOne({ 'name': 'elements' }).then(function (document) {
                 var response = JSON.stringify(document.types);
                 res.send(response);
                 db.close();
@@ -463,7 +463,7 @@ app.get('/helpers/roles', function (req, res) {
     else {
         MongoClient.connect(dbUrl, function (err, db) {
             assert.equal(null, err);
-            db.collection('helpers').findOne({ 'name': 'roles' }).then(function (document) {
+            db.collection('qcms_helpers').findOne({ 'name': 'roles' }).then(function (document) {
                 var response = JSON.stringify(document.roles);
                 res.send(response);
                 db.close();
