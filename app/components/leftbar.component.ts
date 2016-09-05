@@ -181,7 +181,6 @@ export class LeftBarComponent implements OnInit, OnChanges {
         return template;
       }
     }
-    return new Template();
   }
 
   selectDefaultTemplate(elements:Array<Template>):void {
@@ -191,7 +190,10 @@ export class LeftBarComponent implements OnInit, OnChanges {
         return
       }
     }
-    this.selectTemplate(this.findDefault(elements));
+    let defaultTemplate:Template = this.findDefault(elements);
+    if (defaultTemplate) {
+      this.selectTemplate(defaultTemplate);
+    }
     this.extendBar('new');
   }
 

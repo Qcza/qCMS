@@ -155,7 +155,6 @@ var LeftBarComponent = (function () {
                 return template;
             }
         }
-        return new template_1.Template();
     };
     LeftBarComponent.prototype.selectDefaultTemplate = function (elements) {
         for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
@@ -165,7 +164,10 @@ var LeftBarComponent = (function () {
                 return;
             }
         }
-        this.selectTemplate(this.findDefault(elements));
+        var defaultTemplate = this.findDefault(elements);
+        if (defaultTemplate) {
+            this.selectTemplate(defaultTemplate);
+        }
         this.extendBar('new');
     };
     LeftBarComponent.prototype.selectDefaultDocument = function (elements) {
