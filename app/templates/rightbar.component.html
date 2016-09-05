@@ -168,7 +168,7 @@
     <!-- USERS -->
     <div class="user-form" *ngIf="scenario==='users'">
       <div class="document-template" *ngFor="let user of users" (click)="goDeepEditUser(user)">
-        <img src="/img/qboy.png" class="qcms-profile-img" />
+        <img src="/img/{{user.image}}" class="qcms-profile-img" />
         {{user.login}} <small>({{user.role}})</small>
       </div>
       <button class="btn btn-qcms btn-qcms-icon btn-list-fix pull-right" (click)="goDeepAddUser()"><i class="fa fa-user-plus"></i></button>
@@ -195,7 +195,7 @@
         </div>
         <div class="form-group">
           <label for="addUserImage">Profile image</label>
-          <input id="editUserImage" name="editUserImage" type="text" class="form-control qcms-form-input" placeholder="#ToDo" disabled>
+          <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
         </div>
         <div class="form-group">
           <label for="addUserRole">Role</label>
@@ -224,7 +224,7 @@
     <!-- EDIT USER -->
     <div class="edit-user-form" *ngIf="scenario==='editUserDeep'">
       <i class="fa fa-arrow-circle-o-left qcms-nav-icon" (click)="prevUsersView()"></i>
-      <img src="/img/qboy.png" class="qcms-profile-img pull-right" />
+      <img src="/img/{{user.image}}" class="qcms-profile-img pull-right" />
       <hr />
       <form name="editUser">
         <div class="form-group">
@@ -278,7 +278,7 @@
     <!-- EDIT ACCOUNT -->
     <div class="edit-account-form" *ngIf="scenario==='account'">
       <i class="fa fa-user"></i>&nbsp;&nbsp;{{session.user.role}}
-      <img src="/img/qboy.png" class="qcms-profile-img pull-right" />
+      <img src="/img/{{session.user.image}}" class="qcms-profile-img pull-right" />
       <hr />
       <form name="editAccount">
         <div class="form-group">

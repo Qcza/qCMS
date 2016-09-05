@@ -8,7 +8,7 @@ Run packages installation
 Adjust database settings in..
 >config.ts
 
-..and compile it to .js..
+..and compile TypeScript..
 >npm run tsc
 
 ..then seed database.

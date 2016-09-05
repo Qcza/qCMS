@@ -5,21 +5,57 @@ import * as assert from 'assert';
 import * as bodyParser from 'body-parser';
 import * as bcrypt from 'bcrypt';
 import * as multer from 'multer';
+import * as cors from 'cors';
 
 import * as config from './config';
 
+// MONGO CONFIG
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID;
 const dbUrl = (config.dbUser && config.dbPwd) ? ('mongodb://' + config.dbUser + ':' + config.dbPwd + '@' + config.dbUrl) : ('mongodb://' + config.dbUrl);
 
+// BCRYPT CONFIG
 const saltRounds:number = 8;
 
-const avtrUpload = multer({dest: 'static/public/images/avatars/'});
-const imgUpload = multer({dest: config.imgUrl});
-const fileUpload = multer({dest: config.fileUrl});
+// MULTER CONFIG
+const avtrUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, config.avtrPath)
+    },
+    filename: (req, file, cb) => {
+      let ext = path.extname(file.originalname);
+      cb(null, `${Math.random().toString(36).substring(7)}${ext}`);
+    }
+  })
+});
+const imgUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, config.imgPath)
+    },
+    filename: (req, file, cb) => {
+      let ext = path.extname(file.originalname);
+      cb(null, `${Math.random().toString(36).substring(7)}${ext}`);
+    }
+  })
+});
+const fileUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, config.filePath)
+    },
+    filename: (req, file, cb) => {
+      let ext = path.extname(file.originalname);
+      cb(null, `${Math.random().toString(36).substring(7)}${ext}`);
+    }
+  })
+});
 
+// EXPRESS
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json())
 
 app.use('/', express.static(__dirname));
@@ -27,12 +63,12 @@ app.use('/css', express.static(__dirname + '/app/styles/'))
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 app.use('/css', express.static(__dirname + '/static/font-awesome/css/'));
 app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
-app.use('/img', express.static(__dirname + '/static/public/images/avatars/'));
-app.use('/img', express.static(__dirname + config.imgUrl));
-app.use('/files', express.static(__dirname + config.fileUrl));
+app.use('/img', express.static(__dirname + '/' + config.avtrPath));
+app.use('/img', express.static(__dirname + '/' + config.imgPath));
+app.use('/files', express.static(__dirname + '/' + config.filePath));
 
 // app.get('/', function (req: express.Request, res: express.Response) {
-//     res.sendFile(path.resolve(__dirname, 'index.html'));
+//     res.sendFile(path.resolve(__dirname, ' index.html'));
 // });
 
 //TEMPLATES
@@ -421,6 +457,11 @@ app.delete('/sessions/:id', function (req: express.Request, res: express.Respons
       })
     })
   }
+})
+
+// FILES
+app.post('/uploadavtr', avtrUpload.any(), function (req, res) {
+  res.json(req.files[0])
 })
 
 //HELPERS

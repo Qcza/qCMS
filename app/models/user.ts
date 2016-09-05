@@ -17,12 +17,17 @@ export class User implements UserInterface {
   pw:string;
   image:string;
 
-  constructor (login:string, fname:string, lname:string, role:string = 'user', pw?:string, id?:string) {
+  constructor (login:string, fname:string, lname:string, role:string = 'user', pw?:string, id?:string, image?:string) {
     this.login = login;
     this.fname = fname;
     this.lname = lname;
     this.role = role;
     if (id) this._id = id;
     if (pw) this.pw = pw;
+    if (image && image !== '') {
+      this.image = image;
+    } else {
+      this.image = 'qboy.png';
+    }
   }
 }

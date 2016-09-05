@@ -31,6 +31,19 @@ export class RightBarComponent implements OnChanges, OnInit {
   chosenElement:Element = new Element();
   deletionConfirm:boolean = false;
 
+  // UPLOAD FILES
+  avtrOptions:Object = {
+    url: '/uploadavtr',
+    filterExtensions: true,
+    allowedExtensions: ['image/jpeg', 'image/png']
+  };
+  imgOptions:Object = {
+    url: '/uploadimg'
+  };
+  fileOptions:Object = {
+    url: '/uploadfile'
+  };
+
   // DOCUMENTS
   documentTitle:string = '';
   documentAdded:boolean;
@@ -58,7 +71,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   userRole:string = '';
   userPw:string = '';
   userPwCon:string = '';
-  userImage:File;
+  userImage:string = '';
 
   // ACCOUNT
   accountPw:string = '';
@@ -82,6 +95,13 @@ export class RightBarComponent implements OnChanges, OnInit {
     }
     if (this.scenario === 'users') {
       this.getUsers();
+    }
+  }
+
+  handleUpload(data):void {
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.userImage = data.filename;
     }
   }
 
@@ -400,7 +420,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   addUser() {
-    let user = new User(this.userLogin, this.userFname, this.userLname, this.userRole, this.userPw)
+    let user = new User(this.userLogin, this.userFname, this.userLname, this.userRole, this.userPw, undefined, this.userImage)
     this.appService.postUsers(user).subscribe(
       response => {
         this.response = response,
