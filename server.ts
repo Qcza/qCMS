@@ -14,9 +14,9 @@ const dbUrl = (config.dbUser && config.dbPwd) ? ('mongodb://' + config.dbUser + 
 
 const saltRounds:number = 8;
 
-const avtUpload = multer({dest: 'static/public/images/avatars/'})
-const imgUpload = multer({dest: 'static/public/images/'});
-const fileUpload = multer({dest: 'static/public/files/'});
+const avtrUpload = multer({dest: 'static/public/images/avatars/'});
+const imgUpload = multer({dest: config.imgUrl});
+const fileUpload = multer({dest: config.fileUrl});
 
 const app = express();
 
@@ -27,9 +27,9 @@ app.use('/css', express.static(__dirname + '/app/styles/'))
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 app.use('/css', express.static(__dirname + '/static/font-awesome/css/'));
 app.use('/fonts', express.static(__dirname + '/static/font-awesome/fonts/'));
-app.use('/img', express.static(__dirname + '/static/public/images/'));
 app.use('/img', express.static(__dirname + '/static/public/images/avatars/'));
-app.use('/files', express.static(__dirname + '/static/public/files/'));
+app.use('/img', express.static(__dirname + config.imgUrl));
+app.use('/files', express.static(__dirname + config.fileUrl));
 
 // app.get('/', function (req: express.Request, res: express.Response) {
 //     res.sendFile(path.resolve(__dirname, 'index.html'));
