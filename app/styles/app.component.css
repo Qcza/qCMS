@@ -209,3 +209,26 @@ body {
   /* line 78, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
   .login-checkbox:hover {
     color: #7e24fb; }
+
+/* line 81, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+.github-footer {
+  bottom: 12px;
+  display: block;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%; }
+
+/* line 89, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+.github-link {
+  color: inherit;
+  opacity: .5; }
+  /* line 93, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+  .github-link:hover {
+    opacity: .7; }
+
+/* line 96, /home/balus/OWN/qcms/app/styles/sass/app.component.sass */
+.brand-footer {
+  color: inherit;
+  cursor: default;
+  opacity: .5; }
