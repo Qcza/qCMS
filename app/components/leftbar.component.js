@@ -25,7 +25,6 @@ var LeftBarComponent = (function () {
             { title: 'Edit templates', icon: 'fa-edit', is_selected: false, scenario: 'editTemplate' },
             { title: 'Manage users', icon: 'fa-users', is_selected: false, scenario: 'users' },
             { title: 'Your account', icon: 'fa-briefcase', is_selected: false, scenario: 'account' },
-            { title: 'Settings', icon: 'fa-wrench', is_selected: false, scenario: 'preferences' },
             { title: 'Sign out', icon: 'fa-sign-out', is_selected: false, scenario: 'sign-out' }
         ];
         this.settingMenuUser = [
