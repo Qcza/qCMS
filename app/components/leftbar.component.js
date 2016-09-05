@@ -16,7 +16,7 @@ var session_1 = require('../models/session');
 var LeftBarComponent = (function () {
     function LeftBarComponent(appService) {
         this.appService = appService;
-        this.brand = '@qCMS';
+        this.brand = 'qCMS';
         this.extend = null;
         this.scenario = null;
         this.active = null;

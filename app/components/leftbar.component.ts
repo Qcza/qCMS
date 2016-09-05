@@ -13,7 +13,7 @@ import { SettingMenuInterface } from '../models/helpers';
 })
 
 export class LeftBarComponent implements OnInit, OnChanges { 
-  brand:string = '@qCMS';
+  brand:string = 'qCMS';
   extend:string = null;
   scenario:string = null;
   active:string = null;
