@@ -41,7 +41,7 @@ const imgUpload = multer({
     }
   })
 });
-const fileUpload = multer({
+const attUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, config.filePath)
@@ -491,6 +491,25 @@ app.delete('/images/:name', function (req, res) {
   if (req.get('Auth') === 'basicqCMSAuth') {
     let name = req.params.name;
     let path = config.imgPath + name;
+    fs.unlink(path, function (rs) {
+      let response:string = JSON.stringify(rs);
+      res.send(response);
+    })
+  } else {
+    res.sendStatus(401);
+  }
+})
+
+// POST ATTACHMENT
+app.post('/attachments', attUpload.any(), function (req, res) {
+  res.json(req.files[0])
+})
+
+// DELETE ATTACHMENT
+app.delete('/attachments/:name', function (req, res) {
+  if (req.get('Auth') === 'basicqCMSAuth') {
+    let name = req.params.name;
+    let path = config.filePath + name;
     fs.unlink(path, function (rs) {
       let response:string = JSON.stringify(rs);
       res.send(response);

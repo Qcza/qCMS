@@ -31,6 +31,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   chosenElement:Element = new Element();
   deletionConfirm:boolean = false;
   fileUploaded:string;
+  attUploaded:string;
   resetFile:boolean = false;
 
   // UPLOAD FILES
@@ -44,8 +45,8 @@ export class RightBarComponent implements OnChanges, OnInit {
     filterExtensions: true,
     allowedExtensions: ['image/jpeg', 'image/png']
   };
-  fileOptions:Object = {
-    url: '/files'
+  attOptions:Object = {
+    url: '/attachments'
   };
 
   // DOCUMENTS
@@ -56,6 +57,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   documentCollections:Array<string>;
   documentCollection:string = '';
   documentImages:Array<string> = [];
+  documentAttachments:Array<Object> = [];
 
   // TEMPLATES
   templateName:string;
@@ -98,6 +100,7 @@ export class RightBarComponent implements OnChanges, OnInit {
       this.userImage = undefined;
       this.userImageName = undefined;
       this.fileUploaded = undefined;
+      this.attUploaded = undefined;
     }
     if (this.scenario === 'editTemplate') {
       this.getTemplatesToEdit();
@@ -156,6 +159,26 @@ export class RightBarComponent implements OnChanges, OnInit {
       this.fileUploaded = 'ok';
     } else {
       this.fileUploaded = 'err';
+    }
+  }
+
+  handleUploadAttach(data):void {
+    this.attUploaded = undefined;
+    if (data && data.progress.percent < 100) {
+      this.attUploaded = 'during'
+    } else if (data && data.error) {
+      this.attUploaded = 'err'
+    } else if (data && data.response) {
+      data = JSON.parse(data.response);
+      let attachment = {
+        filename: data.filename,
+        originalname: data.originalname,
+        ext: data.filename.slice(data.filename.indexOf('.'))
+      }
+      this.documentAttachments.push(attachment);
+      this.attUploaded = 'ok';
+    } else {
+      this.attUploaded = 'err';
     }
   }
 
@@ -274,6 +297,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   resetDocumentForm():void {
      this.documentTitle = '';
      this.documentImages = [];
+     this.documentAttachments = [];
   }
 
   showAlerts(type:string, message:string):void {
@@ -313,7 +337,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   addDocument(title:string, template:Template):void {
-    let doc = new Doc(title, template, undefined, this.documentImages);
+    let doc = new Doc(title, template, undefined, this.documentImages, this.documentAttachments);
     this.appService.postDocument(doc).subscribe(
       response => {
         this.response = response,
@@ -632,5 +656,12 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.document.images.splice(index, 1);
     this.editDocument(this.document);
     this.deleteImage(name);
+  }
+
+  deleteAttachment(name:string):void {
+    this.appService.deleteAttachment(name).subscribe(
+      response => this.response = response,
+      error => this.errorMessage = error
+    )
   }
 }

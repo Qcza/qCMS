@@ -140,8 +140,23 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="useDocumentFile"><i class="fa fa-chain"></i> Attachments</label>
-          <input id="useDocumentFile" name="useDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
+          <label for="useDocumentAttach"><i class="fa fa-picture-o"></i> Attachments</label>
+          <label class="qcms-file-uploader">
+            <input type="file" ngFileSelect [options]='attOptions' (onUpload)="handleUploadAttach($event)">
+            Upload file
+            <i *ngIf="attUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="attUploaded === 'during'" class="sr-only">Loading...</small>
+            <i *ngIf="attUploaded === 'ok'" class="fa fa-check-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="attUploaded === 'ok'" class="sr-only">Done</small>
+            <i *ngIf="attUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="attUploaded === 'err'" class="sr-only">Error</small>
+          </label>
+        </div>
+        <div class="form-group">
+          <div class="qcms-attachment" *ngFor="let attach of documentAttachments">
+            <i class="fa fa-file-o qcms-attachment-icon" title="{{attach.originalname}}"></i>
+            <small class="qcms-attachment-label">{{attach.originalname}}</small>
+          </div>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template);">Save</button>
       </form>

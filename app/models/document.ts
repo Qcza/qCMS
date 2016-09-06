@@ -7,7 +7,7 @@ interface DocInterface {
   template:Template;
   is_selected:boolean;
   images:Array<string>;
-  attachments:Array<string>;
+  attachments:Array<Object>;
 }
 
 export class Doc implements DocInterface {
@@ -17,9 +17,9 @@ export class Doc implements DocInterface {
   template:Template;
   is_selected:boolean;
   images:Array<string>;
-  attachments:Array<string>;
+  attachments:Array<Object>;
 
-  constructor (title:string, template:Template, id?:string, images?:Array<string>, attachments?:Array<string>) {
+  constructor (title:string, template:Template, id?:string, images?:Array<string>, attachments?:Array<Object>) {
     if (id) this._id = id;
     this.date = new Date();
     this.title = title;

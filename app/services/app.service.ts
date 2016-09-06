@@ -156,6 +156,13 @@ export class AppService {
     return this.http.delete(this.imagesUrl + '/' + name, options).map(this.extractData).catch(this.handleError);
   }
 
+  private attachmentsUrl = this.domain + '/attachments';
+  deleteAttachment (name:string): Observable<any> {
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.attachmentsUrl + '/' + name, options).map(this.extractData).catch(this.handleError);
+  }
+
 
   // Helpers services
   private collectionsUrl = this.domain + '/helpers/collections';
