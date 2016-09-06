@@ -35,15 +35,15 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   // UPLOAD FILES
   avtrOptions:Object = {
-    url: '/uploadavtr',
+    url: '/avatars',
     filterExtensions: true,
     allowedExtensions: ['image/jpeg', 'image/png']
   };
   imgOptions:Object = {
-    url: '/uploadimg'
+    url: '/images'
   };
   fileOptions:Object = {
-    url: '/uploadfile'
+    url: '/files'
   };
 
   // DOCUMENTS
@@ -106,6 +106,9 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   handleUpload(data):void {
     this.fileUploaded = undefined;
+    if (this.userImage && this.userImage !== '') {
+      this.deleteAvatar(this.userImage);
+    }
     if (data && data.progress.percent < 100) {
       this.fileUploaded = 'during'
     } else if (data && data.error) {
@@ -126,6 +129,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   resetUserImage(event):void {
     event.stopPropagation();
     event.preventDefault();
+    this.deleteAvatar(this.userImage);
     this.userImage = undefined;
     this.userImageName = undefined;
     this.fileUploaded = undefined;
@@ -501,6 +505,9 @@ export class RightBarComponent implements OnChanges, OnInit {
       this.user.pw = this.userPw;
     }
     if (this.userImage && this.userImage !== '') {
+      if (user.image !== 'qboy.png') {
+        this.deleteAvatar(user.image);
+      }
       this.user.image = this.userImage;
     }
     this.appService.putUser(user).subscribe(
@@ -524,6 +531,9 @@ export class RightBarComponent implements OnChanges, OnInit {
   editAccount(session:Session) {
     let user = this.session.user;
     if (this.userImage && this.userImage !== '') {
+      if (user.image !== 'qboy.png') {
+        this.deleteAvatar(user.image);
+      }
       user.image = this.userImage;
     }
     let account = new User(user.login, user.fname, user.lname, user.role, undefined, user._id, user.image)
@@ -561,5 +571,12 @@ export class RightBarComponent implements OnChanges, OnInit {
   @Output() onRefreshSession = new EventEmitter<boolean>();
   emitRefreshSession() {
     this.onRefreshSession.emit(true);
+  }
+
+  deleteAvatar(name:string):void {
+    this.appService.deleteAvatar(name).subscribe(
+      response => this.response = response,
+      error => this.errorMessage = error
+    )
   }
 }

@@ -6,6 +6,7 @@ import * as bodyParser from 'body-parser';
 import * as bcrypt from 'bcrypt';
 import * as multer from 'multer';
 import * as cors from 'cors';
+import * as fs from 'fs';
 
 import * as config from './config';
 
@@ -460,8 +461,23 @@ app.delete('/sessions/:id', function (req: express.Request, res: express.Respons
 })
 
 // FILES
-app.post('/uploadavtr', avtrUpload.any(), function (req, res) {
+// POST AVATAR
+app.post('/avatars', avtrUpload.any(), function (req, res) {
   res.json(req.files[0])
+})
+
+// DELETE AVATAR
+app.delete('/avatars/:name', function (req, res) {
+  if (req.get('Auth') === 'basicqCMSAuth') {
+    let name = req.params.name;
+    let path = config.avtrPath + name;
+    fs.unlink(path, function (rs) {
+      let response:string = JSON.stringify(rs);
+      res.send(response);
+    })
+  } else {
+    res.sendStatus(401);
+  }
 })
 
 //HELPERS

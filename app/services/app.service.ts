@@ -141,6 +141,14 @@ export class AppService {
     return this.http.put(this.sessionUrl+'/'+session.sessionId, body, options).map(this.extractData).catch(this.handleError);
   }
 
+  // Files services
+  private avatarsUrl = this.domain + '/avatars';
+  deleteAvatar (name:string): Observable<any> {
+    let headers = new Headers({'Auth': 'basicqCMSAuth'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.delete(this.avatarsUrl + '/' + name, options).map(this.extractData).catch(this.handleError);
+  }
+
 
   // Helpers services
   private collectionsUrl = this.domain + '/helpers/collections';
