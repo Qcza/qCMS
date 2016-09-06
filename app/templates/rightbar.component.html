@@ -201,7 +201,7 @@
             <span *ngIf="userImage">{{userImageName}}</span>
             <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
             <small *ngIf="fileUploaded === 'during'" class="sr-only">Loading...</small>
-            <i *ngIf="fileUploaded === 'ok'" class="fa fa-check-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <i *ngIf="fileUploaded === 'ok'" class="fa fa-fw qcms-file-uploader-icon" [ngClass]="{'fa-check-circle-o': resetFile === false, 'fa-minus-circle': resetFile === true}"  on-mouseenter="resetFile = true" on-mouseout="resetFile = false" (click)="resetUserImage($event)"></i>
             <small *ngIf="fileUploaded === 'ok'" class="sr-only">Done</small>
             <i *ngIf="fileUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
             <small *ngIf="fileUploaded === 'err'" class="sr-only">Error</small>
@@ -250,8 +250,18 @@
           <input id="editUserLname" name="editUserLname" type="text" class="form-control qcms-form-input" [(ngModel)]="user.lname">
         </div>
         <div class="form-group">
-          <label for="editUserImage">Profile image</label>
-          <input id="editUserImage" name="editUserImage" type="text" class="form-control qcms-form-input" placeholder="#ToDo" disabled>
+          <label for="editUserImage">Profile image <small>(.png/.jpg)</small></label>
+          <label class="qcms-file-uploader">
+            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
+            <span *ngIf="!userImage">Upload file</span>
+            <span *ngIf="userImage">{{userImageName}}</span>
+            <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'during'" class="sr-only">Loading...</small>
+            <i *ngIf="fileUploaded === 'ok'" class="fa fa-fw qcms-file-uploader-icon" [ngClass]="{'fa-check-circle-o': resetFile === false, 'fa-minus-circle': resetFile === true}"  on-mouseenter="resetFile = true" on-mouseout="resetFile = false" (click)="resetUserImage($event)"></i>
+            <small *ngIf="fileUploaded === 'ok'" class="sr-only">Done</small>
+            <i *ngIf="fileUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'err'" class="sr-only">Error</small>
+          </label>
         </div>
         <div class="form-group">
           <label for="editUserRole">Role</label>
@@ -304,8 +314,18 @@
           <input id="editAccountLname" name="editAccountLname" type="text" class="form-control qcms-form-input" [(ngModel)]="session.user.lname">
         </div>
         <div class="form-group">
-          <label for="editAccountImage">Profile image</label>
-          <input id="editAccountImage" name="editAccountImage" type="text" class="form-control qcms-form-input" placeholder="#ToDo" disabled>
+          <label for="editAccountImage">Profile image <small>(.png/.jpg)</small></label>
+          <label class="qcms-file-uploader">
+            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
+            <span *ngIf="!userImage">Upload file</span>
+            <span *ngIf="userImage">{{userImageName}}</span>
+            <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'during'" class="sr-only">Loading...</small>
+            <i *ngIf="fileUploaded === 'ok'" class="fa fa-fw qcms-file-uploader-icon" [ngClass]="{'fa-check-circle-o': resetFile === false, 'fa-minus-circle': resetFile === true}"  on-mouseenter="resetFile = true" on-mouseout="resetFile = false" (click)="resetUserImage($event)"></i>
+            <small *ngIf="fileUploaded === 'ok'" class="sr-only">Done</small>
+            <i *ngIf="fileUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'err'" class="sr-only">Error</small>
+          </label>
         </div>
         <div class="form-group">
           <label for="editAccountPw">New password</label>

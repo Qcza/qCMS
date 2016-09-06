@@ -313,7 +313,7 @@ app.put('/users/:id', function (req: express.Request, res: express.Response) {
         'login': req.body.login,
         'fname': req.body.fname,
         'lname': req.body.lname,
-        'imgurl': req.body.imgurl,
+        'image': req.body.image,
         'role': req.body.role
       }}).then(function () {
         if (req.body.pw && req.body.pw !== '') {

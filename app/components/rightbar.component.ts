@@ -31,6 +31,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   chosenElement:Element = new Element();
   deletionConfirm:boolean = false;
   fileUploaded:string;
+  resetFile:boolean = false;
 
   // UPLOAD FILES
   avtrOptions:Object = {
@@ -91,6 +92,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     if (this.scenario !== undefined) {
       this.show = 'show';
       this.deletionConfirm = false;
+      this.userImage = undefined;
+      this.userImageName = undefined;
+      this.fileUploaded = undefined;
     }
     if (this.scenario === 'editTemplate') {
       this.getTemplatesToEdit();
@@ -117,6 +121,14 @@ export class RightBarComponent implements OnChanges, OnInit {
     } else {
       this.fileUploaded = 'err';
     }
+  }
+
+  resetUserImage(event):void {
+    event.stopPropagation();
+    event.preventDefault();
+    this.userImage = undefined;
+    this.userImageName = undefined;
+    this.fileUploaded = undefined;
   }
 
   showBar():void {
@@ -413,7 +425,7 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   goDeepEditUser(user:UserInterface):void {
     this.scenario = 'editUserDeep';
-    this.user = new User(user.login, user.fname, user.lname, user.role, undefined, user._id);
+    this.user = new User(user.login, user.fname, user.lname, user.role, undefined, user._id, user.image);
   }
 
   choseRole(role:string) {
@@ -488,6 +500,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     if (this.userPw !== '') {
       this.user.pw = this.userPw;
     }
+    if (this.userImage && this.userImage !== '') {
+      this.user.image = this.userImage;
+    }
     this.appService.putUser(user).subscribe(
       response => {
         this.response = response,
@@ -508,7 +523,10 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   editAccount(session:Session) {
     let user = this.session.user;
-    let account = new User(user.login, user.fname, user.lname, user.role, undefined, user._id)
+    if (this.userImage && this.userImage !== '') {
+      user.image = this.userImage;
+    }
+    let account = new User(user.login, user.fname, user.lname, user.role, undefined, user._id, user.image)
     if (this.accountPw !== '') {
       account.pw = this.accountPw;
       this.accountPw = '';
