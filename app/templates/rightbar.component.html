@@ -156,6 +156,7 @@
           <div class="qcms-attachment" *ngFor="let attach of documentAttachments">
             <i class="fa fa-file-o qcms-attachment-icon" title="{{attach.originalname}}"></i>
             <small class="qcms-attachment-label">{{attach.originalname}}</small>
+            <i class="fa fa-times-circle qcms-attach-remove" (click)="deleteAttachFromList(attach.filename)"></i>
           </div>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template);">Save</button>

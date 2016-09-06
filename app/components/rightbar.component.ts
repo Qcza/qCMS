@@ -3,7 +3,7 @@ import { Template, Element } from '../models/template';
 import { Doc } from '../models/document';
 import { Session } from '../models/session';
 import { User, UserInterface } from '../models/user';
-import { Alert } from '../models/helpers';
+import { Alert, AttachmentInterface } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
 
@@ -57,7 +57,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   documentCollections:Array<string>;
   documentCollection:string = '';
   documentImages:Array<string> = [];
-  documentAttachments:Array<Object> = [];
+  documentAttachments:Array<AttachmentInterface> = [];
 
   // TEMPLATES
   templateName:string;
@@ -170,7 +170,7 @@ export class RightBarComponent implements OnChanges, OnInit {
       this.attUploaded = 'err'
     } else if (data && data.response) {
       data = JSON.parse(data.response);
-      let attachment = {
+      let attachment:AttachmentInterface = {
         filename: data.filename,
         originalname: data.originalname,
         ext: data.filename.slice(data.filename.indexOf('.'))
@@ -663,5 +663,16 @@ export class RightBarComponent implements OnChanges, OnInit {
       response => this.response = response,
       error => this.errorMessage = error
     )
+  }
+
+  deleteAttachFromList(name:string):void {
+    for (let attach of this.documentAttachments) {
+      if (attach.filename === name) {
+        let index = this.documentAttachments.indexOf(attach)
+        this.documentAttachments.splice(index, 1);
+        this.deleteAttachment(name);
+        return
+      }
+    }
   }
 }
