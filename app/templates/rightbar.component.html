@@ -121,11 +121,26 @@
           <input id="useDocumentTitle" name="useDocumentTitle" class="form-control qcms-form-input" type="text" [(ngModel)]="documentTitle">
         </div>
         <div class="form-group">
-          <label for="useDocumentPicture"><i class="fa fa-picture-o"></i> Picture</label>
-          <input id="useDocumentPicture" name="useDocumentPicture" class="form-control qcms-form-input" type="text" placeholder="#ToDo picture input" disabled>
+          <label for="useDocumentImage"><i class="fa fa-picture-o"></i> Pictures <small>(.png/.jpg)</small></label>
+          <label class="qcms-file-uploader">
+            <input type="file" ngFileSelect [options]='imgOptions' (onUpload)="handleUploadImage($event)" accept="image/jpeg,image/png">
+            Upload file
+            <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'during'" class="sr-only">Loading...</small>
+            <i *ngIf="fileUploaded === 'ok'" class="fa fa-check-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'ok'" class="sr-only">Done</small>
+            <i *ngIf="fileUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'err'" class="sr-only">Error</small>
+          </label>
         </div>
         <div class="form-group">
-          <label for="useDocumentFile"><i class="fa fa-chain"></i> File</label>
+          <div *ngFor="let image of documentImages" class="qcms-image">
+            <img class="qcms-image-thumbnail" src="img/{{image}}" title="{{image}}" />
+            <i class="fa fa-times-circle qcms-image-remove" (click)="deleteImageFromList(image)"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="useDocumentFile"><i class="fa fa-chain"></i> Attachments</label>
           <input id="useDocumentFile" name="useDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
         <button class="btn btn-qcms pull-right" [disabled]="documentTitle === ''" (click)="addDocument(documentTitle, template);">Save</button>
@@ -144,11 +159,26 @@
           <input id="editDocumentTitle" name="editDocumentTitle" class="form-control qcms-form-input" type="text" [(ngModel)]="document.title">
         </div>
         <div class="form-group">
-          <label for="editDocumentPicture"><i class="fa fa-picture-o"></i> Picture</label>
-          <input id="editDocumentPicture" name="editDocumentPicture" class="form-control qcms-form-input" type="text" placeholder="#ToDo picture input" disabled>
+          <label for="editDocumentImage"><i class="fa fa-picture-o"></i> Pictures <small>(.png/.jpg)</small></label>
+          <label class="qcms-file-uploader">
+            <input type="file" ngFileSelect [options]='imgOptions' (onUpload)="handleUploadImageDoc($event)" accept="image/jpeg,image/png">
+            Upload file
+            <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'during'" class="sr-only">Loading...</small>
+            <i *ngIf="fileUploaded === 'ok'" class="fa fa-check-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'ok'" class="sr-only">Done</small>
+            <i *ngIf="fileUploaded === 'err'" class="fa fa-times-circle-o fa-fw qcms-file-uploader-icon"></i>
+            <small *ngIf="fileUploaded === 'err'" class="sr-only">Error</small>
+          </label>
         </div>
         <div class="form-group">
-          <label for="editDocumentFile"><i class="fa fa-chain"></i> File</label>
+          <div *ngFor="let image of document.images" class="qcms-image">
+            <img class="qcms-image-thumbnail" src="img/{{image}}" title="{{image}}" />
+            <i class="fa fa-times-circle qcms-image-remove" (click)="deleteImageFromObj(image)"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editDocumentFile"><i class="fa fa-chain"></i> Attachments</label>
           <input id="editDocumentFile" name="editDocumentFile" class="form-control qcms-form-input" type="text" placeholder="#ToDo file input" disabled>
         </div>
         <div *ngIf="!deletionConfirm">
@@ -196,7 +226,7 @@
         <div class="form-group">
           <label for="addUserImage">Profile image <small>(.png/.jpg)</small></label>
           <label class="qcms-file-uploader">
-            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
+            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUploadAvatar($event)" accept="image/jpeg,image/png">
             <span *ngIf="!userImage">Upload file</span>
             <span *ngIf="userImage">{{userImageName}}</span>
             <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
@@ -252,7 +282,7 @@
         <div class="form-group">
           <label for="editUserImage">Profile image <small>(.png/.jpg)</small></label>
           <label class="qcms-file-uploader">
-            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
+            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUploadAvatar($event)" accept="image/jpeg,image/png">
             <span *ngIf="!userImage">Upload file</span>
             <span *ngIf="userImage">{{userImageName}}</span>
             <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>
@@ -316,7 +346,7 @@
         <div class="form-group">
           <label for="editAccountImage">Profile image <small>(.png/.jpg)</small></label>
           <label class="qcms-file-uploader">
-            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUpload($event)" accept="image/jpeg,image/png">
+            <input type="file" ngFileSelect [options]='avtrOptions' (onUpload)="handleUploadAvatar($event)" accept="image/jpeg,image/png">
             <span *ngIf="!userImage">Upload file</span>
             <span *ngIf="userImage">{{userImageName}}</span>
             <i *ngIf="fileUploaded === 'during'" class="fa fa-circle-o-notch fa-spin fa-fw qcms-file-uploader-icon"></i>

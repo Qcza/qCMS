@@ -263,7 +263,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
         doc.is_selected = false;
       }
     }
-    let selectedDocument = new Doc(document.title, document.template, document._id);
+    let selectedDocument = new Doc(document.title, document.template, document._id, document.images);
     this.onSelectDocument.emit(selectedDocument);
   }
 
@@ -271,7 +271,7 @@ export class LeftBarComponent implements OnInit, OnChanges {
     if (scenario === 'all') {
       for (let document of this.documents) {
         if (document.is_selected === true) {
-          let selectedDocument = new Doc(document.title, document.template, document._id);
+          let selectedDocument = new Doc(document.title, document.template, document._id, document.images);
           this.onSelectDocument.emit(selectedDocument);
           this.selectRightBarScenario('editDocument');
           break;

@@ -1,11 +1,11 @@
 <div class="left-bar">
-  <div class="left-bar-element" (click)="selectDefaultDocument(documents)" [ngClass]="{'left-bar-element-active': active === 'all'}">
+  <div class="left-bar-element" title="All documents" (click)="selectDefaultDocument(documents)" [ngClass]="{'left-bar-element-active': active === 'all'}">
     <i class="fa fa-inbox"></i>
   </div>
-  <div class="left-bar-element" (click)="selectDefaultTemplate(templates)" [ngClass]="{'left-bar-element-active': active === 'new'}">
+  <div class="left-bar-element" title="New document" (click)="selectDefaultTemplate(templates)" [ngClass]="{'left-bar-element-active': active === 'new'}">
     <i class="fa fa-file"></i>
   </div>
-  <div class="left-bar-element-bottom" (click)="extendBar('admin')" [ngClass]="{'left-bar-element-active': active === 'admin'}">
+  <div class="left-bar-element-bottom" title="Settings" (click)="extendBar('admin')" [ngClass]="{'left-bar-element-active': active === 'admin'}">
     <i class="fa fa-cogs"></i>
   </div>
   <div class="left-bar-brand">

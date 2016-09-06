@@ -40,7 +40,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     allowedExtensions: ['image/jpeg', 'image/png']
   };
   imgOptions:Object = {
-    url: '/images'
+    url: '/images',
+    filterExtensions: true,
+    allowedExtensions: ['image/jpeg', 'image/png']
   };
   fileOptions:Object = {
     url: '/files'
@@ -53,6 +55,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   documentEdited:boolean;
   documentCollections:Array<string>;
   documentCollection:string = '';
+  documentImages:Array<string> = [];
 
   // TEMPLATES
   templateName:string;
@@ -104,7 +107,7 @@ export class RightBarComponent implements OnChanges, OnInit {
     }
   }
 
-  handleUpload(data):void {
+  handleUploadAvatar(data):void {
     this.fileUploaded = undefined;
     if (this.userImage && this.userImage !== '') {
       this.deleteAvatar(this.userImage);
@@ -120,6 +123,36 @@ export class RightBarComponent implements OnChanges, OnInit {
       if (this.userImageName.length > 18) {
         this.userImageName = this.userImageName.slice(0,16) + '..';
       }
+      this.fileUploaded = 'ok';
+    } else {
+      this.fileUploaded = 'err';
+    }
+  }
+
+  handleUploadImage(data):void {
+    this.fileUploaded = undefined;
+    if (data && data.progress.percent < 100) {
+      this.fileUploaded = 'during'
+    } else if (data && data.error) {
+      this.fileUploaded = 'err'
+    } else if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.documentImages.push(data.filename);
+      this.fileUploaded = 'ok';
+    } else {
+      this.fileUploaded = 'err';
+    }
+  }
+
+  handleUploadImageDoc(data):void {
+    this.fileUploaded = undefined;
+    if (data && data.progress.percent < 100) {
+      this.fileUploaded = 'during'
+    } else if (data && data.error) {
+      this.fileUploaded = 'err'
+    } else if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.document.images.push(data.filename);
       this.fileUploaded = 'ok';
     } else {
       this.fileUploaded = 'err';
@@ -240,6 +273,7 @@ export class RightBarComponent implements OnChanges, OnInit {
 
   resetDocumentForm():void {
      this.documentTitle = '';
+     this.documentImages = [];
   }
 
   showAlerts(type:string, message:string):void {
@@ -279,7 +313,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   addDocument(title:string, template:Template):void {
-    let doc = new Doc(title, template);
+    let doc = new Doc(title, template, undefined, this.documentImages);
     this.appService.postDocument(doc).subscribe(
       response => {
         this.response = response,
@@ -578,5 +612,25 @@ export class RightBarComponent implements OnChanges, OnInit {
       response => this.response = response,
       error => this.errorMessage = error
     )
+  }
+
+  deleteImage(name:string):void {
+    this.appService.deleteImage(name).subscribe(
+      response => this.response = response,
+      error => this.errorMessage = error
+    )
+  }
+
+  deleteImageFromList(name:string):void {
+    let index = this.documentImages.indexOf(name)
+    this.documentImages.splice(index, 1);
+    this.deleteImage(name);
+  }
+
+  deleteImageFromObj(name:string):void {
+    let index = this.document.images.indexOf(name)
+    this.document.images.splice(index, 1);
+    this.editDocument(this.document);
+    this.deleteImage(name);
   }
 }
