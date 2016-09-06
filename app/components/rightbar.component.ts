@@ -30,6 +30,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   elementsList:Array<Element> = [];
   chosenElement:Element = new Element();
   deletionConfirm:boolean = false;
+  fileUploaded:string;
 
   // UPLOAD FILES
   avtrOptions:Object = {
@@ -72,6 +73,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   userPw:string = '';
   userPwCon:string = '';
   userImage:string = '';
+  userImageName:string = '';
 
   // ACCOUNT
   accountPw:string = '';
@@ -99,9 +101,21 @@ export class RightBarComponent implements OnChanges, OnInit {
   }
 
   handleUpload(data):void {
-    if (data && data.response) {
+    this.fileUploaded = undefined;
+    if (data && data.progress.percent < 100) {
+      this.fileUploaded = 'during'
+    } else if (data && data.error) {
+      this.fileUploaded = 'err'
+    } else if (data && data.response) {
       data = JSON.parse(data.response);
       this.userImage = data.filename;
+      this.userImageName = data.originalname;
+      if (this.userImageName.length > 18) {
+        this.userImageName = this.userImageName.slice(0,16) + '..';
+      }
+      this.fileUploaded = 'ok';
+    } else {
+      this.fileUploaded = 'err';
     }
   }
 
@@ -417,6 +431,9 @@ export class RightBarComponent implements OnChanges, OnInit {
     this.userRole = '';
     this.userPw = '';
     this.userPwCon = '';
+    this.userImage = undefined;
+    this.userImageName = undefined;
+    this.fileUploaded = undefined;
   }
 
   addUser() {
