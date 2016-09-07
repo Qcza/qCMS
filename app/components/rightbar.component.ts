@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { Template, Element } from '../models/template';
-import { Doc } from '../models/document';
+import { Doc, AttachmentInterface } from '../models/document';
 import { Session } from '../models/session';
 import { User, UserInterface } from '../models/user';
-import { Alert, AttachmentInterface } from '../models/helpers';
+import { Alert } from '../models/helpers';
 import { AppService } from '../services/app.service';
 
 
@@ -38,15 +38,18 @@ export class RightBarComponent implements OnChanges, OnInit {
   avtrOptions:Object = {
     url: '/avatars',
     filterExtensions: true,
-    allowedExtensions: ['image/jpeg', 'image/png']
+    allowedExtensions: ['image/jpeg', 'image/png'],
+    customHeaders: {'Auth': 'basicqCMSAuth'}
   };
   imgOptions:Object = {
     url: '/images',
     filterExtensions: true,
-    allowedExtensions: ['image/jpeg', 'image/png']
+    allowedExtensions: ['image/jpeg', 'image/png'],
+    customHeaders: {'Auth': 'basicqCMSAuth'}
   };
   attOptions:Object = {
-    url: '/attachments'
+    url: '/attachments',
+    customHeaders: {'Auth': 'basicqCMSAuth'}
   };
 
   // DOCUMENTS
@@ -176,6 +179,26 @@ export class RightBarComponent implements OnChanges, OnInit {
         ext: data.filename.slice(data.filename.indexOf('.'))
       }
       this.documentAttachments.push(attachment);
+      this.attUploaded = 'ok';
+    } else {
+      this.attUploaded = 'err';
+    }
+  }
+
+  handleUploadAttachObj(data):void {
+    this.attUploaded = undefined;
+    if (data && data.progress.percent < 100) {
+      this.attUploaded = 'during'
+    } else if (data && data.error) {
+      this.attUploaded = 'err'
+    } else if (data && data.response) {
+      data = JSON.parse(data.response);
+      let attachment:AttachmentInterface = {
+        filename: data.filename,
+        originalname: data.originalname,
+        ext: data.filename.slice(data.filename.indexOf('.'))
+      }
+      this.document.attachments.push(attachment);
       this.attUploaded = 'ok';
     } else {
       this.attUploaded = 'err';
@@ -670,6 +693,18 @@ export class RightBarComponent implements OnChanges, OnInit {
       if (attach.filename === name) {
         let index = this.documentAttachments.indexOf(attach)
         this.documentAttachments.splice(index, 1);
+        this.deleteAttachment(name);
+        return
+      }
+    }
+  }
+
+  deleteAttachFromListObj(name:string):void {
+    for (let attach of this.document.attachments) {
+      if (attach.filename === name) {
+        let index = this.document.attachments.indexOf(attach)
+        this.document.attachments.splice(index, 1);
+        this.editDocument(this.document);
         this.deleteAttachment(name);
         return
       }

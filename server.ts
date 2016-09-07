@@ -239,7 +239,8 @@ app.put('/documents/:id', function(req: express.Request, res: express.Response) 
       db.collection('qcms_documents').updateOne({'_id': new ObjectId(id)}, {$set: {
         'title': req.body.title,
         'template': req.body.template,
-        'images': req.body.images
+        'images': req.body.images,
+        'attachments': req.body.attachments
       }}).then(function () {
         let response:string = JSON.stringify('success');
         res.send(response);
@@ -257,10 +258,23 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
     let id:mongodb.ObjectID = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
-      db.collection('qcms_documents').deleteOne({'_id': id}).then(function () {
-        let response:string = JSON.stringify('success');
-        res.send(response);
-        db.close();
+      db.collection('qcms_documents').findOne({'_id': id}).then(function(document) {
+        if (document) {
+          for (let img of document.images) {
+            let path = config.imgPath + img;
+            fs.unlink(path);
+          }
+          for (let att of document.attachments) {
+            let path = config.filePath + att.filename;
+            fs.unlink(path);
+          }
+        }
+      }).then(function () {
+        db.collection('qcms_documents').deleteOne({'_id': id}).then(function () {
+          let response:string = JSON.stringify('success');
+          res.send(response);
+          db.close();
+        })
       })
     })
   }
@@ -347,10 +361,17 @@ app.delete('/users/:id', function (req: express.Request, res: express.Response) 
   let id:mongodb.ObjectID = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
-      db.collection('qcms_users').deleteOne({'_id': id}).then(function () {
-        let response:string = JSON.stringify('success');
-        res.send(response);
-        db.close();
+      db.collection('qcms_users').findOne({'_id': id}).then(function (document) {
+        if (document) {
+          let path = config.avtrPath + document.image;
+          fs.unlink(path);
+        }
+      }).then(function () {
+        db.collection('qcms_users').deleteOne({'_id': id}).then(function () {
+          let response:string = JSON.stringify('success');
+          res.send(response);
+          db.close();
+        })
       })
     })
   }
@@ -464,7 +485,11 @@ app.delete('/sessions/:id', function (req: express.Request, res: express.Respons
 // FILES
 // POST AVATAR
 app.post('/avatars', avtrUpload.any(), function (req, res) {
-  res.json(req.files[0])
+  if (req.get('Auth') === 'basicqCMSAuth') {
+    res.json(req.files[0])
+  } else {
+    res.sendStatus(401);
+  }
 })
 
 // DELETE AVATAR
@@ -483,7 +508,11 @@ app.delete('/avatars/:name', function (req, res) {
 
 // POST IMAGE
 app.post('/images', imgUpload.any(), function (req, res) {
-  res.json(req.files[0])
+  if (req.get('Auth') === 'basicqCMSAuth') {
+    res.json(req.files[0])
+  } else {
+    res.sendStatus(401);
+  }
 })
 
 // DELETE IMAGE
@@ -502,7 +531,11 @@ app.delete('/images/:name', function (req, res) {
 
 // POST ATTACHMENT
 app.post('/attachments', attUpload.any(), function (req, res) {
-  res.json(req.files[0])
+  if (req.get('Auth') === 'basicqCMSAuth') {
+    res.json(req.files[0])
+  } else {
+    res.sendStatus(401);
+  }
 })
 
 // DELETE ATTACHMENT

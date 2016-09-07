@@ -27,9 +27,3 @@ export interface LoginFields {
   login:string;
   pw:string;
 }
-
-export interface AttachmentInterface {
-  filename:any;
-  originalname:any;
-  ext:any;
-}
