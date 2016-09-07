@@ -1,7 +1,5 @@
 import * as request from 'request';
 
-import { Template, Element } from '../app/models/template';
-
 const port = 3000;
 const main_url = `http://localhost:${port}`;
 
