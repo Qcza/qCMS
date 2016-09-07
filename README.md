@@ -1,5 +1,7 @@
 # qCMS
-quickCMS based on MEAN with Angular2.
+Easy to install and configure, basic CMS. Great for quick prototyping or as a starter for further develop.
+
+CMS works on MEAN stack with use of Angular 2.
 
 ##Installation##
 Run packages installation
