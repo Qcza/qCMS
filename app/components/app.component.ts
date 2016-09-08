@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { AppService } from '../services/app.service';
-import { LeftBarComponent } from './leftbar.component';
-import { RightBarComponent } from './rightbar.component';
 import { Template, Element } from '../models/template';
 import { User } from '../models/user';
 import { Doc } from '../models/document';
@@ -14,7 +12,6 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
   providers: [AppService],
   templateUrl: 'app/templates/app.component.html',
   styleUrls: ['app/styles/app.component.css'],
-  directives: [LeftBarComponent, RightBarComponent]
 })
 
 export class AppComponent { 
