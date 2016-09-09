@@ -25,9 +25,6 @@ Start server
 Start development server with TypeScrypt and SASS watchers
 >npm run dev
 
-Default server listening port
->3000
-
 First login credentials
 >login: *admin*
 
