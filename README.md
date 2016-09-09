@@ -3,6 +3,8 @@ Easy to install and configure, basic CMS. Great for quick prototyping or as a st
 
 CMS works on MEAN stack with use of Angular 2.
 
+Demo: https://qcms.herokuapp.com/
+
 ##Installation##
 Run packages installation
 >npm install
