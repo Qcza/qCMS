@@ -20,8 +20,8 @@ Adjust database settings in..
 Start server
 >npm start
 
-Start server without TypeScrypt and SASS watchers
->npm run server
+Start development server with TypeScrypt and SASS watchers
+>npm run dev
 
 Default server listening port
 >3000

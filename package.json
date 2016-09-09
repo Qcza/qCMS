@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "simple cms",
   "scripts": {
-    "start": "concurrently \"npm run sass\" \"npm run tsc:w\" \"npm run server\" ",
+    "start": "npm run server",
+    "dev": "concurrently \"npm run sass\" \"npm run tsc:w\" \"npm run server\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "server": "node server.js",
