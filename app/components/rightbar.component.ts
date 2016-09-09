@@ -104,6 +104,10 @@ export class RightBarComponent implements OnChanges, OnInit {
       this.userImageName = undefined;
       this.fileUploaded = undefined;
       this.attUploaded = undefined;
+      this.accountPw = '';
+      this.accountPwCon = '';
+      this.userRole = '';
+      this.userPw = '';
     }
     if (this.scenario === 'editTemplate') {
       this.getTemplatesToEdit();
