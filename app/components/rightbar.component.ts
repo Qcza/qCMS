@@ -63,7 +63,7 @@ export class RightBarComponent implements OnChanges, OnInit {
   documentAttachments:Array<AttachmentInterface> = [];
 
   // TEMPLATES
-  templateName:string;
+  templateName:string = '';
   templateElements:Array<Element> = [];
   templateDefault:boolean = false;
   templatesToEdit:Array<Template> = [];
