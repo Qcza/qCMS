@@ -14,10 +14,8 @@ import 'rxjs/add/operator/catch';
 export class AppService {
   constructor (private http: Http) {  }
 
-  private domain = 'http://localhost:3000';
-
   // Templates services
-  private templatesUrl = this.domain + '/templates';
+  private templatesUrl = '/templates';
   getTemplates (): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
@@ -51,7 +49,7 @@ export class AppService {
   }
 
   // Documents services
-  private documentsUrl = this.domain + '/documents';
+  private documentsUrl = '/documents';
   postDocument (document:Doc): Observable<any> {
     let body = JSON.stringify(document);
     let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
@@ -79,7 +77,7 @@ export class AppService {
   }
 
   // Users services
-  private usersUrl = this.domain + '/users';
+  private usersUrl = '/users';
   postUsers (user:User): Observable<any> {
     let body = JSON.stringify(user);
     let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
@@ -114,7 +112,7 @@ export class AppService {
   }
 
   // Sessions services
-  private sessionUrl = this.domain + '/sessions';
+  private sessionUrl = '/sessions';
   setSession (session:Session): Observable<any> {
     let body = JSON.stringify(session);
     let headers = new Headers({'Content-type': 'application/json', 'Auth': 'basicqCMSAuth'});
@@ -142,21 +140,21 @@ export class AppService {
   }
 
   // Files services
-  private avatarsUrl = this.domain + '/avatars';
+  private avatarsUrl = '/avatars';
   deleteAvatar (name:string): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.delete(this.avatarsUrl + '/' + name, options).map(this.extractData).catch(this.handleError);
   }
 
-  private imagesUrl = this.domain + '/images';
+  private imagesUrl = '/images';
   deleteImage (name:string): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.delete(this.imagesUrl + '/' + name, options).map(this.extractData).catch(this.handleError);
   }
 
-  private attachmentsUrl = this.domain + '/attachments';
+  private attachmentsUrl = '/attachments';
   deleteAttachment (name:string): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
@@ -165,21 +163,21 @@ export class AppService {
 
 
   // Helpers services
-  private collectionsUrl = this.domain + '/helpers/collections';
+  private collectionsUrl = '/helpers/collections';
   getCollections (): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.get(this.collectionsUrl, options).map(this.extractData).catch(this.handleError);
   }
 
-  private elementsUrl = this.domain + '/helpers/elements';
+  private elementsUrl = '/helpers/elements';
   getElements (): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});
     return this.http.get(this.elementsUrl, options).map(this.extractData).catch(this.handleError);
   }
 
-  private rolesUrl = this.domain + '/helpers/roles';
+  private rolesUrl = '/helpers/roles';
   getRoles (): Observable<any> {
     let headers = new Headers({'Auth': 'basicqCMSAuth'});
     let options = new RequestOptions({headers: headers});

@@ -601,4 +601,4 @@ app.get('/helpers/roles', function (req: express.Request, res: express.Response)
   }
 })
 
-app.listen(3000);
+app.listen(config.port);
