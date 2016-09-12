@@ -97,7 +97,8 @@ function addTemplate (db, req) {
 }
 app.post('/templates', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+      let response:string = JSON.stringify({'error': 'unauthorized access'});
+      res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -117,7 +118,8 @@ app.post('/templates', function (req: express.Request, res: express.Response) {
 // GET TEMPLATES
 app.get('/templates', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -133,7 +135,8 @@ app.get('/templates', function (req: express.Request, res: express.Response) {
 // GET TEMPLATE
 app.get('/templates/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -150,7 +153,8 @@ app.get('/templates/:id', function (req: express.Request, res: express.Response)
 // DELETE TEMPLATE
 app.delete('/templates/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function(err, db) {
@@ -178,7 +182,8 @@ function updateTemplate (db, req) {
 }
 app.put('/templates/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function (err, db) {
       assert.equal(null, err);
@@ -199,7 +204,8 @@ app.put('/templates/:id', function (req: express.Request, res: express.Response)
 // POST DOCUMENT
 app.post('/documents', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -215,7 +221,8 @@ app.post('/documents', function (req: express.Request, res: express.Response) {
 // GET DOCUMENTS
 app.get('/documents', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -231,7 +238,8 @@ app.get('/documents', function (req: express.Request, res: express.Response) {
 // EDIT DOCUMENT
 app.put('/documents/:id', function(req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function(err, db) {
@@ -253,7 +261,8 @@ app.put('/documents/:id', function(req: express.Request, res: express.Response) 
 // DELETE DOCUMENT
 app.delete('/documents/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:mongodb.ObjectID = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function(err, db) {
@@ -284,7 +293,8 @@ app.delete('/documents/:id', function (req: express.Request, res: express.Respon
 // POST USERS
 app.post('/users', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     bcrypt.hash(req.body.pw, saltRounds, function (bcerr, hash) {
       assert.equal(null, bcerr)
@@ -304,7 +314,8 @@ app.post('/users', function (req: express.Request, res: express.Response) {
 // GET USERS
 app.get('/users', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -320,7 +331,8 @@ app.get('/users', function (req: express.Request, res: express.Response) {
 // EDIT USER
 app.put('/users/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:mongodb.ObjectID = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function(bcerr, db) {
@@ -356,7 +368,8 @@ app.put('/users/:id', function (req: express.Request, res: express.Response) {
 // DELETE USER
 app.delete('/users/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
   let id:mongodb.ObjectID = new ObjectId(req.params.id);
     MongoClient.connect(dbUrl, function(err, db) {
@@ -380,7 +393,8 @@ app.delete('/users/:id', function (req: express.Request, res: express.Response) 
 // SIGN IN
 app.post('/users/signin', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function (err, db) {
       assert.equal(null, err);
@@ -410,7 +424,8 @@ app.post('/users/signin', function (req: express.Request, res: express.Response)
 // SET SESSION
 app.post('/sessions', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function (err, db) {
       assert.equal(null, err);
@@ -427,7 +442,8 @@ app.post('/sessions', function (req: express.Request, res: express.Response) {
 // GET SESSION
 app.get('/sessions/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
@@ -449,7 +465,8 @@ app.get('/sessions/:id', function (req: express.Request, res: express.Response) 
 // PUT SESSION
 app.put('/sessions/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function (err, db) {
@@ -468,7 +485,8 @@ app.put('/sessions/:id', function (req: express.Request, res: express.Response) 
 // DELETE SESSION
 app.delete('/sessions/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function(err, db) {
@@ -488,7 +506,8 @@ app.post('/avatars', avtrUpload.any(), function (req, res) {
   if (req.get('Auth') === 'basicqCMSAuth') {
     res.json(req.files[0])
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -502,7 +521,8 @@ app.delete('/avatars/:name', function (req, res) {
       res.send(response);
     })
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -511,7 +531,8 @@ app.post('/images', imgUpload.any(), function (req, res) {
   if (req.get('Auth') === 'basicqCMSAuth') {
     res.json(req.files[0])
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -525,7 +546,8 @@ app.delete('/images/:name', function (req, res) {
       res.send(response);
     })
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -534,7 +556,8 @@ app.post('/attachments', attUpload.any(), function (req, res) {
   if (req.get('Auth') === 'basicqCMSAuth') {
     res.json(req.files[0])
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -548,7 +571,8 @@ app.delete('/attachments/:name', function (req, res) {
       res.send(response);
     })
   } else {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   }
 })
 
@@ -556,7 +580,8 @@ app.delete('/attachments/:name', function (req, res) {
 // GET COLLECTIONS
 app.get('/helpers/collections', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -572,7 +597,8 @@ app.get('/helpers/collections', function (req: express.Request, res: express.Res
 // GET ELEMENTS
 app.get('/helpers/elements', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
@@ -588,7 +614,8 @@ app.get('/helpers/elements', function (req: express.Request, res: express.Respon
 // GET ROLES
 app.get('/helpers/roles', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
-    res.sendStatus(401);
+    let response:string = JSON.stringify({'error': 'unauthorized access'});
+    res.send(response);
   } else {
     MongoClient.connect(dbUrl, function(err, db) {
       assert.equal(null, err);
