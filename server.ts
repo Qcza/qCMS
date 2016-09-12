@@ -57,7 +57,8 @@ const attUpload = multer({
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname));
 app.use('/css', express.static(__dirname + '/app/styles/'))
@@ -154,7 +155,7 @@ app.get('/templates/:id', function (req: express.Request, res: express.Response)
 app.delete('/templates/:id', function (req: express.Request, res: express.Response) {
   if (req.get('Auth') !== 'basicqCMSAuth') {
     let response:string = JSON.stringify({'error': 'unauthorized access'});
-    res.send(response
+    res.send(response)
   } else {
     let id:string = req.params.id;
     MongoClient.connect(dbUrl, function(err, db) {
