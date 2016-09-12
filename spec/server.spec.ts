@@ -31,12 +31,12 @@ describe("Templates", function () {
   afterEach(function () {
     MongoClient.connect(dbUrl, function (err, db) {
       assert.equal(null, err);
-      db.collection('qcms_ut_templates').drop();
+      db.collection('qcms_templates').deleteOne({'name': 'qcmsUnitTest'});
     })
   })
 
   it("should add new template to db", function (done) {
-    let template = new Template();
+    let template = new Template('qcmsUnitTest');
     let options = {
       method: 'POST',
       url: main_url+'/templates',
