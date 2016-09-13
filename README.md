@@ -1,6 +1,9 @@
 # qCMS
 Easy to install and configure, basic CMS. Great for quick prototyping or as a starter for further develop.
 
+[![dependencies Status](https://david-dm.org/Qcza/qcms/status.svg)](https://david-dm.org/Qcza/qcms)
+[![devDependencies Status](https://david-dm.org/Qcza/qcms/dev-status.svg)](https://david-dm.org/Qcza/qcms?type=dev)
+
 CMS works on MEAN stack with use of Angular 2.
 
 Demo: https://qcms.herokuapp.com/
