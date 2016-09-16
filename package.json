@@ -9,7 +9,7 @@
     "tsc:w": "tsc -w",
     "server": "node server.js",
     "sass": "node-sass --source-comments app/styles/sass/ -o app/styles/",
-    "preinstall":  "npm i typings -g",
+    "preinstall": "npm i typings -g",
     "postinstall": "typings install",
     "test": "jasmine-node --captureExceptions spec/",
     "seed": "node helpers/seed.js"
@@ -46,6 +46,7 @@
     "core-js": "^2.4.1",
     "cors": "^2.8.0",
     "express": "^4.14.0",
+    "font-awesome": "^4.6.3",
     "mongodb": "^2.2.5",
     "multer": "^1.2.0",
     "ng2-cookies": "^1.0.2",
