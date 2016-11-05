@@ -10,7 +10,7 @@ import { UPLOAD_DIRECTIVES } from 'ng2-uploader/ng2-uploader';
 import { AppComponent } from '../components/app.component';
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule, NgbModule ],
+  imports: [ BrowserModule, FormsModule, HttpModule, NgbModule.forRoot() ],
   declarations: [ AppComponent, UPLOAD_DIRECTIVES, LeftBarComponent, RightBarComponent ],
   bootstrap: [ AppComponent ]
 })
